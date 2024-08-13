@@ -4,7 +4,7 @@ Project2 Backend
 
 Entities
 
-Class User
+Class Player
 id: UUID username: String password: String role: String team: Team.id :UUID
 
 Class Team
@@ -13,7 +13,7 @@ id: UUID name: String sponsor: Array of Sponsor.id UUID
 Class Sponsor
 id: UUID category: String name: String budget: Double
 
-Class proposals
+Class Proposals
 id: UUID Type: String (PlayerInvite or SponsorProposal) Status: String (PENDING/ACCEPTED/REJECTED) sender: Team.id if PlayerInvite else Sponsor.id
 
 User Stories
