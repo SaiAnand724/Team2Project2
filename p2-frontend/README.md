@@ -26,4 +26,4 @@ After cloning and opening the frontend project on VSCode...
 
 `npm start`  to start the application
 
-- and Ctrl + C (or Control + C) to 
+- and Ctrl + C (or Control + C) to stop application
