@@ -9,6 +9,7 @@ import { Routes } from 'react-router-dom';
 import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterForm';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
 import { AuthSelector } from './Components/AuthenticationComponents/AuthSelector';
+import { SponsorDashboard } from './Components/SponsorComponents/SponsorDashboard';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -20,6 +21,21 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<AuthSelector/>}/>
           <Route path="/register" element={<RegisterUserForm/>}/>
+          <Route path="/sponsor" element={<SponsorDashboard/>}/>
+          {/* Sponsor Routes
+        <Route path="/proposals" element={<Proposals />} />
+        <Route path="/affiliates" element={<Affiliates />} />
+        <Route path="/show-all" element={<ShowAll />} />
+        <Route path="/send-proposals" element={<SponsorProposal />} />
+        <Route path="/profile" element={<SponsorDetails />} />
+
+          */}
+          {/* Team Manager Routes
+          
+          */}
+          {/* Player Routes
+          
+          */}
         </Routes>
       </main>
       <Footer />
