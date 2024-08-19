@@ -17,13 +17,13 @@ const App: React.FC = () => {
   return (
     <div className={`app-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
       <Navbar />
-      <main className="content">
+      <main className="">
         <Routes>
           <Route path="/" element={<AuthSelector/>}/>
           <Route path="/register" element={<RegisterUserForm/>}/>
           <Route path="/sponsor" element={<SponsorDashboard/>}/>
           {/* Sponsor Routes
-        <Route path="/proposals" element={<Proposals />} />
+        <Route path="/proposals" element={<SponsorProposals />} />
         <Route path="/affiliates" element={<Affiliates />} />
         <Route path="/show-all" element={<ShowAll />} />
         <Route path="/send-proposals" element={<SponsorProposal />} />

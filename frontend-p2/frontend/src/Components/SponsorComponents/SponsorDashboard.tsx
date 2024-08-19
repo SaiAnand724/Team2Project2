@@ -7,10 +7,10 @@ export const SponsorDashboard: React.FC = () => {
 
   return (
     <div>
-        <div>
+        <div >
             <SponsorNavbar></SponsorNavbar>
         </div>
-        <div>
+        <div className='app-container'>
             <h3 style={{textAlign:'center'}}>Sponsor Details</h3>
             <div>
                 <Grid>

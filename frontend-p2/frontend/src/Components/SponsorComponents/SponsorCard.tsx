@@ -10,7 +10,7 @@ export const SponsorCard: React.FC = () => {
     return (
         <Card>
             <CardContent>
-                <Typography variant="h5" component="h2">Bruh</Typography>
+                <Typography variant="h5" component="h2">Card 1</Typography>
                 <CardActions>
                     <Button>Learn More</Button>
                 </CardActions>
