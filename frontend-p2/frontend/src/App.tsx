@@ -11,8 +11,8 @@ import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider
 import { AuthSelector } from './Components/AuthenticationComponents/AuthSelector';
 
 import { SponsorDashboard } from './Components/SponsorComponents/SponsorDashboard';
-
-import { CreateProposalForm } from './Components/ProposalComponents/ProposalForm';
+import { CreateProposalForm } from './Components/SponsorComponents/SponsorProposal';
+import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite';
 
 
 const App: React.FC = () => {
@@ -42,7 +42,8 @@ const App: React.FC = () => {
           
           */}
 
-          <Route path="/newproposal" element={<CreateProposalForm/>}/>
+          <Route path="/newsponsorproposal" element={<CreateProposalForm/>}/>
+          <Route path="/newteaminv" element={<CreateTeamInviteForm/>}/>
 
         </Routes>
       </main>
