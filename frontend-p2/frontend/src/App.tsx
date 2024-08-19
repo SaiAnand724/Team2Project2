@@ -9,6 +9,7 @@ import { Routes } from 'react-router-dom';
 import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterForm';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
 import { AuthSelector } from './Components/AuthenticationComponents/AuthSelector';
+import { CreateProposalForm } from './Components/ProposalComponents/ProposalForm';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<AuthSelector/>}/>
           <Route path="/register" element={<RegisterUserForm/>}/>
+          <Route path="/newproposal" element={<CreateProposalForm/>}/>
         </Routes>
       </main>
       <Footer />
