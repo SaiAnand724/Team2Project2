@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Button, useTheme, useMediaQuery, Drawer, List, ListItem, ListItemText, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Button, useTheme, useMediaQuery, Drawer, List, ListItem, ListItemText, Box, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useTheme as useAppTheme } from './ThemeProvider';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar: React.FC = () => {
   const { darkMode } = useAppTheme();
@@ -47,21 +48,26 @@ const Navbar: React.FC = () => {
                   onKeyDown={handleDrawerToggle}
                 >
                   <List>
-                    <ListItem button component={Link} to="/" sx={{ color: linkColor }}>
+                    <ListItemButton component={Link} to="/" sx={{ color: linkColor }}>
                       <ListItemText primary="Home" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/register" sx={{ color: linkColor }}>
+                    </ListItemButton>
+                    <ListItemButton component={Link} to="/register" sx={{ color: linkColor }}>
                       <ListItemText primary="Register" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/other" sx={{ color: linkColor }}>
+                    </ListItemButton>
+                    <ListItemButton component={Link} to="/sponsor" sx={{ color: linkColor }}>
+                      <ListItemText primary="Sponsor" />
+                    </ListItemButton>
+                    <ListItemButton component={Link} to="/other" sx={{ color: linkColor }}>
                       <ListItemText primary="Other" />
-                    </ListItem>
-                    <ListItem button component={Link} to="" sx={{ color: linkColor }}>
-                      <ListItemText primary="Log Out" />
-                    </ListItem>
+                    </ListItemButton>
+                    <ListItemButton component={Link} to="" sx={{ color: linkColor }}>
+                      <LogoutIcon />
+                    </ListItemButton>
                   </List>
                 </Box>
+                <ThemeSwitcher />
               </Drawer>
+
             </>
           ) : (
             <>
@@ -76,6 +82,9 @@ const Navbar: React.FC = () => {
                   </Button>
                   <Button component={Link} to="/register" sx={{ color: linkColor }}>
                     Register
+                  </Button>
+                  <Button component={Link} to="/sponsor" sx={{ color: linkColor }}>
+                    Sponsor
                   </Button>
                   <Button component={Link} to="/Other" sx={{ color: linkColor }}>
                     Other
