@@ -9,7 +9,11 @@ import { Routes } from 'react-router-dom';
 import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterForm';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
 import { AuthSelector } from './Components/AuthenticationComponents/AuthSelector';
+
 import { SponsorDashboard } from './Components/SponsorComponents/SponsorDashboard';
+
+import { CreateProposalForm } from './Components/ProposalComponents/ProposalForm';
+
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -21,6 +25,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<AuthSelector/>}/>
           <Route path="/register" element={<RegisterUserForm/>}/>
+
           <Route path="/sponsor" element={<SponsorDashboard/>}/>
           {/* Sponsor Routes
         <Route path="/proposals" element={<SponsorProposals />} />
@@ -36,6 +41,9 @@ const App: React.FC = () => {
           {/* Player Routes
           
           */}
+
+          <Route path="/newproposal" element={<CreateProposalForm/>}/>
+
         </Routes>
       </main>
       <Footer />
