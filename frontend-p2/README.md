@@ -253,13 +253,12 @@ After cloning and opening the frontend project on VSCode...
 `npm install axios` - for HTTP requests
 
 
-`npm install react-bootstrap bootstrap` - for bootstrap styles, UI components, etc
-
-
 `npm install react-toastify` - for toast alerts and error handling
 
 
 `npm install react-tool-tip` - may use for providing info when hovering
+
+`npm install @mui/material @emotion/react @emotion/styled`  -to install material UI for styling/UI
 
 
 `npm start`  to start the application
