@@ -1,20 +1,37 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Button, useTheme, useMediaQuery, Drawer, List, ListItem, ListItemText, Box, ListItemButton } from '@mui/material';
+import {AppBar, Toolbar, Typography, IconButton, Button, useTheme, useMediaQuery, Drawer, List, ListItemText, Box, ListItemButton,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useTheme as useAppTheme } from './ThemeProvider';
 import LogoutIcon from '@mui/icons-material/Logout';
+import axios from 'axios';
+import { log } from 'console';
 
 const Navbar: React.FC = () => {
   const { darkMode } = useAppTheme();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+  const navigate = useNavigate(); // For redirecting after logout
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.get('http://localhost:8080/auth/user/logout', { withCredentials: true });
+      // Clear any stored user data (like localStorage, etc.)
+      localStorage.removeItem('userData');
+      console.log('Logged Out Successfully! See you later!')
+      navigate('/'); // Redirect to home or login page after logout
+    } catch (error) {
+      console.error('Error logging out:', error);
+      // Optionally, show an error message to the user
+    }
   };
 
   const navbarBackgroundColor = darkMode ? '#173049' : '#91b8df';
@@ -60,14 +77,14 @@ const Navbar: React.FC = () => {
                     <ListItemButton component={Link} to="/other" sx={{ color: linkColor }}>
                       <ListItemText primary="Other" />
                     </ListItemButton>
-                    <ListItemButton component={Link} to="" sx={{ color: linkColor }}>
+                    <ListItemButton onClick={handleLogout} sx={{ color: linkColor }}>
                       <LogoutIcon />
+                      <ListItemText primary="Log Out" />
                     </ListItemButton>
                   </List>
                 </Box>
                 <ThemeSwitcher />
               </Drawer>
-
             </>
           ) : (
             <>
@@ -86,10 +103,10 @@ const Navbar: React.FC = () => {
                   <Button component={Link} to="/sponsor" sx={{ color: linkColor }}>
                     Sponsor
                   </Button>
-                  <Button component={Link} to="/Other" sx={{ color: linkColor }}>
+                  <Button component={Link} to="/other" sx={{ color: linkColor }}>
                     Other
                   </Button>
-                  <Button component={Link} to="" sx={{ color: linkColor }}>
+                  <Button onClick={handleLogout} sx={{ color: linkColor }}>
                     Log Out
                   </Button>
                 </Box>
