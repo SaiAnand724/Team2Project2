@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTheme as useAppTheme } from './ThemeProvider';
 import { Switch, FormControlLabel, useTheme, Typography, Box } from '@mui/material';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 const ThemeSwitcher: React.FC = () => {
   const { darkMode, toggleTheme } = useAppTheme();
@@ -27,7 +29,7 @@ const ThemeSwitcher: React.FC = () => {
             }}
           />
         }
-        label={<Typography style={{ color: labelColor }}>{darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</Typography>}
+        label={<Typography style={{ color: labelColor }}>{darkMode ? <LightModeIcon/> : <DarkModeIcon/>}</Typography>}
         sx={{ marginLeft: 2 }}
       />
     </Box>

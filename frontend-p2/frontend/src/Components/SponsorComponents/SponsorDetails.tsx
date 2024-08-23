@@ -1,4 +1,8 @@
-export{}
+export const SponsorDetails:React.FC = () => {
+    return (
+        <div className="container"></div>
+    );
+}
 
 {/*Functionality: Displays detailed information about a specific sponsor.
 o	Endpoints:

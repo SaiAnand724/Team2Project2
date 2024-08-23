@@ -1,4 +1,9 @@
-export{}
+export const SponsorBudget:React.FC = () => {
+    return(
+        <div className="container">
+        </div>
+    );
+}
 
 {/* Functionality: Manages and displays sponsor budget information.
 o	Endpoints:
