@@ -6,8 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useTheme as useAppTheme } from './ThemeProvider';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 import axios from 'axios';
 import { log } from 'console';
+
+import SportsIcon from '@mui/icons-material/Sports';
+
 
 const Navbar: React.FC = () => {
   const { darkMode } = useAppTheme();
@@ -90,7 +94,7 @@ const Navbar: React.FC = () => {
             <>
               <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 2 }}>
                 <Typography variant="h6" component="div">
-                  <Link to="/" style={{ textDecoration: 'none', color: linkColor }}>MyApp</Link>
+                  <Link to="/" style={{ textDecoration: 'none', color: linkColor }}><SportsIcon fontSize='large'/></Link>
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: 'flex', gap: 2 }}>

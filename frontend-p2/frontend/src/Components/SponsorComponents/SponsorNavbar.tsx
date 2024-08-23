@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, CssBaseline, Drawer, List, ListItemText, IconButton, ListItemButton, Divider} from '@mui/material';
+import { Box, CssBaseline, Drawer, List, ListItemText, IconButton, ListItemButton, Divider, Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { useTheme } from '@mui/material/styles';
@@ -140,10 +140,6 @@ export const SponsorNavbar: React.FC = () => {
     </Box>          
   );
 };
-
-export{}
-
-
 
 
 {/* Functionality: Manages and displays sponsor budget information.
