@@ -11,6 +11,7 @@ o	Functions:
  */}
 
  export const CreateProposalForm: React.FC = () => {
+    
     const navigate = useNavigate();
 
     return <Container className="create-proposal-container">
