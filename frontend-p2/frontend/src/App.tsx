@@ -3,26 +3,50 @@ import { ThemeProvider, useTheme } from './Components/UtilityComponents/ThemePro
 import Navbar from './Components/UtilityComponents/Navbar';
 import Footer from './Components/UtilityComponents/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
-import { Route } from 'react-router-dom';
-import { Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterForm';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
-import { AuthSelector } from './Components/AuthenticationComponents/AuthSelector';
+import AuthSelector from "./Components/AuthenticationComponents/AuthSelector";
 
 import { SponsorDashboard } from './Components/SponsorComponents/SponsorDashboard';
 import { CreateProposalForm } from './Components/SponsorComponents/SponsorProposal';
 import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite';
 
+//import PlayerDashboard from './Components/PlayerComponents/PlayerDashboard'
+
+import PMLoginPage from './Components/AuthenticationComponents/PMLoginPage';
+import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
+  const location = useLocation();
+
+  // Define paths where Navbar and Footer should not be displayed
+  const noNavbarPaths = ['/pm-login', '/s-login', '/register', '/'];
+  const noFooterPaths = ['/pm-login', '/s-login', '/register', '/']; // Add paths as needed
+
+  // Check if the current route should not have Navbar or Footer
+  const showNavbar = !noNavbarPaths.includes(location.pathname);
+  const showFooter = !noFooterPaths.includes(location.pathname);
 
   return (
     <div className={`app-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <Navbar />
-      <main className="">
+      {showNavbar && <Navbar />}
+      <main > {/*keeps the footer on the bottom of the page*/}
         <Routes>
+
+          <Route path="/" element={<AuthSelector />} />
+          <Route path="/register" element={<RegisterUserForm />} />
+          <Route path="/pm-login" element={<PMLoginPage />} />
+          <Route path="/s-login" element={<SLoginPage />} />
+          <Route path="/sponsor" element={<SponsorDashboard />} />
+          {/*<Route path="/player" element={<PlayerDashboard/>}/>*/}
+          <Route path="/newproposal" element={<CreateProposalForm />} />
+          {/* Additional routes can be added here */}
+
           <Route path="/" element={<AuthSelector/>}/>
           <Route path="/register" element={<RegisterUserForm/>}/>
 
@@ -45,9 +69,10 @@ const App: React.FC = () => {
           <Route path="/newsponsorproposal" element={<CreateProposalForm/>}/>
           <Route path="/newteaminv" element={<CreateTeamInviteForm/>}/>
 
+
         </Routes>
       </main>
-      <Footer />
+      {showFooter && <Footer />}
     </div>
   );
 }
