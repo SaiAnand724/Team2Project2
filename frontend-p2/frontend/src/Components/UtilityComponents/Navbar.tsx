@@ -58,6 +58,9 @@ const Navbar: React.FC = () => {
                     <ListItemButton component={Link} to="/sponsor" sx={{ color: linkColor }}>
                       <ListItemText primary="Sponsor" />
                     </ListItemButton>
+                    <ListItemButton component={Link} to="/player" sx={{ color: linkColor }}>
+                      <ListItemText primary="Player" />
+                    </ListItemButton>
                     <ListItemButton component={Link} to="/other" sx={{ color: linkColor }}>
                       <ListItemText primary="Other" />
                     </ListItemButton>
@@ -86,6 +89,9 @@ const Navbar: React.FC = () => {
                   </Button>
                   <Button component={Link} to="/sponsor" sx={{ color: linkColor }}>
                     Sponsor
+                  </Button>
+                  <Button component={Link} to="/player" sx={{ color: linkColor }}>
+                    Player
                   </Button>
                   <Button component={Link} to="/Other" sx={{ color: linkColor }}>
                     Other

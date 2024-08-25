@@ -13,6 +13,7 @@ import { AuthSelector } from './Components/AuthenticationComponents/AuthSelector
 import { SponsorDashboard } from './Components/SponsorComponents/SponsorDashboard';
 import { CreateProposalForm } from './Components/SponsorComponents/SponsorProposal';
 import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite';
+import { PlayerDashboard } from './Components/PlayerComponents/PlayerDashboard';
 
 
 const App: React.FC = () => {
@@ -27,6 +28,7 @@ const App: React.FC = () => {
           <Route path="/register" element={<RegisterUserForm/>}/>
 
           <Route path="/sponsor" element={<SponsorDashboard/>}/>
+          <Route path='/player' element={<PlayerDashboard/>}/>
           {/* Sponsor Routes
         <Route path="/proposals" element={<SponsorProposals />} />
         <Route path="/affiliates" element={<Affiliates />} />
