@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { userStore } from "../../globalStore/store";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
@@ -59,3 +60,6 @@ export const PlayerDashboard: React.FC = () => {
     </div>
   );
 };
+
+export {}
+
