@@ -4,7 +4,7 @@ import { sponsorStore } from "../../globalStore/store";
 import { SponsorNavbar } from "./SponsorNavbar";
 import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterface";
 import Table from "@mui/material/Table";
-import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 export const SponsorDetails:React.FC<{proposals:SponsoredTeamsInterface[]}> = ({proposals}) => {
 
@@ -53,25 +53,37 @@ export const SponsorDetails:React.FC<{proposals:SponsoredTeamsInterface[]}> = ({
         }
     }
     return (
-        <div className="container">
+        <div >
             <div >
                 <SponsorNavbar></SponsorNavbar>
             </div>
             <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Sponsor Proposal History</h2>
-            <Table>
+            <div className="container">
+            <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table ">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Proposal Id</TableCell>
-                        <TableCell>Team Name</TableCell>
-                        <TableCell>Amount</TableCell>
-                        <TableCell>Status</TableCell>
+                        <TableCell align="center">Proposal Id</TableCell>
+                        <TableCell align="center">Team Name</TableCell>
+                        <TableCell align="center">Amount</TableCell>
+                        <TableCell align="center">Status</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     Table Data
+                    {proposalsList.map((proposal) => (
+                    <TableRow key = {proposal.proposalId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        <TableCell align="center">{proposal.proposalId}</TableCell>
+                        <TableCell align="center">{proposal.receiverTeamName}</TableCell>
+                        <TableCell align="center">{proposal.amount}</TableCell>
+                        <TableCell align="center">{proposal.status}</TableCell>
+                    </TableRow>
+                    ))}
                 </TableBody>
                 
             </Table>
+            </TableContainer>
+            </div>
 
         </div>
     );
