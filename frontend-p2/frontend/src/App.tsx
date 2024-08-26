@@ -19,6 +19,8 @@ import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite
 
 import PMLoginPage from './Components/AuthenticationComponents/PMLoginPage';
 import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
+import { SponsorshipList } from './Components/SponsorComponents/SponsorshipList';
+import { SponsorDetails} from './Components/SponsorComponents/SponsorProposalHist'
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -42,32 +44,24 @@ const App: React.FC = () => {
           <Route path="/register" element={<RegisterUserForm />} />
           <Route path="/pm-login" element={<PMLoginPage />} />
           <Route path="/s-login" element={<SLoginPage />} />
-          <Route path="/sponsor" element={<SponsorDashboard />} />
-          {/*<Route path="/player" element={<PlayerDashboard/>}/>*/}
-          <Route path="/newproposal" element={<CreateProposalForm />} />
-          {/* Additional routes can be added here */}
 
-          <Route path="/" element={<AuthSelector/>}/>
-          <Route path="/register" element={<RegisterUserForm/>}/>
-
-          <Route path="/sponsor" element={<SponsorDashboard/>}/>
           {/* Sponsor Routes
-        <Route path="/proposals" element={<SponsorProposals />} />
-        <Route path="/affiliates" element={<Affiliates />} />
-        <Route path="/show-all" element={<ShowAll />} />
-        <Route path="/send-proposals" element={<SponsorProposal />} />
-        <Route path="/profile" element={<SponsorDetails />} />
 
           */}
+          <Route path="/sponsor" element={<SponsorDashboard />} />
+          <Route path="/affiliates" element={<SponsorshipList teams={[]} sponsTeams={[]} teamInvestments={[]} />} />
+          <Route path="/proposals-hist" element={<SponsorDetails proposals={[]} />} />
+          <Route path="/newsponsorproposal" element={<CreateProposalForm/>}/>
+
           {/* Team Manager Routes
           
           */}
-          {/* Player Routes
           
-          */}
-
-          <Route path="/newsponsorproposal" element={<CreateProposalForm/>}/>
           <Route path="/newteaminv" element={<CreateTeamInviteForm/>}/>
+
+          {/* Player Routes
+          <Route path="/player" element={<PlayerDashboard/>}/>
+          */}
 
 
         </Routes>

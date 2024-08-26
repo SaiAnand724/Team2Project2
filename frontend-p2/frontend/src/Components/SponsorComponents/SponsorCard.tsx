@@ -4,15 +4,16 @@ import { SponsorInterface } from "../../Interfaces/SponsorInterface"
 import axios from "axios"
 import { sponsorStore } from "../../globalStore/store"
 import { useEffect, useState } from "react"
-import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface";
+import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterface";
 
-export const SponsorCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
+export const SponsorCard: React.FC<{proposals:SponsoredTeamsInterface[]}> = ({proposals}) => {
 
     const sponsorURL = `${sponsorStore.baseURL}/sponsor`
 
-    const [proposalsList, setProposalsList] = useState<TeamProposalInterface[]>(proposals) /** */
-    const [activePropId, setActivePropId] = useState<number | null>(null);
+    const [proposalsList, setProposalsList] = useState<SponsoredTeamsInterface[]>(proposals) /** */
 {/** 
+        const [activePropId, setActivePropId] = useState<number | null>(null);
+
         const [sponsorLoginCreds, setSponsorLoginCreds] = useState([sponsorStore.username, sponsorStore.password]) 
             
         sponsorLoginTemp()
@@ -34,12 +35,9 @@ export const SponsorCard: React.FC<{proposals:TeamProposalInterface[]}> = ({prop
 
 
     useEffect(() => {
-
+        //fetchPendingProposals()
 
     }, []);
- 
-
-
 
     const fetchPendingProposals = async () => {
         try {
@@ -53,17 +51,6 @@ export const SponsorCard: React.FC<{proposals:TeamProposalInterface[]}> = ({prop
         }
     }
 
-    const fetchAcceptedProposals = async () => {
-        try {
-            let response:any = null;
-            response = await axios.get(`${sponsorURL}/proposals/Accepted`)
-            setProposalsList(response.data)
-            console.log(response.data)
-        }
-        catch {
-            console.log("Error fetching accepted proposals")
-        }
-    }
 
     const fetchInvestedTeams = async () => {
         try {
@@ -84,16 +71,27 @@ export const SponsorCard: React.FC<{proposals:TeamProposalInterface[]}> = ({prop
 
     return (
         <Grid item xs="auto">
+            <Card>
+            <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Typography variant="h5" component="div" sx={{ mb: 2 }}> Placeholder </Typography>
+            </CardContent>
+            </Card>
+            <br></br>
+            <Card>
+            <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Typography variant="h5" component="div" sx={{ mb: 2 }}> Placeholder </Typography>
+            </CardContent>
+            </Card>
             {/** 
-             * {proposalsList.map((proposal) => (
-             * key = {proposal.proposalId}
-             * {proposal.proposalId}
+             * 
+             * 
+             * 
             */}
-            
-            <Card  sx={{ position: 'relative', width: 300, height: 300 }}>
+            {proposalsList.map((proposal) => (
+            <Card key = {proposal.proposalId} sx={{ position: 'relative', width: 300, height: 300 }}>
                 <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Typography variant="h5" component="h2">
-                    Proposal 1
+                    Proposal ID: {proposal.proposalId}
                     </Typography>
                     <Button
                     variant="contained"
@@ -113,25 +111,27 @@ export const SponsorCard: React.FC<{proposals:TeamProposalInterface[]}> = ({prop
                         marginTop: '16px', // Margin at the top of the grey box
                     }}
                     >
-                        {/** {proposal.amount}
-                         * {proposal.receiverTeam}
-                         * {proposal.status}
+                        {/** 
+                         * $$$
+                         * Team Name
+                         * Pending
                         */}
                     <Typography variant="h6">
-                        Amount: <span style={{fontStyle: 'italic'}}>$$$</span>
+                        Amount: <span style={{fontStyle: 'italic'}}>${proposal.amount}</span>
                         <br></br>
                         <br></br>
-                        Recipient: <span style={{fontStyle: 'italic'}}>Team Name</span>
+                        Recipient: <span style={{fontStyle: 'italic'}}>{proposal.receiverTeamName}</span>
                         <br></br>
                         <br></br>
-                        Status: <span style={{fontStyle: 'italic'}}>Pending</span>
+                        Status: <span style={{fontStyle: 'italic'}}>{proposal.status}</span>
                     </Typography>
                     {/* Additional content can go here */}
                     </Box>
                 </CardContent>
             </Card>
+            ))}
 
-            {/** ))}    */}
+            {/**     */}
             
 
         </Grid>

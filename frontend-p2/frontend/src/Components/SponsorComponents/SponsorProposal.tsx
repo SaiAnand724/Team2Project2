@@ -1,5 +1,6 @@
 import { Button, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { SponsorNavbar } from "./SponsorNavbar";
 
 
 {/*Functionality: Allows sponsors to send proposals to teams.
@@ -15,6 +16,9 @@ o	Functions:
     const navigate = useNavigate();
 
     return <Container className="create-proposal-container">
+        <div >
+            <SponsorNavbar></SponsorNavbar>
+        </div>
         <h1> LOGO </h1>
         <input type="number" name="propAmount" placeholder="Amount: "></input>
         <input type="text" name="propTeam" placeholder="Team: "></input>
