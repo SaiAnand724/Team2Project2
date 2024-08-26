@@ -3,34 +3,20 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../UtilityComponents/Carousel'; // Import the Carousel component
 import axios from 'axios'; // Import axios for HTTP requests
-import { useTheme as useCustomTheme} from '../UtilityComponents/ThemeProvider'; // Import your custom theme hook
+import { useTheme as useCustomTheme } from '../UtilityComponents/ThemeProvider'; // Import your custom theme hook
 import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
-
-// Copyright Component to display copyright information
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { ToastContainer, toast } from 'react-toastify'; // Import toast functions
+import 'react-toastify/dist/ReactToastify.css'; // Import the default styles
 
 const PMLoginPage: React.FC = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -60,7 +46,7 @@ const PMLoginPage: React.FC = () => {
   // Function to validate inputs before submission
   const validateInputs = () => {
     if (!user.username || !user.password) {
-      console.log('Username and password are required.');
+      toast.error('Username and password are required.');
       return false;
     }
     return true;
@@ -77,46 +63,51 @@ const PMLoginPage: React.FC = () => {
 
       // Store user details in localStorage
       localStorage.setItem('loggedInUser', JSON.stringify({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
         userId: userData.userId,
         username: userData.username,
-        name: userData.name,
-        role: userData.role
+        TeamName: userData.teamName,
+        role: userData.role,
+        salary: userData.salary
       }));
 
-      console.log(`Welcome ${userData.name}! Login successful!`);
+      toast.success(`Welcome ${userData.firstName}! Login successful!`);
 
+      setTimeout(() => {
+        
+      
       // Navigate based on user role
       if (userData.role === 'Manager') {
-        navigate('/manager-dashboard');
+        navigate('/manager');
       } else if (userData.role === 'Player') {
         navigate('/player');
       } else {
-        console.log('Unknown user role. Please contact support.');
-      }
+        toast.error('Unknown user role. Please contact support.');
+      }}, 3000)
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Handle different types of errors
         if (error.response) {
           switch (error.response.status) {
             case 400:
-              console.log('Bad Request: Please check your input and try again.');
+              toast.error('Bad Request: Please check your input and try again.');
               break;
             case 401:
-              console.log('Unauthorized: Incorrect username or password.');
+              toast.error('Unauthorized: Incorrect username or password.');
               break;
             case 500:
-              console.log('Server Error: Please try again later.');
+              toast.error('Server Error: Please try again later.');
               break;
             default:
-              console.log('An unexpected error occurred. Please try again.');
+              toast.error('An unexpected error occurred. Please try again.');
           }
         } else if (error.request) {
-          console.log('Network Error: Please check your connection and try again.');
+          toast.error('Network Error: Please check your connection and try again.');
         } else {
-          console.log('Error: ' + error.message);
+          toast.error('Error: ' + error.message);
         }
       } else {
-        console.log('An unexpected error occurred. Please try again.');
+        toast.error('An unexpected error occurred. Please try again.');
       }
     } finally {
       setLoading(false);
@@ -135,10 +126,8 @@ const PMLoginPage: React.FC = () => {
   };
 
   const handleRegisterPage = () => {
-    navigate('/register')
-  }
-
-  const theme = useTheme(); // Use MUI theme hook
+    navigate('/pmregister');
+  };
 
   return (
     <ThemeProvider theme={createTheme({ palette: { mode: darkMode ? 'dark' : 'light' } })}>
@@ -223,10 +212,6 @@ const PMLoginPage: React.FC = () => {
                     value={user.password}
                     onChange={storeValues}
                   />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
                   <Button
                     type="submit"
                     fullWidth
@@ -239,16 +224,15 @@ const PMLoginPage: React.FC = () => {
                   <Grid container>
                     <Grid item xs>
                       <Link href="#" variant="body2" onClick={handleBackToUserType}>
-                        Back To User Type Selection
+                        {"Back To User Type Selection"}
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="#" variant="body2">
+                      <Link href="#" variant="body2" onClick={handleRegisterPage}>
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>
                   </Grid>
-                  <Copyright sx={{ mt: 5 }} />
                 </Box>
               </Box>
             </Box>
@@ -297,7 +281,6 @@ const PMLoginPage: React.FC = () => {
                 value={user.password}
                 onChange={storeValues}
               />
-              
               <Button
                 type="submit"
                 fullWidth
@@ -310,7 +293,7 @@ const PMLoginPage: React.FC = () => {
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2" onClick={handleBackToUserType}>
-                    Back To User Type Selection
+                    {"Back To User Type Selection"}
                   </Link>
                 </Grid>
                 <Grid item>
@@ -321,8 +304,7 @@ const PMLoginPage: React.FC = () => {
               </Grid>
             </Box>
           </Box>
-        </Grid>
-        <Box
+          <Box
           sx={{
             position: 'absolute',
             top: 0,
@@ -332,7 +314,9 @@ const PMLoginPage: React.FC = () => {
         >
           <ThemeSwitcher /> {/* Theme switcher for toggling between light and dark themes */}
         </Box>
+        </Grid>
       </Grid>
+      <ToastContainer />
     </ThemeProvider>
   );
 };

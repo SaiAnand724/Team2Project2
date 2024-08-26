@@ -7,7 +7,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterForm';
+import  RegisterUserPage from './Components/AuthenticationComponents/RegisterUserPage';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
 import AuthSelector from "./Components/AuthenticationComponents/AuthSelector";
 
@@ -19,14 +19,17 @@ import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite
 
 import PMLoginPage from './Components/AuthenticationComponents/PMLoginPage';
 import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
+import PlayerDashboard from './Components/PlayerComponents/PlayerDashboard';
+import ManagerDashboard from './Components/ManagerComponents/ManagerDashboard';
+import RegisterSponsorPage from './Components/AuthenticationComponents/RegisterSponsorPage';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
   const location = useLocation();
 
   // Define paths where Navbar and Footer should not be displayed
-  const noNavbarPaths = ['/pm-login', '/s-login', '/register', '/'];
-  const noFooterPaths = ['/pm-login', '/s-login', '/register', '/']; // Add paths as needed
+  const noNavbarPaths = ['/pm-login', '/s-login', '/sregister', '/pmregister', '/'];
+  const noFooterPaths = ['/pm-login', '/s-login', '/sregister', '/pmregister', '/']; // Add paths as needed
 
   // Check if the current route should not have Navbar or Footer
   const showNavbar = !noNavbarPaths.includes(location.pathname);
@@ -39,17 +42,19 @@ const App: React.FC = () => {
         <Routes>
 
           <Route path="/" element={<AuthSelector />} />
-          <Route path="/register" element={<RegisterUserForm />} />
+          <Route path="/register" element={<RegisterUserPage />} />
           <Route path="/pm-login" element={<PMLoginPage />} />
           <Route path="/s-login" element={<SLoginPage />} />
           <Route path="/sponsor" element={<SponsorDashboard />} />
-          {/*<Route path="/player" element={<PlayerDashboard/>}/>*/}
+          {<Route path="/player" element={<PlayerDashboard/>}/>}
+          {<Route path="/manager" element={<ManagerDashboard/>}/>}
+          
           <Route path="/newproposal" element={<CreateProposalForm />} />
           {/* Additional routes can be added here */}
 
           <Route path="/" element={<AuthSelector/>}/>
-          <Route path="/register" element={<RegisterUserForm/>}/>
-
+          <Route path="/pmregister" element={<RegisterUserPage/>}/>
+          <Route path="/sregister" element={<RegisterSponsorPage/>}/>
           <Route path="/sponsor" element={<SponsorDashboard/>}/>
           {/* Sponsor Routes
         <Route path="/proposals" element={<SponsorProposals />} />
