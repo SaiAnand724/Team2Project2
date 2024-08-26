@@ -20,6 +20,7 @@ import { PlayerDashboard } from './Components/PlayerComponents/PlayerDashboard';
 
 import PMLoginPage from './Components/AuthenticationComponents/PMLoginPage';
 import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
+import { ManagerDashboard } from './Components/TeamComponents/ManagerDashboard';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -53,6 +54,7 @@ const App: React.FC = () => {
 
           <Route path="/sponsor" element={<SponsorDashboard/>}/>
           <Route path='/player' element={<PlayerDashboard/>}/>
+          <Route path='/manager' element={<ManagerDashboard/>}/>
           {/* Sponsor Routes
         <Route path="/proposals" element={<SponsorProposals />} />
         <Route path="/affiliates" element={<Affiliates />} />
