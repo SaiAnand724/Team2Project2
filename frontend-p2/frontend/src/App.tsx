@@ -62,8 +62,8 @@ const App: React.FC = () => {
           <Route path="/newteaminv" element={<CreateTeamInviteForm/>}/>
 
           {/* Player Routes
-          <Route path="/player" element={<PlayerDashboard/>}/>
           */}
+          <Route path="/player" element={<PlayerDashboard/>}/>
 
 
         </Routes>
