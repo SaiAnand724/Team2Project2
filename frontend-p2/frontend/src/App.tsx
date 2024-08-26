@@ -14,6 +14,7 @@ import AuthSelector from "./Components/AuthenticationComponents/AuthSelector";
 import { SponsorDashboard } from './Components/SponsorComponents/SponsorDashboard';
 import { CreateProposalForm } from './Components/SponsorComponents/SponsorProposal';
 import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite';
+import { PlayerDashboard } from './Components/PlayerComponents/PlayerDashboard';
 
 //import PlayerDashboard from './Components/PlayerComponents/PlayerDashboard'
 
@@ -21,6 +22,7 @@ import PMLoginPage from './Components/AuthenticationComponents/PMLoginPage';
 import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
 import { SponsorshipList } from './Components/SponsorComponents/SponsorshipList';
 import { SponsorDetails} from './Components/SponsorComponents/SponsorProposalHist'
+import { ManagerDashboard } from './Components/TeamComponents/ManagerDashboard';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -56,7 +58,7 @@ const App: React.FC = () => {
           {/* Team Manager Routes
           
           */}
-          
+
           <Route path="/newteaminv" element={<CreateTeamInviteForm/>}/>
 
           {/* Player Routes

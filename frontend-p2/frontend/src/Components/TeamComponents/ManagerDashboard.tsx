@@ -1,17 +1,20 @@
 
 import { useEffect, useState } from "react";
 import { userStore } from "../../globalStore/store";
-import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
-import { PlayerNavbar } from "./PlayerNavbar";
+
+
 import { Divider, Grid } from "@mui/material";
+import { ManagerNavbar } from "./ManagerNavbar";
+import { TeamCard } from "./TeamCard";
+import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface";
 
-import { PlayerCard } from "./PlayerCard";
 
-export const PlayerDashboard: React.FC = () => {
 
-    const sponsorURL = `${userStore.baseURL}/player`
+export const ManagerDashboard: React.FC = () => {
 
-    const [proposalsList, setProposalsList] = useState<PlayerProposalInterface[]>([]) /**  */
+    const sponsorURL = `${userStore.baseURL}/`
+
+    const [proposalsList, setProposalsList] = useState<TeamProposalInterface[]>([]) /**  */
 
     useEffect(() => {
         const sortedProposals = proposalsList.sort();
@@ -22,10 +25,10 @@ export const PlayerDashboard: React.FC = () => {
   return (
     <div>
         <div >
-            <PlayerNavbar></PlayerNavbar>
+            <ManagerNavbar></ManagerNavbar>
         </div>
         <div className='app-container'>
-            <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Player Details</h2>
+            <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Manager Details</h2>
             <Divider/>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '25px' }}>
@@ -36,19 +39,34 @@ export const PlayerDashboard: React.FC = () => {
                             justifyContent="flex-start"
                             alignItems="flex-start" 
                             columns={2}>
-                        <PlayerCard proposals={proposalsList}></PlayerCard>
+                        <TeamCard proposals={proposalsList}></TeamCard>
                         
                     </Grid>
                 </div>
 
                 <div>
 
+                        <div style={{ textAlign: 'center', marginRight: '225px' }}>
+                            <h3 style={{ fontWeight: 'bold' }}>Team balance: $$$</h3>
+                        </div>
+
+                        <br />
+
 
 
 
                         <div style={{ textAlign: 'center', marginRight: '225px' }}>
                             <h3 style={{ fontWeight: 'bold' }}>Salary: $$$</h3>
-                        </div>     
+                        </div>
+
+                        <br />
+                        <br />
+
+                        <div style={{ textAlign: 'center', marginRight: '225px' }}>
+                            <h3 style={{ fontWeight: 'bold' }}>Team Members:</h3>
+                        </div>
+
+
 
 
                 </div>
@@ -60,6 +78,3 @@ export const PlayerDashboard: React.FC = () => {
     </div>
   );
 };
-
-export {}
-
