@@ -7,7 +7,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterForm';
+import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterUserForm';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
 import AuthSelector from "./Components/AuthenticationComponents/AuthSelector";
 
