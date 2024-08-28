@@ -40,11 +40,10 @@ export default function SLoginPage() {
     setLoading(true); // Set loading state to true
     try {
       const response = await axios.post('http://localhost:8080/auth/sponsor/login', user, { withCredentials: true });
-      const { userId, username, name, role } = response.data;
 
       // Store user details in localStorage upon successful login
-      localStorage.setItem('loggedInSponsor', JSON.stringify({ userId, username, name, role }));
-      console.log(`Welcome ${name}! Login successful!`);
+      localStorage.setItem('loggedInSponsor', JSON.stringify(response.data));
+      console.log(`Welcome ${response.data.name}! Login successful!`);
       navigate('/sponsor'); // Redirect to sponsor page
     } catch (error) {
       // Error handling
