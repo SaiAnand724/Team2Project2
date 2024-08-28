@@ -62,7 +62,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export const SponsorNavbar: React.FC = () => {
+export const ManagerNavbar: React.FC = () => {
   const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -88,7 +88,7 @@ export const SponsorNavbar: React.FC = () => {
             sx={{ mr: 0, ...(drawerOpen && { display: 'none' }) }}
           >
             <MenuOpenIcon />
-            <h4 style={{ marginLeft: "10px" }}>Sponsor Dashboard</h4>
+            <h4 style={{ marginLeft: "10px" }}>Manager Dashboard</h4>
           </IconButton>
 
         </Toolbar>
@@ -116,18 +116,19 @@ export const SponsorNavbar: React.FC = () => {
         </DrawerHeader>
         <Divider />
         <List>
-            <ListItemButton component={Link} to="/sponsor">
-            <ListItemText primary="Dashboard" />
+            <ListItemButton component={Link} to="/manager">
+            <ListItemText primary="Show All" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/proposals-hist">
-            <ListItemText primary="Proposals" />
+          <ListItemButton component={Link} to="/invites">
+            <ListItemText primary="Team Invites" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/affiliates">
-            <ListItemText primary="Affiliates - Teams" />
+          <ListItemButton component={Link} to="/teamsponsorships">
+            <ListItemText primary="Sponsorships" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/newsponsorproposal">
-            <ListItemText primary="Create Proposal" />
+          <ListItemButton component={Link} to="/viewteam">
+            <ListItemText primary="View Team" />
           </ListItemButton>
+
         </List>
       </Drawer>
 
@@ -137,14 +138,3 @@ export const SponsorNavbar: React.FC = () => {
     </Box>          
   );
 };
-
-
-{/* Functionality: Manages and displays sponsor budget information.
-o	Endpoints:
-	GET /sponsor/balance to fetch the remaining balance.
-	PATCH /sponsor/budget/{newBudget} to update the budget.
-
-o	Functions:
-	fetchSponsorBalance(): Retrieves the remaining balance.
-	updateSponsorBudget(newBudget): Updates the sponsor’s budget.
- */}

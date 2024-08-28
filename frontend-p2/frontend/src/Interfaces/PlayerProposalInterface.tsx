@@ -1,10 +1,10 @@
 import { UUID } from "crypto";
 
-export interface TeamProposalInterface {
+export interface PlayerProposalInterface {
     proposalId?: UUID,
     status: string,
     senderSponsorId?: UUID,
-    receiverTeam?: any,
+    receiverPlayer?: UUID,
     amount: number
 
 }
