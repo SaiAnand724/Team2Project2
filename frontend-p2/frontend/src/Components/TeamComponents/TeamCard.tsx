@@ -1,18 +1,18 @@
 
 
-import { Box, Button, Card, CardContent, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Grid, Tab, Typography } from "@mui/material";
 import axios from "axios";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useEffect, useState } from "react";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
-import { sponsorStore } from "../../globalStore/store";
+import { userStore } from "../../globalStore/store";
 import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface";
 
 export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
 
-    const sponsorURL = `${sponsorStore.baseURL}/`
+    const managerURL = `${userStore.baseURL}/user`
 
-    const [proposalsList, setProposalsList] = useState<PlayerProposalInterface[]>(proposals) /** */
+    const [proposalsList, setProposalsList] = useState<TeamProposalInterface[]>(proposals) /** */
     const [activePropId, setActivePropId] = useState<number | null>(null);
 
 
@@ -25,10 +25,12 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
 
 
 
-    const fetchPendingProposals = async () => {
+    const rejectProposals = async () => {
         try {
             let response:any = null;
-            response = await axios.get(`${sponsorURL}/proposals/Pending`)
+            //figure out query param logic
+            const proposalId = activePropId;
+            response = await axios.patch(`${managerURL}/proposal/sponsor/reject?proposal_ID=${proposalId}`)
             setProposalsList(response.data)
             console.log(response.data)
         }
@@ -37,10 +39,12 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
         }
     }
 
-    const fetchAcceptedProposals = async () => {
+    const acceptProposals = async () => {
         try {
             let response:any = null;
-            response = await axios.get(`${sponsorURL}/proposals/Accepted`)
+            //figure out query param logic
+            const proposalId = activePropId;
+            response = await axios.patch(`${managerURL}/proposals/accepted?proposal_ID=${proposalId}`)
             setProposalsList(response.data)
             console.log(response.data)
         }
@@ -89,19 +93,21 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
                     }}
                     >
                         {/** {proposal.amount}
-                         * {proposal.receiverTeam}
+                         * {proposal.senderSponsorName}
                          * {proposal.status}
                         */}
                     <Typography variant="h6">
                         Amount: <span style={{fontStyle: 'italic'}}>$$$</span>
                         <br></br>
                         <br></br>
-                        Recipient: <span style={{fontStyle: 'italic'}}>Recipient Name</span>
+                        Sender: <span style={{fontStyle: 'italic'}}>Sponsor Name</span>
                         <br></br>
                         <br></br>
                         Status: <span style={{fontStyle: 'italic'}}>Pending</span>
                     </Typography>
                     {/* Additional content can go here */}
+                    <Button variant="outlined" color="success" onClick={acceptProposals}> Accept </Button> 
+                    <Button variant="outlined" color="error" onClick={rejectProposals}> Reject </Button>
                     </Box>
                 </CardContent>
             </Card>

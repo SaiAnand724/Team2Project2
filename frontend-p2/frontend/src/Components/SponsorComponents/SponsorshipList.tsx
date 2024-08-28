@@ -20,6 +20,9 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
         
     }, [teamInvestmentsList]);
 
+        {/** Sample data for all teams lists and invested teams */}
+
+
     
     const fetchTeamslist = async () => {
         try {
@@ -77,9 +80,10 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
             <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Sponsored Team Investments</h2>
             <div className="container">
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ minWidth: 600 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                        <TableCell align="center">Team ID</TableCell>
                         <TableCell align="center">Team Name</TableCell>
                         <TableCell align="center">Aggregate Investment</TableCell>
                     </TableRow>
@@ -88,6 +92,7 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
                     Table Data vvv
                     {teamInvestmentsList.map((team) => (
                     <TableRow key={team.teamId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        <TableCell align="center">{team.teamId}</TableCell>
                         <TableCell align="center">{team.teamName}</TableCell>
                         <TableCell align="center">${team.totalInvestment}</TableCell>
                     </TableRow>
