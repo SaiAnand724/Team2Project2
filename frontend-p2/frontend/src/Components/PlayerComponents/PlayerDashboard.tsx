@@ -6,6 +6,7 @@ import { PlayerNavbar } from "./PlayerNavbar";
 import { Divider, Grid } from "@mui/material";
 
 import { PlayerCard } from "./PlayerCard";
+import { Navbar } from "react-bootstrap";
 
 export const PlayerDashboard: React.FC = () => {
 
@@ -22,7 +23,7 @@ export const PlayerDashboard: React.FC = () => {
   return (
     <div>
         <div >
-            <PlayerNavbar></PlayerNavbar>
+            <Navbar></Navbar>
         </div>
         <div className='app-container'>
             <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Player Details</h2>

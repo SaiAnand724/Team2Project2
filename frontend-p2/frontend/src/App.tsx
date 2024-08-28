@@ -24,6 +24,8 @@ import { SponsorDetails} from './Components/SponsorComponents/SponsorProposalHis
 import { ManagerDashboard } from './Components/TeamComponents/ManagerDashboard';
 import { TeamInviteContainer } from './Components/PlayerComponents/TeamInviteContainer';
 import { SponsorshipContainer } from './Components/PlayerComponents/SponsorshipContainer';
+import RegisterUserPage from './Components/AuthenticationComponents/RegisterUserPage';
+import RegisterSponsorPage from './Components/AuthenticationComponents/RegisterSponsorPage';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -46,6 +48,8 @@ const App: React.FC = () => {
           <Route path="/" element={<AuthSelector />} />
           <Route path="/pm-login" element={<PMLoginPage />} />
           <Route path="/s-login" element={<SLoginPage />} />
+          <Route path="pmregister" element={<RegisterUserPage/>}/>
+          <Route path="sregister" element={<RegisterSponsorPage/>}/>
 
           {<Route path="/manager" element={<ManagerDashboard/>}/>}
           

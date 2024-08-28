@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -12,12 +11,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from 'axios';
 import { useTheme as useCustomTheme } from '../UtilityComponents/ThemeProvider';
 import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
-import { createTheme, ThemeProvider, Grid } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify'; // Import toast components
-import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
+import { createTheme, ThemeProvider, Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterPage: React.FC = () => {
-  const { darkMode } = useCustomTheme(); // Use custom theme hook for dark mode
+  const { darkMode } = useCustomTheme();
   const navigate = useNavigate();
   const [user, setUser] = useState({
     username: '',
@@ -25,15 +24,24 @@ const RegisterPage: React.FC = () => {
     firstName: '',
     lastName: '',
     role: '',
-    teamName: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser(prev => ({
+  // Separate handlers for TextField and Select components
+  const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUser((prev) => ({
       ...prev,
-      [event.target.name]: event.target.value
+      [name]: value,
+    }));
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const { name, value } = event.target;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
     }));
   };
 
@@ -46,10 +54,7 @@ const RegisterPage: React.FC = () => {
       const response = await axios.post('http://localhost:8080/user/create', user);
       console.log('User registered successfully:', response.data);
 
-      // Show success toast
       toast.success('Registration successful! Taking you to the login page...');
-
-      // Redirect to login page after 3 seconds
       setTimeout(() => {
         navigate('/pm-login');
       }, 3000);
@@ -57,10 +62,10 @@ const RegisterPage: React.FC = () => {
       if (axios.isAxiosError(error)) {
         const message = error.response?.data || 'An unexpected error occurred.';
         setError(message.toString());
-        toast.error(message.toString()); // Show error toast
+        toast.error(message.toString());
       } else {
         setError('An unexpected error occurred.');
-        toast.error('An unexpected error occurred.'); // Show error toast
+        toast.error('An unexpected error occurred.');
       }
     } finally {
       setLoading(false);
@@ -95,7 +100,7 @@ const RegisterPage: React.FC = () => {
                 autoComplete="given-name"
                 autoFocus
                 value={user.firstName}
-                onChange={handleChange}
+                onChange={handleTextFieldChange}
               />
               <TextField
                 margin="normal"
@@ -106,7 +111,7 @@ const RegisterPage: React.FC = () => {
                 name="lastName"
                 autoComplete="family-name"
                 value={user.lastName}
-                onChange={handleChange}
+                onChange={handleTextFieldChange}
               />
               <TextField
                 margin="normal"
@@ -117,7 +122,7 @@ const RegisterPage: React.FC = () => {
                 name="username"
                 autoComplete="username"
                 value={user.username}
-                onChange={handleChange}
+                onChange={handleTextFieldChange}
               />
               <TextField
                 margin="normal"
@@ -129,27 +134,20 @@ const RegisterPage: React.FC = () => {
                 id="password"
                 autoComplete="current-password"
                 value={user.password}
-                onChange={handleChange}
+                onChange={handleTextFieldChange}
               />
-              <TextField
-                margin="normal"
+              <Select
+                fullWidth
                 required
-                fullWidth
-                name="role"
-                label="Role"
                 id="role"
+                name="role"
                 value={user.role}
-                onChange={handleChange}
-              />
-              <TextField
-                margin="normal"
-                fullWidth
-                name="teamName"
-                label="Team Name"
-                id="teamName"
-                value={user.teamName}
-                onChange={handleChange}
-              />
+                onChange={handleSelectChange}
+                label="Role"
+              >
+                <MenuItem value="Player">Player</MenuItem>
+                <MenuItem value="Manager">Manager</MenuItem>
+              </Select>
               {error && <Typography color="error" variant="body2">{error}</Typography>}
               <Button
                 type="submit"
@@ -162,7 +160,7 @@ const RegisterPage: React.FC = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2" onClick={() => navigate('/pm-login')}>
+                  <Link to="/pm-login" style={{ textDecoration: 'none', color: 'inherit' }}>
                     Already have an account? Sign In
                   </Link>
                 </Grid>
@@ -170,7 +168,7 @@ const RegisterPage: React.FC = () => {
             </Box>
           </Box>
         </Grid>
-        <ToastContainer /> {/* Add ToastContainer for displaying toasts */}
+        <ToastContainer />
       </Grid>
     </ThemeProvider>
   );
