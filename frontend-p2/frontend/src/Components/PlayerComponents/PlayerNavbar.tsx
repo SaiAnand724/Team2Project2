@@ -119,10 +119,10 @@ export const PlayerNavbar: React.FC = () => {
             <ListItemButton component={Link} to="/player">
             <ListItemText primary="Dashboard" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/team/invites">
+          <ListItemButton component={Link} to="/player/team/invites">
             <ListItemText primary="Team Invites" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/playersponsorships">
+          <ListItemButton component={Link} to="/player/sponsorships">
             <ListItemText primary="Sponsorships" />
           </ListItemButton>
           <ListItemButton component={Link} to="/show-all">

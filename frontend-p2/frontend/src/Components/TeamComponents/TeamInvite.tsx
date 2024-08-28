@@ -1,4 +1,117 @@
-export{}
+import { IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import React, { useState } from "react";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface";
+import axios from "axios";
+
+
+
+
+
+  
+    export const TeamInvite:React.FC<{invites:TeamInviteProposal[]}> = ({invites}) => {
+
+        const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+        const [selectedInvite, setSelectedInvite] = useState<TeamInviteProposal | null>(null);
+        const [inviteList, setInviteList] = useState<TeamInviteProposal[]>(invites);
+        const [snackbarOpen, setSnackbarOpen] = useState(false);
+        const [snackbarMessage, setSnackbarMessage] = useState("");
+
+        const handleClick = (event: React.MouseEvent<HTMLElement>, invite: TeamInviteProposal) => {
+            setAnchorEl(event.currentTarget);
+            setSelectedInvite(invite);
+        };
+
+        const handleClose = () => {
+            setAnchorEl(null);
+            setSelectedInvite(null);
+         };
+
+        const handleApprove = async () => {
+            if (selectedInvite) {
+
+                const response = await axios.patch("http://localhost:8080/accepted?teamInviteId=" + selectedInvite.proposalId)
+
+
+                setInviteList((prevList) =>
+                  prevList.map((invite) =>
+                    invite.proposalId === selectedInvite.proposalId
+                      ? { ...invite, status: "Accepted" }
+                      : invite
+                  )
+                );
+                setSnackbarMessage(`Invite for ${selectedInvite.teamName} accepted.`);
+                setSnackbarOpen(true);
+
+
+              }
+              handleClose();
+        };
+
+        const handleDeny = async () => {
+            if (selectedInvite) {
+
+                const response = await axios.patch("http://localhost:8080/accepted?teamInviteId=" + selectedInvite.proposalId)
+
+
+                setInviteList((prevList) =>
+                  prevList.map((invite) =>
+                    invite.proposalId === selectedInvite.proposalId
+                      ? { ...invite, status: "Rejected" }
+                      : invite
+                  )
+                );
+                setSnackbarMessage(`Invite for ${selectedInvite.teamName} rejected.`);
+                setSnackbarOpen(true);
+
+
+              }
+              handleClose();
+        };
+
+        return (
+    
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Team Name</TableCell>
+                            <TableCell>Amount</TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Options</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {invites.map((invite) => (
+                            <TableRow key={invite.proposalId}>
+                                <TableCell>{invite.teamName}</TableCell>
+                                <TableCell>{invite.amount}</TableCell>
+                                <TableCell>{invite.status}</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={(event) => handleClick(event, invite)}>
+                                        <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu
+                                        anchorEl={anchorEl}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                    >
+                                        <MenuItem onClick={handleApprove}>Approve</MenuItem>
+                                        <MenuItem onClick={handleDeny}>Reject</MenuItem>
+                                    </Menu>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+      
+
+    
+        );
+    };
+  
+  
 
 {/*Functionality: Allows managers to send team invitations to players.
 o	Endpoints:

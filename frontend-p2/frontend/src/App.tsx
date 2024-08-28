@@ -23,6 +23,9 @@ import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
 import { SponsorshipList } from './Components/SponsorComponents/SponsorshipList';
 import { SponsorDetails} from './Components/SponsorComponents/SponsorProposalHist'
 import { ManagerDashboard } from './Components/TeamComponents/ManagerDashboard';
+import { TeamInviteContainer } from './Components/PlayerComponents/TeamInviteContainer';
+import { SponsorshipContainer } from './Components/PlayerComponents/SponsorshipContainer';
+
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -64,6 +67,8 @@ const App: React.FC = () => {
           {/* Player Routes
           */}
           <Route path="/player" element={<PlayerDashboard/>}/>
+          <Route path='/player/team/invites' element={<TeamInviteContainer/>}/>
+          <Route path='/player/sponsorships' element={<SponsorshipContainer/>}/>
 
 
         </Routes>
