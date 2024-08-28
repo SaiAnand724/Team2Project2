@@ -14,6 +14,7 @@ import { RegisterUserForm } from "./Components/AuthenticationComponents/Register
 import { AuthProvider } from "./Components/AuthenticationComponents/AuthProvider";
 import AuthSelector from "./Components/AuthenticationComponents/AuthSelector";
 
+
 import { SponsorDashboard } from "./Components/SponsorComponents/SponsorDashboard";
 import { CreateProposalForm } from "./Components/SponsorComponents/SponsorProposal";
 import { CreateTeamInviteForm } from "./Components/PlayerComponents/PlayerInvite";
@@ -63,10 +64,12 @@ const App: React.FC = () => {
           <Route path="/" element={<AuthSelector />} />
           <Route path="/pm-login" element={<PMLoginPage />} />
           <Route path="/s-login" element={<SLoginPage />} />
+
           <Route path="pmregister" element={<RegisterUserPage />} />
           <Route path="sregister" element={<RegisterSponsorPage />} />
 
           {<Route path="/manager" element={<ManagerDashboard />} />}
+
 
           <Route path="/newproposal" element={<CreateProposalForm />} />
           {/* Additional routes can be added here */}
