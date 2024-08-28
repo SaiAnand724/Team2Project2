@@ -119,16 +119,13 @@ export const SponsorNavbar: React.FC = () => {
             <ListItemButton component={Link} to="/sponsor">
             <ListItemText primary="Dashboard" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/proposals">
+          <ListItemButton component={Link} to="/proposals-hist">
             <ListItemText primary="Proposals" />
           </ListItemButton>
           <ListItemButton component={Link} to="/affiliates">
             <ListItemText primary="Affiliates - Teams" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/show-all">
-            <ListItemText primary="Show All" />
-          </ListItemButton>
-          <ListItemButton component={Link} to="/create-proposal">
+          <ListItemButton component={Link} to="/newsponsorproposal">
             <ListItemText primary="Create Proposal" />
           </ListItemButton>
         </List>

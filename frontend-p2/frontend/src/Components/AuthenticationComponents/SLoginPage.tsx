@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -15,7 +13,7 @@ import axios from 'axios';
 import Carousel from '../UtilityComponents/Carousel';
 import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
 import { useTheme as useCustomTheme } from '../UtilityComponents/ThemeProvider';
-import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 export default function SLoginPage() {
@@ -83,8 +81,8 @@ export default function SLoginPage() {
   };
 
   const handleRegisterPage = () => {
-    navigate('/register')
-  }
+    navigate('/sregister');
+  };
 
   // Create theme based on current darkMode state
   const theme = createTheme({ palette: { mode: darkMode ? 'dark' : 'light' } });
@@ -169,12 +167,12 @@ export default function SLoginPage() {
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
+                      <Link href="#" variant="body2" onClick={handleBackToUserType}>
+                        Back To User Type Selection
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="#" variant="body2">
+                      <Link href="#" variant="body2" onClick={handleRegisterPage}>
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>
@@ -244,7 +242,7 @@ export default function SLoginPage() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" onClick = {handleRegisterPage}>
+                  <Link href="#" variant="body2" onClick={handleRegisterPage}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

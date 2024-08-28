@@ -62,7 +62,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export const PlayerNavbar: React.FC = () => {
+export const ManagerNavbar: React.FC = () => {
   const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -88,7 +88,7 @@ export const PlayerNavbar: React.FC = () => {
             sx={{ mr: 0, ...(drawerOpen && { display: 'none' }) }}
           >
             <MenuOpenIcon />
-            <h4 style={{ marginLeft: "10px" }}>Player Dashboard</h4>
+            <h4 style={{ marginLeft: "10px" }}>Manager Dashboard</h4>
           </IconButton>
 
         </Toolbar>
@@ -116,17 +116,17 @@ export const PlayerNavbar: React.FC = () => {
         </DrawerHeader>
         <Divider />
         <List>
-            <ListItemButton component={Link} to="/player">
-            <ListItemText primary="Dashboard" />
+            <ListItemButton component={Link} to="/manager">
+            <ListItemText primary="Show All" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/player/team/invites">
+          <ListItemButton component={Link} to="/invites">
             <ListItemText primary="Team Invites" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/player/sponsorships">
+          <ListItemButton component={Link} to="/teamsponsorships">
             <ListItemText primary="Sponsorships" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/show-all">
-            <ListItemText primary="Show All" />
+          <ListItemButton component={Link} to="/viewteam">
+            <ListItemText primary="View Team" />
           </ListItemButton>
 
         </List>
@@ -138,4 +138,3 @@ export const PlayerNavbar: React.FC = () => {
     </Box>          
   );
 };
-

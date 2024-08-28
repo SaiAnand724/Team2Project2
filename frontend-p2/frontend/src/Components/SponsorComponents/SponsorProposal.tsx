@@ -3,6 +3,7 @@ import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 export const CreateProposalForm: React.FC = () => {
   const [proposal, setProposal] = useState({
     receiverTeam: {teamId: ""},
@@ -92,3 +93,4 @@ export const CreateProposalForm: React.FC = () => {
     </Container>
   );
 };
+
