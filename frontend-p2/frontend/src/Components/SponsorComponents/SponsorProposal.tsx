@@ -5,9 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 export const CreateProposalForm: React.FC = () => {
   const [proposal, setProposal] = useState({
-    amount: 0,
-    category: "",
-    teamId: ""
+    receiverTeam: {teamId: ""},
+    amount: 0
   });
 
   const [teams, setTeams] = useState([]);
@@ -15,7 +14,7 @@ export const CreateProposalForm: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/http://database-1.c7gswqykq3l3.us-east-2.rds.amazonaws.com:5432/team')
+    axios.get('http://localhost:8080/team')
       .then(response => {
         setTeams(response.data);
       })
@@ -29,23 +28,28 @@ export const CreateProposalForm: React.FC = () => {
     if(name) {
         setProposal(prevState => ({
             ...prevState,
-            [name]: value,
+            [name]: name === "amount" ? parseFloat(value as string): value,
           }));
     }
   };
 
   const handleTeamChange = (event: { target: { value: string; }; }) => {
+    const selectedTeamId = event.target.value;
     setSelectedTeam(event.target.value);
     setProposal(prevState => ({
       ...prevState,
-      teamId: event.target.value,
+      receiverTeam: {teamId: selectedTeamId}
     }));
   };
 
   const sendSponsorProposal = async () => {
     try {
-      console.log("Sending proposal data: ", proposal);
-      const response = await axios.post("http://database-1.c7gswqykq3l3.us-east-2.rds.amazonaws.com:5432/proposal", proposal);
+      const proposalToSend= {
+        ...proposal,
+        amount: Number(proposal.amount),
+      }
+      console.log("Sending proposal data: ", proposalToSend);
+      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend);
       console.log(response.data);
       alert("Proposal was created!");
       navigate("/player");
@@ -64,15 +68,6 @@ export const CreateProposalForm: React.FC = () => {
         name="amount"
         placeholder="Amount"
         value={proposal.amount}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        label="Category"
-        name="category"
-        placeholder="Category"
-        value={proposal.category}
         onChange={handleChange}
         fullWidth
         margin="normal"

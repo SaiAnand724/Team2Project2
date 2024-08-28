@@ -114,7 +114,6 @@ const Navbar: React.FC = () => {
                   <Button component={Link} to="/player" sx={{ color: linkColor }}>
                     Player
                   </Button>
-                  <Button component={Link} to="/Other" sx={{ color: linkColor }}>
 
                   <Button component={Link} to="/other" sx={{ color: linkColor }}>
 
