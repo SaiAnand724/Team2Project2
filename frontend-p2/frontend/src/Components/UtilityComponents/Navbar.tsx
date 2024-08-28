@@ -110,15 +110,16 @@ const Navbar: React.FC = () => {
       case 'Sponsor':
         return [
           <MenuItem key="dashboard" component={Link} to="/sponsor">Dashboard</MenuItem>,
-          <MenuItem key="teams-sponsored" component={Link} to="/sponsor/teams">Teams Sponsored</MenuItem>,
-          <MenuItem key="proposals" component={Link} to="/sponsor/proposals">Proposals</MenuItem>
+          <MenuItem key="proposal-hist" component={Link} to="proposals-hist">Proposals</MenuItem>,
+          <MenuItem key="proposals" component={Link} to="/affiliates">Affiliates - Teams</MenuItem>,
+          <MenuItem key="newsponsorproposal" component={Link} to="/newsponsorproposal">Create Proposal</MenuItem>
         ];
       default:
         return [
           <MenuItem key="home" component={Link} to="/">Home</MenuItem>,
           <MenuItem key="register" component={Link} to="/register">Register</MenuItem>,
           <MenuItem key="other" component={Link} to="/other">Other</MenuItem>
-        ];
+        ]; //probably don't need this
     }
   };
 
