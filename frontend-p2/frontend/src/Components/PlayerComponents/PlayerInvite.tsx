@@ -1,22 +1,94 @@
-import { Button, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom"
-
-
-{/* Functionality: Allows managers to invite players to a team.
-o	Endpoints:
-	POST /team/proposal to send a team invite.
-
-o	Functions:
-	sendPlayerInvite(playerId, teamId): Sends an invite to a player.
-*/}
+import React, { useState, useEffect } from 'react';
+import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateTeamInviteForm: React.FC = () => {
-    const navigate = useNavigate();
+  const [invite, setInvite] = useState({
+    amount: 0,
+    receiverPlayerId: {userId: ""}
+  });
 
-    return <Container className="create-team-invite-container">
-        <h1> LOGO </h1>
-        <input type="number" name="invAmount" placeholder="Amount: "></input>
-        <input type="text" name="invTeam" placeholder="Team: "></input>
-        <Button variant="contained" onClick={() => {navigate("/")}}>Send</Button>
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/auth/user')
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch((error: any) => {
+        console.error('Error fetching users: ', error);
+      });
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown; }>) => {
+    const { name, value } = e.target;
+    if(name) {
+        setInvite(prevState => ({
+            ...prevState,
+            [name]: name === "amount" ? parseFloat(value as string): value,
+          }));
+    }
+  };
+
+  const handlePlayerChange = (event: { target: { value: string; }; }) => {
+    const selectedUserId = event.target.value;
+    setSelectedUser(event.target.value);
+    setInvite(prevState => ({
+      ...prevState,
+      receiverPlayerId: {userId: selectedUserId},
+    }));
+  };
+
+  const sendTeamInvite = async () => {
+    try {
+      const inviteToSend = {
+        ...invite,
+        amount: Number(invite.amount),
+      }
+      console.log("Sending proposal data: ", inviteToSend);
+      const response = await axios.post("http://localhost:8080/user/teaminvite", inviteToSend);
+      console.log(response.data);
+      alert("Invite was created!");
+      navigate("/player");
+    } catch (error) {
+      console.error("Error: ", error);
+      alert("Adding Invite Failed! Error message: " + error);
+    }
+  };
+
+  return (
+    <Container className="create-proposal-container">
+      <h1> LOGO </h1>
+      <TextField
+        type="number"
+        label="Amount"
+        name="amount"
+        placeholder="Amount"
+        value={invite.amount}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+      <FormControl fullWidth margin="normal">
+        <InputLabel id="team-select-label">Select Player</InputLabel>
+        <Select
+          labelId="team-select-label"
+          id="team-select"
+          value={selectedUser}
+          onChange={handlePlayerChange}
+          label="Select User"
+        >
+          {users.map((team: any) => (
+            <MenuItem key={team.teamId} value={team.teamId}>
+              {team.teamName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <Button variant="contained" onClick={sendTeamInvite}>Submit</Button>
     </Container>
-}
+  );
+};
