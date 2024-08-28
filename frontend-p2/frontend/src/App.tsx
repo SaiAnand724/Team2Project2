@@ -7,7 +7,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import  RegisterUserPage from './Components/AuthenticationComponents/RegisterUserPage';
 import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterUserForm';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
 import AuthSelector from "./Components/AuthenticationComponents/AuthSelector";
@@ -17,12 +16,9 @@ import { CreateProposalForm } from './Components/SponsorComponents/SponsorPropos
 import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite';
 import { PlayerDashboard } from './Components/PlayerComponents/PlayerDashboard';
 
-//import PlayerDashboard from './Components/PlayerComponents/PlayerDashboard'
 
 import PMLoginPage from './Components/AuthenticationComponents/PMLoginPage';
 import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
-import ManagerDashboard from './Components/ManagerComponents/ManagerDashboard';
-import RegisterSponsorPage from './Components/AuthenticationComponents/RegisterSponsorPage';
 import { SponsorshipList } from './Components/SponsorComponents/SponsorshipList';
 import { SponsorDetails} from './Components/SponsorComponents/SponsorProposalHist'
 import { ManagerDashboard } from './Components/TeamComponents/ManagerDashboard';
@@ -57,8 +53,7 @@ const App: React.FC = () => {
           {/* Additional routes can be added here */}
 
           <Route path="/" element={<AuthSelector/>}/>
-          <Route path="/pmregister" element={<RegisterUserPage/>}/>
-          <Route path="/sregister" element={<RegisterSponsorPage/>}/>
+
 
 
 
