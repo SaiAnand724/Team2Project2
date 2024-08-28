@@ -1,34 +1,96 @@
-import { Button, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { SponsorNavbar } from "./SponsorNavbar";
+import React, { useState, useEffect } from 'react';
+import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
-{/*Functionality: Allows sponsors to send proposals to teams.
-o	Endpoints:
-	POST /sponsor/proposal to send a proposal.
+export const CreateProposalForm: React.FC = () => {
+  const [proposal, setProposal] = useState({
+    receiverTeam: {teamId: ""},
+    amount: 0
+  });
 
-o	Functions:
-	sendSponsorProposal(teamId, amount): Sends a proposal to a team.
- */}
+  const [teams, setTeams] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState('');
+  const navigate = useNavigate();
 
- export const CreateProposalForm: React.FC = () => {
-    
-    const navigate = useNavigate();
+  useEffect(() => {
+    axios.get('http://localhost:8080/team')
+      .then(response => {
+        setTeams(response.data);
+      })
+      .catch((error: any) => {
+        console.error('Error fetching teams: ', error);
+      });
+  }, []);
 
-    return (
-        <div>        
-            <div >
-                <SponsorNavbar></SponsorNavbar>
-            </div>
-            <Container className="create-proposal-container">
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown; }>) => {
+    const { name, value } = e.target;
+    if(name) {
+        setProposal(prevState => ({
+            ...prevState,
+            [name]: name === "amount" ? parseFloat(value as string): value,
+          }));
+    }
+  };
 
-            <h1> LOGO </h1>
-            <input type="number" name="propAmount" placeholder="Amount: "></input>
-            <input type="text" name="propTeam" placeholder="Team: "></input>
-            <input type="text" name="propCategory" placeholder="Category: "></input>
-            <Button variant="contained" onClick={() => {navigate("/")}}>Submit</Button>
-            </Container>
-        </div>
+  const handleTeamChange = (event: { target: { value: string; }; }) => {
+    const selectedTeamId = event.target.value;
+    setSelectedTeam(event.target.value);
+    setProposal(prevState => ({
+      ...prevState,
+      receiverTeam: {teamId: selectedTeamId}
+    }));
+  };
 
-    )
-}
+  const sendSponsorProposal = async () => {
+    try {
+      const proposalToSend= {
+        ...proposal,
+        amount: Number(proposal.amount),
+      }
+      console.log("Sending proposal data: ", proposalToSend);
+      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend);
+      console.log(response.data);
+      alert("Proposal was created!");
+      navigate("/player");
+    } catch (error) {
+      console.error("Error: ", error);
+      alert("Adding Proposal Failed! Error message: " + error);
+    }
+  };
+
+  return (
+    <Container className="create-proposal-container">
+      <h1> LOGO </h1>
+      <TextField
+        type="number"
+        label="Amount"
+        name="amount"
+        placeholder="Amount"
+        value={proposal.amount}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+      <FormControl fullWidth margin="normal">
+        <InputLabel id="team-select-label">Select Team</InputLabel>
+        <Select
+          labelId="team-select-label"
+          id="team-select"
+          value={selectedTeam}
+          onChange={handleTeamChange}
+          label="Select Team"
+        >
+          {teams.map((team: any) => (
+            <MenuItem key={team.teamId} value={team.teamId}>
+              {team.teamName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <Button variant="contained" onClick={sendSponsorProposal}>Submit</Button>
+    </Container>
+  );
+};
+

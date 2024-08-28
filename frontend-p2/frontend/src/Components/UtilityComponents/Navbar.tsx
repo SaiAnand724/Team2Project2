@@ -182,6 +182,7 @@ const Navbar: React.FC = () => {
                     Loading...
                   </Typography>
                 ) : (
+
                   <Button onClick={handleLogout} sx={{ color: linkColor }}>
                     <LogoutIcon />
                     Log Out
