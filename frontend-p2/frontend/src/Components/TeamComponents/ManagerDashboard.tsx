@@ -7,14 +7,18 @@ import { Divider, Grid } from "@mui/material";
 import { ManagerNavbar } from "./ManagerNavbar";
 import { TeamCard } from "./TeamCard";
 import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface";
+import { UserInterface } from "../../Interfaces/UserInterface";
+import { TeamBalanceInfo } from "./TeamBalance";
+import { TeamMembers } from "./TeamList";
 
 
 
 export const ManagerDashboard: React.FC = () => {
 
-    const sponsorURL = `${userStore.baseURL}/`
+    const managerURL = `${userStore.baseURL}/user`
 
     const [proposalsList, setProposalsList] = useState<TeamProposalInterface[]>([]) /**  */
+    const [teamMemberList, setTeamMemberList] = useState<UserInterface[]>([]) /** */
 
     useEffect(() => {
         const sortedProposals = proposalsList.sort();
@@ -47,23 +51,16 @@ export const ManagerDashboard: React.FC = () => {
                 <div>
 
                         <div style={{ textAlign: 'center', marginRight: '225px' }}>
-                            <h3 style={{ fontWeight: 'bold' }}>Team balance: $$$</h3>
-                        </div>
-
-                        <br />
-
-
-
-
-                        <div style={{ textAlign: 'center', marginRight: '225px' }}>
-                            <h3 style={{ fontWeight: 'bold' }}>Salary: $$$</h3>
+                            <h2>Team Balance + Manager Salary Info</h2>
+                            <TeamBalanceInfo></TeamBalanceInfo>
                         </div>
 
                         <br />
                         <br />
 
                         <div style={{ textAlign: 'center', marginRight: '225px' }}>
-                            <h3 style={{ fontWeight: 'bold' }}>Team Members:</h3>
+                            <h2>Team Members</h2>
+                            <TeamMembers teamMembers={teamMemberList}></TeamMembers>
                         </div>
 
 

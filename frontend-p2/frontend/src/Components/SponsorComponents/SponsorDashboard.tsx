@@ -18,11 +18,6 @@ export const SponsorDashboard:React.FC = () => {
         setProposalsList(sortedProposals);
     }, []);
 
-  useEffect(() => {
-    const sortedProposals = proposalsList.sort();
-    setProposalsList(sortedProposals);
-  }, []);
-
   return (
     <div>
       <div>
@@ -40,25 +35,18 @@ export const SponsorDashboard:React.FC = () => {
             justifyContent: "space-between",
             alignItems: "flex-start",
             marginTop: "25px",
-          }}
-        >
-          <div className="grid-container" style={{ marginLeft: "50px" }}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              columns={2}
-            >
+          }}>
+        
+          <div className="grid-container" style={{ display: "flex", marginLeft: "50px" }} >
               <SponsorCard proposals={proposalsList}></SponsorCard>
-            </Grid>
           </div>
 
           <div>
-            <div style={{ textAlign: "center", marginRight: "225px" }}>
+            <div style={{ display: "flex", textAlign: "center", marginRight: "140px", marginLeft: "100px", paddingLeft: "20px" }}>
               <SponsorBudget proposals={proposalsList} />
             </div>
           </div>
+          
         </div>
       </div>
     </div>

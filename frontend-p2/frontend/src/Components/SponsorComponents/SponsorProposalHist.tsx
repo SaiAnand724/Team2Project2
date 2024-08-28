@@ -17,6 +17,8 @@ export const SponsorDetails:React.FC<{proposals:SponsoredTeamsInterface[]}> = ({
         setProposalsList(sortedProposals);
     }, []);
 
+    {/** Sample data for proposals lists */}
+
     const fetchAcceptedProposals = async () => {
         try {
             let response:any = null;

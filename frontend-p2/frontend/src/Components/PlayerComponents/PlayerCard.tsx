@@ -3,13 +3,13 @@ import axios from "axios";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useEffect, useState } from "react";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
-import { sponsorStore } from "../../globalStore/store";
+import { userStore } from "../../globalStore/store";
 
 export const PlayerCard: React.FC<{proposals:PlayerProposalInterface[]}> = ({proposals}) => {
 
-    const sponsorURL = `${sponsorStore.baseURL}/player`
+    const playerURL = `${userStore.baseURL}/user`
 
-    const [proposalsList, setProposalsList] = useState<PlayerProposalInterface[]>(proposals) /** */
+    const [invitesList, setInvitesList] = useState<PlayerProposalInterface[]>(proposals) /** */
     const [activePropId, setActivePropId] = useState<number | null>(null);
 
 
@@ -22,11 +22,11 @@ export const PlayerCard: React.FC<{proposals:PlayerProposalInterface[]}> = ({pro
 
 
 
-    const fetchPendingProposals = async () => {
+    const fetchReceivedInvites = async () => {
         try {
             let response:any = null;
-            response = await axios.get(`${sponsorURL}/proposals/Pending`)
-            setProposalsList(response.data)
+            response = await axios.get(`${playerURL}/teaminvite/received`)
+            setInvitesList(response.data)
             console.log(response.data)
         }
         catch {
@@ -34,11 +34,27 @@ export const PlayerCard: React.FC<{proposals:PlayerProposalInterface[]}> = ({pro
         }
     }
 
-    const fetchAcceptedProposals = async () => {
+    const acceptInvites = async () => {
         try {
             let response:any = null;
-            response = await axios.get(`${sponsorURL}/proposals/Accepted`)
-            setProposalsList(response.data)
+            const inviteID = "UUID here"
+            // edit this based on query param stuff
+            response = await axios.patch(`${playerURL}/teaminvites/accepted?teamInviteId=${inviteID}`)
+            setInvitesList(response.data)
+            console.log(response.data)
+        }
+        catch {
+            console.log("Error fetching accepted proposals")
+        }
+    }
+
+    const rejectInvites = async () => {
+        try {
+            let response:any = null;
+            const inviteID = "UUID here"
+            // edit this based on query param stuff
+            response = await axios.patch(`${playerURL}/teaminvites/reject?teamInviteId=${inviteID}`)
+            setInvitesList(response.data)
             console.log(response.data)
         }
         catch {
@@ -65,7 +81,7 @@ export const PlayerCard: React.FC<{proposals:PlayerProposalInterface[]}> = ({pro
             <Card  sx={{ position: 'relative', width: 300, height: 300 }}>
                 <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Typography variant="h5" component="h2">
-                    Proposal 1
+                    Invite 1
                     </Typography>
                     <Button
                     variant="contained"
