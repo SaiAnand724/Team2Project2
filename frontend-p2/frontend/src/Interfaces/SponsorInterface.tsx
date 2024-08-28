@@ -9,4 +9,5 @@ export interface SponsorInterface {
     name: string,
     budget: number,
     proposalsId?: number
+    jwt?: string
 }

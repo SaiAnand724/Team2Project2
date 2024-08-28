@@ -24,5 +24,5 @@ export const userStore:any = {
         role: ""
     } as UserInterface,
     loggedIn: false,
-    baseURL: "http://localhost:8080/"
+    baseURL: "http://localhost:8080"
 }

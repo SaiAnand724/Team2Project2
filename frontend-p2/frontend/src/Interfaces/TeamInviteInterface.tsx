@@ -1,7 +1,8 @@
 export interface TeamInviteProposal {
     proposalId?: number,
     status: string,
-    senderManagerId?: number,
-    receiverPlayerId?: number,
+    teamName: string,
+    receiverUsername: string,
+    senderUsername:string,
     amount: number
 }

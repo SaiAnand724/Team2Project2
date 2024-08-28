@@ -8,20 +8,26 @@ import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import  RegisterUserPage from './Components/AuthenticationComponents/RegisterUserPage';
+import { RegisterUserForm } from './Components/AuthenticationComponents/RegisterUserForm';
 import { AuthProvider } from './Components/AuthenticationComponents/AuthProvider';
 import AuthSelector from "./Components/AuthenticationComponents/AuthSelector";
 
 import { SponsorDashboard } from './Components/SponsorComponents/SponsorDashboard';
 import { CreateProposalForm } from './Components/SponsorComponents/SponsorProposal';
 import { CreateTeamInviteForm } from './Components/PlayerComponents/PlayerInvite';
+import { PlayerDashboard } from './Components/PlayerComponents/PlayerDashboard';
 
 //import PlayerDashboard from './Components/PlayerComponents/PlayerDashboard'
 
 import PMLoginPage from './Components/AuthenticationComponents/PMLoginPage';
 import SLoginPage from './Components/AuthenticationComponents/SLoginPage';
-import PlayerDashboard from './Components/PlayerComponents/PlayerDashboard';
 import ManagerDashboard from './Components/ManagerComponents/ManagerDashboard';
 import RegisterSponsorPage from './Components/AuthenticationComponents/RegisterSponsorPage';
+import { SponsorshipList } from './Components/SponsorComponents/SponsorshipList';
+import { SponsorDetails} from './Components/SponsorComponents/SponsorProposalHist'
+import { ManagerDashboard } from './Components/TeamComponents/ManagerDashboard';
+import { TeamInviteContainer } from './Components/PlayerComponents/TeamInviteContainer';
+import { SponsorshipContainer } from './Components/PlayerComponents/SponsorshipContainer';
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -42,11 +48,9 @@ const App: React.FC = () => {
         <Routes>
 
           <Route path="/" element={<AuthSelector />} />
-          <Route path="/register" element={<RegisterUserPage />} />
           <Route path="/pm-login" element={<PMLoginPage />} />
           <Route path="/s-login" element={<SLoginPage />} />
-          <Route path="/sponsor" element={<SponsorDashboard />} />
-          {<Route path="/player" element={<PlayerDashboard/>}/>}
+
           {<Route path="/manager" element={<ManagerDashboard/>}/>}
           
           <Route path="/newproposal" element={<CreateProposalForm />} />
@@ -55,24 +59,28 @@ const App: React.FC = () => {
           <Route path="/" element={<AuthSelector/>}/>
           <Route path="/pmregister" element={<RegisterUserPage/>}/>
           <Route path="/sregister" element={<RegisterSponsorPage/>}/>
-          <Route path="/sponsor" element={<SponsorDashboard/>}/>
+
+
+
           {/* Sponsor Routes
-        <Route path="/proposals" element={<SponsorProposals />} />
-        <Route path="/affiliates" element={<Affiliates />} />
-        <Route path="/show-all" element={<ShowAll />} />
-        <Route path="/send-proposals" element={<SponsorProposal />} />
-        <Route path="/profile" element={<SponsorDetails />} />
 
           */}
+          <Route path="/sponsor" element={<SponsorDashboard />} />
+          <Route path="/affiliates" element={<SponsorshipList teams={[]} sponsTeams={[]} teamInvestments={[]} />} />
+          <Route path="/proposals-hist" element={<SponsorDetails proposals={[]} />} />
+          <Route path="/newsponsorproposal" element={<CreateProposalForm/>}/>
+
           {/* Team Manager Routes
           
           */}
-          {/* Player Routes
-          
-          */}
 
-          <Route path="/newsponsorproposal" element={<CreateProposalForm/>}/>
           <Route path="/newteaminv" element={<CreateTeamInviteForm/>}/>
+
+          {/* Player Routes
+          */}
+          <Route path="/player" element={<PlayerDashboard/>}/>
+          <Route path='/player/team/invites' element={<TeamInviteContainer/>}/>
+          <Route path='/player/sponsorships' element={<SponsorshipContainer/>}/>
 
 
         </Routes>
