@@ -7,9 +7,6 @@ import {
   Button,
   useTheme,
   useMediaQuery,
-  Drawer,
-  List,
-  ListItemButton,
   Box,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -74,18 +71,22 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navbarBackgroundColor = darkMode ? '#173049' : '#91b8df';
-  const drawerBackgroundColor = darkMode ? '#173049' : '#91b8df';
   const linkColor = darkMode ? '#ffffff' : '#000000';
+
+  const renderMenuItems = () => {
+    // Return appropriate menu items based on user role
+    return null;
+  };
 
   const renderDrawerItems = () => {
     return (
       <>
-        <ListItemButton onClick={handleLogout} sx={{ mt: 2 }}>
-          <LogoutIcon />
-          <Typography variant="body1" sx={{ ml: 1, display: { xs: 'none', lg: 'block' } }}>
-            Log Out
-          </Typography>
-        </ListItemButton>
+        <Typography variant="body1" sx={{ color: linkColor, display: { xs: 'none', lg: 'block' } }}>
+          LOG OUT
+        </Typography>
+        <IconButton onClick={handleLogout} sx={{ display: { xs: 'flex', lg: 'none' } }}>
+          <LogoutIcon sx={{ color: linkColor }} />
+        </IconButton>
       </>
     );
   };
@@ -104,81 +105,31 @@ const Navbar: React.FC = () => {
               </Box>
             </Link>
             <Box sx={{ flexGrow: 1 }} />
-            {!isMobile && (
+            {isMobile ? (
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="logout"
+                onClick={handleLogout}
+                sx={{ ml: 2 }}
+              >
+                <LogoutIcon sx={{ color: linkColor }} />
+              </IconButton>
+            ) : (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 {loading ? (
                   <Typography variant="body1" sx={{ color: linkColor }}>
                     Loading...
                   </Typography>
                 ) : (
-                  <>
-                    {renderDrawerItems()}
-                  </>
+                  renderDrawerItems()
                 )}
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="menu"
-                  onClick={handleDrawerToggle}
-                  sx={{ display: { xs: 'none', lg: 'block' } }}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Box>
-            )}
-            {isMobile && (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <IconButton
-                  edge="end"
-                  color="inherit"
-                  aria-label="logout"
-                  onClick={handleLogout}
-                  sx={{ ml: 2 }}
-                >
-                  <LogoutIcon />
-                </IconButton>
               </Box>
             )}
           </Box>
           <ThemeSwitcher />
         </Toolbar>
       </AppBar>
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={handleDrawerToggle}
-        PaperProps={{
-          sx: {
-            backgroundColor: drawerBackgroundColor,
-            color: linkColor,
-            width: 250,
-          },
-        }}
-        variant="temporary"
-      >
-        <Box
-          sx={{
-            width: 250,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center', // Center-align buttons
-            padding: 2, // Add padding around the content
-          }}
-          role="presentation"
-          onClick={handleDrawerToggle}
-          onKeyDown={handleDrawerToggle}
-        >
-          <Box sx={{ marginBottom: 2 }}>
-            <Typography variant="h6">
-              {username || 'User'}
-            </Typography>
-          </Box>
-          <List sx={{ padding: 0, width: '100%' }}>
-            {renderDrawerItems()}
-          </List>
-          <ThemeSwitcher />
-        </Box>
-      </Drawer>
       <ToastContainer />
     </>
   );
