@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 export const CreateProposalForm: React.FC = () => {
@@ -18,9 +19,11 @@ export const CreateProposalForm: React.FC = () => {
     axios.get('http://localhost:8080/team')
       .then(response => {
         setTeams(response.data);
+        
       })
       .catch((error: any) => {
         console.error('Error fetching teams: ', error);
+        toast.error("Error fetching teams:  " + error)
       });
   }, []);
 
@@ -52,11 +55,13 @@ export const CreateProposalForm: React.FC = () => {
       console.log("Sending proposal data: ", proposalToSend);
       const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend);
       console.log(response.data);
-      alert("Proposal was created!");
+      {/*alert("Proposal was created!");*/}
+      toast.success("Proposal was created")
       navigate("/player");
     } catch (error) {
       console.error("Error: ", error);
-      alert("Adding Proposal Failed! Error message: " + error);
+      {/*alert("Adding Proposal Failed! Error message: " + error);*/}
+      toast.error("Adding Proposal Failed! Error message: " + error)
     }
   };
 
@@ -90,7 +95,9 @@ export const CreateProposalForm: React.FC = () => {
         </Select>
       </FormControl>
       <Button variant="contained" onClick={sendSponsorProposal}>Submit</Button>
+      <ToastContainer/>
     </Container>
+    
   );
 };
 

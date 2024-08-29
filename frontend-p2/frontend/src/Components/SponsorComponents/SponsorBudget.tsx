@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import { TeamProposalInterface } from '../../Interfaces/TeamProposalInterface';
 import { sponsorStore } from '../../globalStore/store';
+import { toast, ToastContainer } from 'react-toastify';
 
 const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
   const [totalBudget, setTotalBudget] = useState<number>(0);
@@ -20,6 +21,7 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
         setAmountSpent(totalProposalsAmount);
       } catch (error) {
         console.error('Error fetching budget data:', error);
+        toast.error("Error fetching budget data: " + error)
       }
     };
 
@@ -47,6 +49,7 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
           </Typography>
         </CardContent>
       </Card>
+      <ToastContainer/>
     </Box>
   );
 };
