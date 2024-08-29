@@ -14,7 +14,7 @@ export const CreateTeamInviteForm: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/user')
+    axios.get('http://3.145.24.62:8080/auth/user')
       .then(response => {
         setUsers(response.data);
       })
@@ -49,7 +49,7 @@ export const CreateTeamInviteForm: React.FC = () => {
         amount: Number(invite.amount),
       }
       console.log("Sending proposal data: ", inviteToSend);
-      const response = await axios.post("http://localhost:8080/user/teaminvite", inviteToSend);
+      const response = await axios.post("http://3.145.24.62:8080/user/teaminvite", inviteToSend);
       console.log(response.data);
       alert("Invite was created!");
       navigate("/player");

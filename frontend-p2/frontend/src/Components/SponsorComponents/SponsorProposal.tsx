@@ -15,7 +15,7 @@ export const CreateProposalForm: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/team')
+    axios.get('http://3.145.24.62:8080/team')
       .then(response => {
         setTeams(response.data);
       })
@@ -50,7 +50,7 @@ export const CreateProposalForm: React.FC = () => {
         amount: Number(proposal.amount),
       }
       console.log("Sending proposal data: ", proposalToSend);
-      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend);
+      const response = await axios.post("http://3.145.24.62:8080/sponsor/proposal", proposalToSend);
       console.log(response.data);
       alert("Proposal was created!");
       navigate("/player");
