@@ -10,6 +10,10 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  flex: 1;
+}
+
 #root {
   height: 100vh;
   /* Ensure the root container takes full viewport height */

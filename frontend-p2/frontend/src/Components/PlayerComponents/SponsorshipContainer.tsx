@@ -3,9 +3,9 @@ import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface"
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { PlayerNavbar } from "./PlayerNavbar"
 import { TeamInterface } from "../../Interfaces/TeamInterface"
 import { Sponsorships } from "./Sponsorships"
+import './SponsorshipContainer.css'
 
 export const SponsorshipContainer:React.FC = () => {
 
@@ -30,10 +30,7 @@ export const SponsorshipContainer:React.FC = () => {
     
     return (
 
-        <div>
-            <div>
-                <PlayerNavbar></PlayerNavbar>
-            </div>
+        <div className="sponsorhip-container">
             
             <Sponsorships sponsorships={sponsorships}></Sponsorships>
             

@@ -4,6 +4,7 @@ import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { TeamInvite } from "../TeamComponents/TeamInvite"
+import './TeamInviteContainer.css';
 import { PlayerNavbar } from "./PlayerNavbar"
 import { userStore } from "../../globalStore/store"
 import { toast } from "react-toastify"
@@ -44,11 +45,7 @@ export const TeamInviteContainer:React.FC = () => {
     
     return (
 
-        <div>
-            <div>
-                <PlayerNavbar></PlayerNavbar>
-            </div>
-            
+        <div className="team-invite-container">            
             <TeamInvite invites={invites}></TeamInvite>
         </div>
     )

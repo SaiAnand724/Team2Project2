@@ -5,7 +5,6 @@ import { SponsorCard } from './SponsorCard';
 import { sponsorStore } from "../../globalStore/store"
 import { SponsoredTeamsInterface } from '../../Interfaces/SponsoredTeamsInterface';
 import SponsorBudget from './SponsorBudget';
-import { Navbar } from 'react-bootstrap';
 
 export const SponsorDashboard:React.FC = () => {
 
@@ -21,9 +20,7 @@ export const SponsorDashboard:React.FC = () => {
 
   return (
     <div>
-      <div>
-        <Navbar></Navbar>
-      </div>
+    
       <div className="app-container">
         <h2 style={{ textAlign: "center", marginBottom: "25px" }}>
           Sponsor Details

@@ -15,83 +15,95 @@ import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
 import { useTheme as useCustomTheme } from '../UtilityComponents/ThemeProvider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast functions
+import 'react-toastify/dist/ReactToastify.css'; // Import default styles
 
 export default function SLoginPage() {
-  const navigate = useNavigate(); // Hook to programmatically navigate
-  const [isOverlayVisible, setOverlayVisible] = React.useState(window.innerWidth < 600); // State to control overlay visibility
-  const [user, setUser] = React.useState({ username: '', password: '' }); // State to store login credentials
-  const [loading, setLoading] = React.useState(false); // State to manage loading state
-  const { darkMode } = useCustomTheme(); // Custom hook to get current theme mode
+  const navigate = useNavigate();
+  const [isOverlayVisible, setOverlayVisible] = React.useState(window.innerWidth < 600);
+  const [user, setUser] = React.useState({ username: '', password: '' });
+  const [loading, setLoading] = React.useState(false);
+  const { darkMode } = useCustomTheme();
 
-  // Effect to handle window resize for responsive design
   React.useEffect(() => {
     const handleResize = () => setOverlayVisible(window.innerWidth < 600);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Handle input field changes
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser(prev => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  // Function to handle login request
   const login = async () => {
-    setLoading(true); // Set loading state to true
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/auth/sponsor/login', user, { withCredentials: true });
 
+
+      localStorage.setItem('loggedInSponsor', JSON.stringify({ userId, username, name, role }));
+      toast.success(`Welcome ${username}! Login successful!`);
+
+      setTimeout(() => {
+        navigate('/sponsor');
+      }, 3000);
+
       // Store user details in localStorage upon successful login
-      localStorage.setItem('loggedInSponsor', JSON.stringify(response.data));
-      console.log(`Welcome ${response.data.name}! Login successful!`);
-      navigate('/sponsor'); // Redirect to sponsor page
+      // Commenting this below for now - can fully remove later
+      //localStorage.setItem('loggedInSponsor', JSON.stringify(response.data));
+      //console.log(`Welcome ${response.data.name}! Login successful!`);
+      //navigate('/sponsor'); // Redirect to sponsor page
+
     } catch (error) {
-      // Error handling
       if (axios.isAxiosError(error)) {
         if (error.response) {
           switch (error.response.status) {
-            case 400: console.log('Bad Request: Please check your input and try again.'); break;
-            case 401: console.log('Unauthorized: Incorrect username or password.'); break;
-            case 500: console.log('Server Error: Please try again later.'); break;
-            default: console.log('An unexpected error occurred. Please try again.');
+            case 400:
+              toast.error('Bad Request: Please check your input and try again.');
+              break;
+            case 401:
+              toast.error('Unauthorized: Incorrect username or password.');
+              break;
+            case 500:
+              toast.error('Server Error: Please try again later.');
+              break;
+            default:
+              toast.error('An unexpected error occurred. Please try again.');
           }
         } else if (error.request) {
-          console.log('Network Error: Please check your connection and try again.');
+          toast.error('Network Error: Please check your connection and try again.');
         } else {
-          console.log('Error: ' + error.message);
+          toast.error('Error: ' + error.message);
         }
       } else {
-        console.log('An unexpected error occurred. Please try again.');
+        toast.error('An unexpected error occurred. Please try again.');
       }
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
-  // Handle form submission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    login(); // Call login function on form submit
+    login();
   };
 
-  // Function to navigate back to user type selection page
   const handleBackToUserType = () => {
-    navigate('/'); // Redirect to select user type page
+    navigate('/');
   };
 
   const handleRegisterPage = () => {
     navigate('/sregister');
   };
 
-  // Create theme based on current darkMode state
   const theme = createTheme({ palette: { mode: darkMode ? 'dark' : 'light' } });
 
   return (
-    <ThemeProvider theme={theme}> {/* Provide theme to the component tree */}
+    <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh', overflow: 'hidden' }}>
-        <CssBaseline /> {/* Normalize CSS */}
+        <CssBaseline />
         <Grid item xs={12} sm={6} md={7} sx={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
-          <Carousel /> {/* Carousel component */}
+          <Carousel />
           {isOverlayVisible && (
             <Box
               sx={{
@@ -154,7 +166,6 @@ export default function SLoginPage() {
                     value={user.password}
                     onChange={handleChange}
                   />
-
                   <Button
                     type="submit"
                     fullWidth
@@ -197,7 +208,7 @@ export default function SLoginPage() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sponsor Sign in
+              Sponsor Sign In
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
@@ -224,7 +235,6 @@ export default function SLoginPage() {
                 value={user.password}
                 onChange={handleChange}
               />
-
               <Button
                 type="submit"
                 fullWidth
@@ -257,9 +267,10 @@ export default function SLoginPage() {
             p: 2,
           }}
         >
-          <ThemeSwitcher /> {/* Component to switch between light and dark modes */}
+          <ThemeSwitcher />
         </Box>
       </Grid>
+      <ToastContainer /> {/* Include ToastContainer to display toast notifications */}
     </ThemeProvider>
   );
 }
