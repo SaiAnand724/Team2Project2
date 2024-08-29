@@ -14,7 +14,7 @@ export const CreateTeamInviteForm: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/user')
+    axios.get('http://localhost:8080/user/all')
       .then(response => {
         setUsers(response.data);
       })
@@ -44,12 +44,24 @@ export const CreateTeamInviteForm: React.FC = () => {
 
   const sendTeamInvite = async () => {
     try {
+      const jwt = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+      const userResponse = await axios.get(`http://localhost:8080/user/${invite.receiverPlayerId.userId}`, {
+        headers: {
+          Authorization: `${jwt.jwt}`
+        }
+      });
+      const receiverPlayer = userResponse.data; // Full User object
       const inviteToSend = {
         ...invite,
+        receiverPlayerId: receiverPlayer,
         amount: Number(invite.amount),
       }
-      console.log("Sending proposal data: ", inviteToSend);
-      const response = await axios.post("http://localhost:8080/user/teaminvite", inviteToSend);
+      console.log("Sending invite data: ", inviteToSend);
+      const response = await axios.post("http://localhost:8080/user/teaminvite", inviteToSend, {
+        headers: {
+          Authorization: `${jwt.jwt}`,
+        },
+      });
       console.log(response.data);
       alert("Invite was created!");
       navigate("/player");
@@ -81,9 +93,9 @@ export const CreateTeamInviteForm: React.FC = () => {
           onChange={handlePlayerChange}
           label="Select User"
         >
-          {users.map((team: any) => (
-            <MenuItem key={team.teamId} value={team.teamId}>
-              {team.teamName}
+          {users.map((user: any) => (
+            <MenuItem key={user.userId} value={user.userId}>
+              {user.username}
             </MenuItem>
           ))}
         </Select>
