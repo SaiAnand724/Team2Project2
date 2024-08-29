@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 export const CreateProposalForm: React.FC = () => {
   const [proposal, setProposal] = useState({
     receiverTeam: {teamId: ""},
-    amount: 0
+    amount: 0,
+    status: "Pending"
   });
 
   const [teams, setTeams] = useState([]);
@@ -15,7 +16,13 @@ export const CreateProposalForm: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://3.145.24.62:8080/team')
+    const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
+    console.log(r.jwt)
+    axios.get('http://localhost:8080/team', {
+      headers: {
+        Authorization: `${r.jwt}`
+      }
+    })
       .then(response => {
         setTeams(response.data);
       })
@@ -50,7 +57,7 @@ export const CreateProposalForm: React.FC = () => {
         amount: Number(proposal.amount),
       }
       console.log("Sending proposal data: ", proposalToSend);
-      const response = await axios.post("http://3.145.24.62:8080/sponsor/proposal", proposalToSend);
+      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend);
       console.log(response.data);
       alert("Proposal was created!");
       navigate("/player");

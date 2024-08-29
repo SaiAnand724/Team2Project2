@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export const CreateTeamInviteForm: React.FC = () => {
   const [invite, setInvite] = useState({
     amount: 0,
-    receiverPlayerId: {userId: ""}
+    receiverPlayer: {userId: ""}
   });
 
   const [users, setUsers] = useState([]);
@@ -14,7 +14,12 @@ export const CreateTeamInviteForm: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://3.145.24.62:8080/auth/user')
+    const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+    axios.get('http://localhost:8080/user/all', {
+      headers: {
+        Authorization: `${r.jwt}`
+      }
+    })
       .then(response => {
         setUsers(response.data);
       })
@@ -38,7 +43,7 @@ export const CreateTeamInviteForm: React.FC = () => {
     setSelectedUser(event.target.value);
     setInvite(prevState => ({
       ...prevState,
-      receiverPlayerId: {userId: selectedUserId},
+      receiverPlayer: {userId: selectedUserId},
     }));
   };
 
@@ -49,7 +54,7 @@ export const CreateTeamInviteForm: React.FC = () => {
         amount: Number(invite.amount),
       }
       console.log("Sending proposal data: ", inviteToSend);
-      const response = await axios.post("http://3.145.24.62:8080/user/teaminvite", inviteToSend);
+      const response = await axios.post("http://localhost:8080/user/teaminvite", inviteToSend);
       console.log(response.data);
       alert("Invite was created!");
       navigate("/player");
@@ -81,9 +86,9 @@ export const CreateTeamInviteForm: React.FC = () => {
           onChange={handlePlayerChange}
           label="Select User"
         >
-          {users.map((team: any) => (
-            <MenuItem key={team.teamId} value={team.teamId}>
-              {team.teamName}
+          {users.map((user: any) => (
+            <MenuItem key={user.userId} value={user.userId}>
+              {user.username}
             </MenuItem>
           ))}
         </Select>
