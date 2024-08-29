@@ -6,7 +6,7 @@ import axios from "axios"
 import { TeamInvite } from "../TeamComponents/TeamInvite"
 import { PlayerNavbar } from "./PlayerNavbar"
 import { userStore } from "../../globalStore/store"
-import { toast } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 
 export const TeamInviteContainer:React.FC = () => {
 
@@ -16,14 +16,17 @@ export const TeamInviteContainer:React.FC = () => {
     useEffect(() => {
         getAllInvites()
         console.log({invites})
+        
     }, [])
     
 
 
 
     const getAllInvites = async () => {
-        const token = userStore.loggedInUser.jwt
-        console.log(userStore.loggedInUser.jwt)
+        const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+
+        const token = r.jwt
+
 
         try {
 
@@ -45,11 +48,10 @@ export const TeamInviteContainer:React.FC = () => {
     return (
 
         <div>
-            <div>
-                <PlayerNavbar></PlayerNavbar>
-            </div>
+
             
             <TeamInvite invites={invites}></TeamInvite>
+            <ToastContainer/>
         </div>
     )
 
