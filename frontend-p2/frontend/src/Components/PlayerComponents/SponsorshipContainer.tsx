@@ -5,25 +5,42 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { TeamInterface } from "../../Interfaces/TeamInterface"
 import { Sponsorships } from "./Sponsorships"
+import { toast, ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
 import './SponsorshipContainer.css'
+
 
 export const SponsorshipContainer:React.FC = () => {
 
     const [sponsorships, setSponsorships] = useState<TeamInterface[]>([])
 
-   {/* useEffect(() => {
+    useEffect(() => {
         getAllSponsorships()
     }, [])
-    */}
+    
 
 
 
     const getAllSponsorships = async () => {
-        const response = await axios.get("http://localhost:8080/sponsor/teams")
+        const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
 
-        setSponsorships(response.data)
+        const token = r.jwt
 
-        console.log(response.data)
+        try {
+            const response = await axios.get("http://localhost:8080/user/sponsors/Accepted", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            setSponsorships(response.data)
+
+            console.log(response.data)
+        }
+        catch(error) {
+            console.log("Can't get sponsors")
+            toast.error("Couldn't display sponsors")
+        }
     }
 
 
@@ -33,6 +50,7 @@ export const SponsorshipContainer:React.FC = () => {
         <div className="sponsorhip-container">
             
             <Sponsorships sponsorships={sponsorships}></Sponsorships>
+            <ToastContainer/>
             
         </div>
     )

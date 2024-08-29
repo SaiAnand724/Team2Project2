@@ -7,7 +7,7 @@ import { TeamInvite } from "../TeamComponents/TeamInvite"
 import './TeamInviteContainer.css';
 import { PlayerNavbar } from "./PlayerNavbar"
 import { userStore } from "../../globalStore/store"
-import { toast } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 
 export const TeamInviteContainer:React.FC = () => {
 
@@ -17,14 +17,17 @@ export const TeamInviteContainer:React.FC = () => {
     useEffect(() => {
         getAllInvites()
         console.log({invites})
+        
     }, [])
     
 
 
 
     const getAllInvites = async () => {
-        const token = userStore.loggedInUser.jwt
-        console.log(userStore.loggedInUser.jwt)
+        const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+
+        const token = r.jwt
+
 
         try {
 
@@ -46,7 +49,9 @@ export const TeamInviteContainer:React.FC = () => {
     return (
 
         <div className="team-invite-container">            
+
             <TeamInvite invites={invites}></TeamInvite>
+            <ToastContainer/>
         </div>
     )
 

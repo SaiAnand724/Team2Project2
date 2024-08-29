@@ -4,6 +4,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface";
 import axios from "axios";
 import { userStore } from "../../globalStore/store";
+import { toast } from "react-toastify";
 
 
 
@@ -29,12 +30,14 @@ import { userStore } from "../../globalStore/store";
          };
 
         const handleApprove = async () => {
-            const token = userStore.loggedInUser.jwt
-            console.log(userStore.loggedInUser.jwt)
+            const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+
+            const token = r.jwt
             try{
                 if (selectedInvite) {
+                    console.log(selectedInvite.proposalId)
 
-                    const response = await axios.patch("http://localhost:8080/accepted",{},{
+                    const response = await axios.patch("http://localhost:8080/accepted?teamInviteId=" + selectedInvite.proposalId,{},{
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -57,16 +60,19 @@ import { userStore } from "../../globalStore/store";
             }
             catch(error) {
                 console.log("Couldn't approve invite")
+                toast.error("Couldn't approve invite")
+
             }
         };
 
         const handleDeny = async () => {
-            const token = userStore.loggedInUser.jwt
-            console.log(userStore.loggedInUser.jwt)
+            const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+
+            const token = r.jwt
             try{
             if (selectedInvite) {
 
-                const response = await axios.patch("http://localhost:8080/rejected", {}, {
+                const response = await axios.patch("http://localhost:8080/rejected?teamInviteId=" + selectedInvite.proposalId, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -90,6 +96,7 @@ import { userStore } from "../../globalStore/store";
             }
             catch(error) {
                 console.log("Couldn't deny invite")
+                toast.error("Couldn't reject invite")
             }
         };
 
@@ -137,10 +144,3 @@ import { userStore } from "../../globalStore/store";
   
   
 
-{/*Functionality: Allows managers to send team invitations to players.
-o	Endpoints:
-	POST /team/proposal to send a team invite.
-
-o	Functions:
-	sendTeamInvite(playerId, teamId): Sends an invite to a player.
- */}
