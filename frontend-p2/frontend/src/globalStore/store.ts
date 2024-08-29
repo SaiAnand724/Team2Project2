@@ -3,26 +3,28 @@ import { UserInterface } from "../Interfaces/UserInterface";
 
 export const sponsorStore:any = {
     loggedInSponsor: {
-        sponsorId: "385c9913-1e20-4bdb-8701-6ac6fe27b9bd", //<- replace with actual sponsor ID when testing
-        username: "sponsor1",
-        password: "password",
-        category: "Sports",
-        name: "SportsSponsor",
-        budget: 10000.00
+        sponsorId: "", 
+        username: "",
+        category: "",
+        name: "",
+        budget: 0,
+        jwt: ""
     } as SponsorInterface, 
-    loggedIn: false,
-    baseURL: "http://localhost:8080"
 }
 
 export const userStore:any = {
     loggedInUser: {
-        userId: "df3e9990-48e0-4ba8-9eb7-3c8bc17a1203", //<- replace with actual user ID when testing
+        userId: "",
         firstName: "",
         lastName: "",
         username: "",
         password: "",
-        role: ""
+        role: "",
+        jwt: ""
     } as UserInterface,
-    loggedIn: false,
-    baseURL: "http://localhost:8080"
+}
+
+// Not best practice to keep this here, but for the sake of the project, we will keep it here
+export const store = {
+    backendURL: "http://localhost:8080",
 }

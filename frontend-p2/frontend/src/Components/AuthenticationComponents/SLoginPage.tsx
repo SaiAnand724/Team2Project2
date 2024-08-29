@@ -39,7 +39,7 @@ export default function SLoginPage() {
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/auth/sponsor/login', user, { withCredentials: true });
-      const { userId, username, name, role } = response.data;
+
 
       localStorage.setItem('loggedInSponsor', JSON.stringify({ userId, username, name, role }));
       toast.success(`Welcome ${username}! Login successful!`);
@@ -47,6 +47,13 @@ export default function SLoginPage() {
       setTimeout(() => {
         navigate('/sponsor');
       }, 3000);
+
+      // Store user details in localStorage upon successful login
+      // Commenting this below for now - can fully remove later
+      //localStorage.setItem('loggedInSponsor', JSON.stringify(response.data));
+      //console.log(`Welcome ${response.data.name}! Login successful!`);
+      //navigate('/sponsor'); // Redirect to sponsor page
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
