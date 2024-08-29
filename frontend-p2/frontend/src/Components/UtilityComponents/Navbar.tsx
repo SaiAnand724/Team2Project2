@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
             display: { xs: 'none', lg: 'block' },
             cursor: 'pointer', // Add cursor style here
             '&:hover': {
-              textDecoration: 'bold',
+              textDecoration: '',
             },
           }}
         >
