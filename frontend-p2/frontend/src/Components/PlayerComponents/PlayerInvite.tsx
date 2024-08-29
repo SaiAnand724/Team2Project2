@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export const CreateTeamInviteForm: React.FC = () => {
   const [invite, setInvite] = useState({
     amount: 0,
-    receiverPlayerId: {userId: ""}
+    receiverPlayer: {userId: ""}
   });
 
   const [users, setUsers] = useState([]);
@@ -38,14 +38,14 @@ export const CreateTeamInviteForm: React.FC = () => {
     setSelectedUser(event.target.value);
     setInvite(prevState => ({
       ...prevState,
-      receiverPlayerId: {userId: selectedUserId},
+      receiverPlayerer: {userId: selectedUserId},
     }));
   };
 
   const sendTeamInvite = async () => {
     try {
       const jwt = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
-      const userResponse = await axios.get(`http://localhost:8080/user/${invite.receiverPlayerId.userId}`, {
+      const userResponse = await axios.get(`http://localhost:8080/user/${invite.receiverPlayer.userId}`, {
         headers: {
           Authorization: `${jwt.jwt}`
         }
