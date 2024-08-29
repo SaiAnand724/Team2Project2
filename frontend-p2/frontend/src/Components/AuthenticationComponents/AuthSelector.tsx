@@ -9,7 +9,6 @@ const AuthSelector: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
 
-
   return (
     <Box
       sx={{
@@ -25,16 +24,51 @@ const AuthSelector: React.FC = () => {
     >
       {/* ThemeSwitcher positioned in the top-right corner */}
       <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
-        {/* Ensure ThemeSwitcher is working correctly */}
         <ThemeSwitcher />
+      </Box>
+
+      {/* Logo and Brand Name at the top center */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: isMobile ? 16 : 24,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          textAlign: 'center',
+          mb: isMobile ? 8 : 10, // Increased margin on mobile
+        }}
+      >
+        <img 
+          src='apple-touch-icon.png' 
+          alt="Brand Logo" 
+          style={{ 
+            width: isMobile ? '80px' : '160px', 
+            height: isMobile ? '80px' : '160px' 
+          }} 
+        />
+        <Typography 
+          variant={isMobile ? 'h5' : 'h4'} 
+          component="div"
+          sx={{
+            mt: 2, 
+            lineHeight: isMobile ? 1.3 : 1.5,
+            padding: '0 16px', 
+            fontSize: isMobile ? '1.25rem' : '1.75rem', 
+            fontWeight: 'bold', 
+            whiteSpace: 'nowrap', 
+          }}
+        >
+          Sponsor Sponsorship Management System
+        </Typography>
       </Box>
 
       {/* Blue border container */}
       <Box
         sx={{
-          padding: 2, // Padding around the border
-          border: `20px solid blue`, // Blue border
-          borderRadius: '8px', // Optional: rounded corners for the border
+          padding: 2, 
+          border: `20px solid blue`, 
+          borderRadius: '8px', 
+          mt: isMobile ? 24 : 32, 
         }}
       >
         {/* Main Content */}
@@ -67,7 +101,7 @@ const AuthSelector: React.FC = () => {
             >
               <PersonOutlined
                 sx={{
-                  fontSize: '200px', // Adjust icon size as needed
+                  fontSize: '200px', 
                 }}
               />
             </Box>
@@ -85,7 +119,7 @@ const AuthSelector: React.FC = () => {
                 alignItems: 'center',
                 height: isMobile ? '200px' : '300px',
                 width: isMobile ? '200px' : '300px',
-                borderRadius: '8px', // Makes the box circular
+                borderRadius: '8px', 
                 overflow: 'hidden',
                 cursor: 'pointer',
                 transition: 'transform 0.3s ease-in-out',
@@ -98,7 +132,7 @@ const AuthSelector: React.FC = () => {
             >
               <RequestQuoteOutlined
                 sx={{
-                  fontSize: '200px'// Adjust icon size as needed
+                  fontSize: '200px'
                 }}
               />
             </Box>
