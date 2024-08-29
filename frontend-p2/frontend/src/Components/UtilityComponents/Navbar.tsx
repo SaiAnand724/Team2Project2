@@ -71,11 +71,6 @@ const Navbar: React.FC = () => {
   const navbarBackgroundColor = darkMode ? '#173049' : '#91b8df';
   const linkColor = darkMode ? '#ffffff' : '#000000';
 
-  const renderMenuItems = () => {
-    // Return appropriate menu items based on user role
-    return null;
-  };
-
   const renderDrawerItems = () => {
     return (
       <>
@@ -85,9 +80,9 @@ const Navbar: React.FC = () => {
           sx={{
             color: linkColor,
             display: { xs: 'none', lg: 'block' },
-            cursor: 'pointer', // Add cursor style here
+            cursor: 'pointer', 
             '&:hover': {
-              textDecoration: '',
+              textDecoration: 'underline',
             },
           }}
         >
@@ -108,14 +103,12 @@ const Navbar: React.FC = () => {
       <AppBar position="static" sx={{ backgroundColor: navbarBackgroundColor }}>
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-            <Link to="/" style={{ textDecoration: 'none', color: linkColor }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <SportsIcon fontSize="large" />
-                <Typography variant="h6" component="div" sx={{ ml: 1 }}>
-                  {username || 'User'}
-                </Typography>
-              </Box>
-            </Link>
+            <Box sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+               <SportsIcon fontSize="large" />
+                    <Typography variant="h6" component="div" sx={{ ml: 1, color: linkColor }}>
+                       {username || 'User'}
+                    </Typography>
+            </Box>
             <Box sx={{ flexGrow: 1 }} />
             {isMobile ? (
               <IconButton
