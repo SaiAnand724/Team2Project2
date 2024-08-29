@@ -15,6 +15,8 @@ import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
 import { useTheme as useCustomTheme } from '../UtilityComponents/ThemeProvider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast functions
+import 'react-toastify/dist/ReactToastify.css'; // Import default styles
 
 export default function SLoginPage() {
   const navigate = useNavigate(); // Hook to programmatically navigate
@@ -44,25 +46,32 @@ export default function SLoginPage() {
 
       // Store user details in localStorage upon successful login
       localStorage.setItem('loggedInSponsor', JSON.stringify({ userId, username, name, role }));
-      console.log(`Welcome ${name}! Login successful!`);
-      navigate('/sponsor'); // Redirect to sponsor page
+
+      // Show success toast with a timeout
+      toast.success(`Welcome ${username}! Login successful!`, {
+        autoClose: 3000, // Toast will auto-close after 3 seconds
+      });
+
+      setTimeout(() => {
+        navigate('/sponsor'); // Redirect to sponsor page
+      }, 3000); // Delay navigation to match the toast duration
     } catch (error) {
       // Error handling
       if (axios.isAxiosError(error)) {
         if (error.response) {
           switch (error.response.status) {
-            case 400: console.log('Bad Request: Please check your input and try again.'); break;
-            case 401: console.log('Unauthorized: Incorrect username or password.'); break;
-            case 500: console.log('Server Error: Please try again later.'); break;
-            default: console.log('An unexpected error occurred. Please try again.');
+            case 400: toast.error('Bad Request: Please check your input and try again.'); break;
+            case 401: toast.error('Unauthorized: Incorrect username or password.'); break;
+            case 500: toast.error('Server Error: Please try again later.'); break;
+            default: toast.error('An unexpected error occurred. Please try again.');
           }
         } else if (error.request) {
-          console.log('Network Error: Please check your connection and try again.');
+          toast.error('Network Error: Please check your connection and try again.');
         } else {
-          console.log('Error: ' + error.message);
+          toast.error('Error: ' + error.message);
         }
       } else {
-        console.log('An unexpected error occurred. Please try again.');
+        toast.error('An unexpected error occurred. Please try again.');
       }
     } finally {
       setLoading(false); // Reset loading state
@@ -250,17 +259,8 @@ export default function SLoginPage() {
             </Box>
           </Box>
         </Grid>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            p: 2,
-          }}
-        >
-          <ThemeSwitcher /> {/* Component to switch between light and dark modes */}
-        </Box>
       </Grid>
+      <ToastContainer /> {/* Add ToastContainer to display toast notifications */}
     </ThemeProvider>
   );
 }

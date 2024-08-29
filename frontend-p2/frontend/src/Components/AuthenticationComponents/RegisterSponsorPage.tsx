@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from 'axios';
 import { useTheme as useCustomTheme } from '../UtilityComponents/ThemeProvider';
 import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
-import { createTheme, ThemeProvider, Grid } from '@mui/material';
+import { createTheme, ThemeProvider, Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,6 +33,13 @@ const SponsorRegisterPage: React.FC = () => {
     setSponsor(prev => ({
       ...prev,
       [event.target.name]: event.target.value
+    }));
+  };
+
+  const handleCategoryChange = (event: SelectChangeEvent<string>) => {
+    setSponsor(prev => ({
+      ...prev,
+      category: event.target.value as string
     }));
   };
 
@@ -115,16 +122,23 @@ const SponsorRegisterPage: React.FC = () => {
                 value={sponsor.password}
                 onChange={handleChange}
               />
-              <TextField
-                margin="normal"
+              <Select
                 required
                 fullWidth
                 name="category"
-                label="Category"
                 id="category"
                 value={sponsor.category}
-                onChange={handleChange}
-              />
+                onChange={handleCategoryChange}
+                displayEmpty
+                sx={{ mt: 2 }}
+              >
+                <MenuItem value="" disabled>Select Category</MenuItem>
+                <MenuItem value="Sports">Sports</MenuItem>
+                <MenuItem value="Food">Food</MenuItem>
+                <MenuItem value="Clothing">Clothing</MenuItem>
+                <MenuItem value="Technology">Technology</MenuItem>
+                <MenuItem value="Entertainment">Entertainment</MenuItem>
+              </Select>
               <TextField
                 margin="normal"
                 required
