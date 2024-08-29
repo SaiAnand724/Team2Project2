@@ -4,12 +4,10 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Button,
+  Box,
   useTheme,
   useMediaQuery,
-  Box,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useTheme as useAppTheme } from './ThemeProvider';
@@ -81,10 +79,24 @@ const Navbar: React.FC = () => {
   const renderDrawerItems = () => {
     return (
       <>
-        <Typography variant="body1" sx={{ color: linkColor, display: { xs: 'none', lg: 'block' } }}>
+        <Typography
+          onClick={handleLogout}
+          variant="body1"
+          sx={{
+            color: linkColor,
+            display: { xs: 'none', lg: 'block' },
+            cursor: 'pointer', // Add cursor style here
+            '&:hover': {
+              textDecoration: 'bold',
+            },
+          }}
+        >
           LOG OUT
         </Typography>
-        <IconButton onClick={handleLogout} sx={{ display: { xs: 'flex', lg: 'none' } }}>
+        <IconButton
+          onClick={handleLogout}
+          sx={{ display: { xs: 'flex', lg: 'none' } }}
+        >
           <LogoutIcon sx={{ color: linkColor }} />
         </IconButton>
       </>

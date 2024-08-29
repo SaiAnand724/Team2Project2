@@ -84,7 +84,14 @@ const Sidebar: React.FC = () => {
           (item, index) =>
             item.visible !== false && (
               <Tooltip title={expanded ? '' : item.text} placement="right" key={index}>
-                <ListItemButton component={Link} to={item.link} sx={{ px: 2 }}>
+                <ListItemButton 
+                  component={Link} 
+                  to={item.link} 
+                  sx={{ 
+                    px: 2, 
+                    my: 1, // Added vertical margin for spacing
+                  }}
+                >
                   <ListItemIcon sx={{ color: iconColor }}>
                     {item.icon}
                   </ListItemIcon>

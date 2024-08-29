@@ -19,51 +19,49 @@ import { ToastContainer, toast } from 'react-toastify'; // Import toast function
 import 'react-toastify/dist/ReactToastify.css'; // Import default styles
 
 export default function SLoginPage() {
-  const navigate = useNavigate(); // Hook to programmatically navigate
-  const [isOverlayVisible, setOverlayVisible] = React.useState(window.innerWidth < 600); // State to control overlay visibility
-  const [user, setUser] = React.useState({ username: '', password: '' }); // State to store login credentials
-  const [loading, setLoading] = React.useState(false); // State to manage loading state
-  const { darkMode } = useCustomTheme(); // Custom hook to get current theme mode
+  const navigate = useNavigate();
+  const [isOverlayVisible, setOverlayVisible] = React.useState(window.innerWidth < 600);
+  const [user, setUser] = React.useState({ username: '', password: '' });
+  const [loading, setLoading] = React.useState(false);
+  const { darkMode } = useCustomTheme();
 
-  // Effect to handle window resize for responsive design
   React.useEffect(() => {
     const handleResize = () => setOverlayVisible(window.innerWidth < 600);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Handle input field changes
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser(prev => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  // Function to handle login request
   const login = async () => {
-    setLoading(true); // Set loading state to true
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/auth/sponsor/login', user, { withCredentials: true });
       const { userId, username, name, role } = response.data;
 
-      // Store user details in localStorage upon successful login
       localStorage.setItem('loggedInSponsor', JSON.stringify({ userId, username, name, role }));
-
-      // Show success toast with a timeout
-      toast.success(`Welcome ${username}! Login successful!`, {
-        autoClose: 3000, // Toast will auto-close after 3 seconds
-      });
+      toast.success(`Welcome ${username}! Login successful!`);
 
       setTimeout(() => {
-        navigate('/sponsor'); // Redirect to sponsor page
-      }, 3000); // Delay navigation to match the toast duration
+        navigate('/sponsor');
+      }, 3000);
     } catch (error) {
-      // Error handling
       if (axios.isAxiosError(error)) {
         if (error.response) {
           switch (error.response.status) {
-            case 400: toast.error('Bad Request: Please check your input and try again.'); break;
-            case 401: toast.error('Unauthorized: Incorrect username or password.'); break;
-            case 500: toast.error('Server Error: Please try again later.'); break;
-            default: toast.error('An unexpected error occurred. Please try again.');
+            case 400:
+              toast.error('Bad Request: Please check your input and try again.');
+              break;
+            case 401:
+              toast.error('Unauthorized: Incorrect username or password.');
+              break;
+            case 500:
+              toast.error('Server Error: Please try again later.');
+              break;
+            default:
+              toast.error('An unexpected error occurred. Please try again.');
           }
         } else if (error.request) {
           toast.error('Network Error: Please check your connection and try again.');
@@ -74,34 +72,31 @@ export default function SLoginPage() {
         toast.error('An unexpected error occurred. Please try again.');
       }
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
-  // Handle form submission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    login(); // Call login function on form submit
+    login();
   };
 
-  // Function to navigate back to user type selection page
   const handleBackToUserType = () => {
-    navigate('/'); // Redirect to select user type page
+    navigate('/');
   };
 
   const handleRegisterPage = () => {
     navigate('/sregister');
   };
 
-  // Create theme based on current darkMode state
   const theme = createTheme({ palette: { mode: darkMode ? 'dark' : 'light' } });
 
   return (
-    <ThemeProvider theme={theme}> {/* Provide theme to the component tree */}
+    <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh', overflow: 'hidden' }}>
-        <CssBaseline /> {/* Normalize CSS */}
+        <CssBaseline />
         <Grid item xs={12} sm={6} md={7} sx={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
-          <Carousel /> {/* Carousel component */}
+          <Carousel />
           {isOverlayVisible && (
             <Box
               sx={{
@@ -164,7 +159,6 @@ export default function SLoginPage() {
                     value={user.password}
                     onChange={handleChange}
                   />
-
                   <Button
                     type="submit"
                     fullWidth
@@ -207,7 +201,7 @@ export default function SLoginPage() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sponsor Sign in
+              Sponsor Sign In
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
@@ -234,7 +228,6 @@ export default function SLoginPage() {
                 value={user.password}
                 onChange={handleChange}
               />
-
               <Button
                 type="submit"
                 fullWidth
@@ -259,8 +252,18 @@ export default function SLoginPage() {
             </Box>
           </Box>
         </Grid>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            p: 2,
+          }}
+        >
+          <ThemeSwitcher />
+        </Box>
       </Grid>
-      <ToastContainer /> {/* Add ToastContainer to display toast notifications */}
+      <ToastContainer /> {/* Include ToastContainer to display toast notifications */}
     </ThemeProvider>
   );
 }
