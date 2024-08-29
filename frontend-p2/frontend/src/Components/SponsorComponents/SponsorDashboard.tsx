@@ -11,6 +11,8 @@ export const SponsorDashboard:React.FC = () => {
     const sponsorURL = `${sponsorStore.baseURL}/sponsor`
 
     const [proposalsList, setProposalsList] = useState<SponsoredTeamsInterface[]>([]) /**  */
+    const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
+    console.log(r.jwt)
 
     useEffect(() => {
         const sortedProposals = proposalsList.sort();

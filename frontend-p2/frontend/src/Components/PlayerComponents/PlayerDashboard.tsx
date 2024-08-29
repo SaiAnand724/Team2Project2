@@ -10,6 +10,7 @@ export const PlayerDashboard: React.FC = () => {
 
     const [proposalsList, setProposalsList] = useState<PlayerProposalInterface[]>([]);
 
+
     useEffect(() => {
         const sortedProposals = proposalsList.sort();
         setProposalsList(sortedProposals);
