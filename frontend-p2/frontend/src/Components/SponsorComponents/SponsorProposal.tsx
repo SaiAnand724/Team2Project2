@@ -4,18 +4,32 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
+
 export const CreateProposalForm: React.FC = () => {
   const [proposal, setProposal] = useState({
     receiverTeam: {teamId: ""},
-    amount: 0
-  });
+    amount: 0,
+});
 
   const [teams, setTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get('http://localhost:8080/team')
+  useEffect (()  => {
+    const jwt = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
+    console.log({
+      headers: {
+        Authorization: `${jwt.jwt}`,
+    },
+  })
+    console.log(jwt.jwt);
+    axios.get('http://localhost:8080/team', {
+        headers: {
+          Authorization: `${jwt.jwt}`,
+      },
+    }
+
+    )
       .then(response => {
         setTeams(response.data);
       })
@@ -50,7 +64,13 @@ export const CreateProposalForm: React.FC = () => {
         amount: Number(proposal.amount),
       }
       console.log("Sending proposal data: ", proposalToSend);
-      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend);
+      const jwt = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
+      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend, {
+        headers: {
+          Authorization: `Bearer ${jwt.jwt}`,
+        },
+      }
+      );
       console.log(response.data);
       alert("Proposal was created!");
       navigate("/player");
