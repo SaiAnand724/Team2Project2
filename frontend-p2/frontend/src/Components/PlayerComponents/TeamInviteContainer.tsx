@@ -5,25 +5,42 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { TeamInvite } from "../TeamComponents/TeamInvite"
 import './TeamInviteContainer.css';
+import { PlayerNavbar } from "./PlayerNavbar"
+import { userStore } from "../../globalStore/store"
+import { toast } from "react-toastify"
 
 export const TeamInviteContainer:React.FC = () => {
 
     const [invites, setInvites] = useState<TeamInviteProposal[]>([])
 
 
-   {/* useEffect(() => {
+    useEffect(() => {
         getAllInvites()
+        console.log({invites})
     }, [])
-    */}
+    
 
 
 
     const getAllInvites = async () => {
-        const response = await axios.get("http://localhost:8080/user/teaminvite/received")
+        const token = userStore.loggedInUser.jwt
+        console.log(userStore.loggedInUser.jwt)
 
-        setInvites(response.data)
+        try {
 
-        console.log(response.data)
+            const response = await axios.get("http://localhost:8080/user/teaminvite/received", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            setInvites(response.data)
+
+            console.log(response.data)
+        } catch(error) {
+            console.log("Error getting invites")
+            toast.error("Couldn't get invites")
+        }
     }
     
     return (

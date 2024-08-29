@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface";
 import axios from "axios";
+import { userStore } from "../../globalStore/store";
 
 
 
@@ -28,30 +29,49 @@ import axios from "axios";
          };
 
         const handleApprove = async () => {
-            if (selectedInvite) {
+            const token = userStore.loggedInUser.jwt
+            console.log(userStore.loggedInUser.jwt)
+            try{
+                if (selectedInvite) {
 
-                const response = await axios.patch("http://localhost:8080/accepted?teamInviteId=" + selectedInvite.proposalId)
-
-
-                setInviteList((prevList) =>
-                  prevList.map((invite) =>
-                    invite.proposalId === selectedInvite.proposalId
-                      ? { ...invite, status: "Accepted" }
-                      : invite
-                  )
-                );
-                setSnackbarMessage(`Invite for ${selectedInvite.teamName} accepted.`);
-                setSnackbarOpen(true);
+                    const response = await axios.patch("http://localhost:8080/accepted",{},{
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
 
 
-              }
-              handleClose();
+                    setInviteList((prevList) =>
+                    prevList.map((invite) =>
+                        invite.proposalId === selectedInvite.proposalId
+                        ? { ...invite, status: "Accepted" }
+                        : invite
+                    )
+                    );
+                    setSnackbarMessage(`Invite for ${selectedInvite.teamName} accepted.`);
+                    setSnackbarOpen(true);
+
+
+                }
+                handleClose();
+            }
+            catch(error) {
+                console.log("Couldn't approve invite")
+            }
         };
 
         const handleDeny = async () => {
+            const token = userStore.loggedInUser.jwt
+            console.log(userStore.loggedInUser.jwt)
+            try{
             if (selectedInvite) {
 
-                const response = await axios.patch("http://localhost:8080/accepted?teamInviteId=" + selectedInvite.proposalId)
+                const response = await axios.patch("http://localhost:8080/rejected", {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    
+                })
 
 
                 setInviteList((prevList) =>
@@ -67,6 +87,10 @@ import axios from "axios";
 
               }
               handleClose();
+            }
+            catch(error) {
+                console.log("Couldn't deny invite")
+            }
         };
 
         return (
