@@ -3,11 +3,12 @@ import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface"
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { PlayerNavbar } from "./PlayerNavbar"
 import { TeamInterface } from "../../Interfaces/TeamInterface"
 import { Sponsorships } from "./Sponsorships"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
+import './SponsorshipContainer.css'
+
 
 export const SponsorshipContainer:React.FC = () => {
 
@@ -46,8 +47,7 @@ export const SponsorshipContainer:React.FC = () => {
     
     return (
 
-        <div>
-
+        <div className="sponsorhip-container">
             
             <Sponsorships sponsorships={sponsorships}></Sponsorships>
             <ToastContainer/>

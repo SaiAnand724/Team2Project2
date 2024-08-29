@@ -64,7 +64,7 @@ const PMLoginPage: React.FC = () => {
       // Store user details in localStorage
       localStorage.setItem('loggedInUser', JSON.stringify(response.data));
 
-      toast.success(`Welcome ${userData.firstName}! Login successful!`);
+      toast.success(`Welcome ${userData.username}! Login successful!`);
 
       setTimeout(() => {
         

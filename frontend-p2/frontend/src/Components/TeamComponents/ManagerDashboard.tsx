@@ -28,9 +28,7 @@ export const ManagerDashboard: React.FC = () => {
 
   return (
     <div>
-        <div >
-            <ManagerNavbar></ManagerNavbar>
-        </div>
+
         <div className='app-container'>
             <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Manager Details</h2>
             <Divider/>
