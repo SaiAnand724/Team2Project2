@@ -1,6 +1,6 @@
 # Team2Project2
 
-Project2 Backend
+Project2 Backend - why zip files
 
 Entities
 
