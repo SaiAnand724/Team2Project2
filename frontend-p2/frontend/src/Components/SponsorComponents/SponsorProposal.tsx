@@ -18,10 +18,11 @@ export const CreateProposalForm: React.FC = () => {
   useEffect(() => {
     const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
     console.log(r.jwt)
-    axios.get('http://localhost:8080/team', {
+    axios.get('http://localhost:8080/allteams', {
       headers: {
-        Authorization: `${r.jwt}`
-      }
+        'Authorization': `Bearer ${r.jwt}`,
+        'Content-Type': 'application/json'
+      },
     })
       .then(response => {
         setTeams(response.data);
@@ -57,7 +58,14 @@ export const CreateProposalForm: React.FC = () => {
         amount: Number(proposal.amount),
       }
       console.log("Sending proposal data: ", proposalToSend);
-      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend);
+      const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
+      console.log(r.jwt)
+      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend, {
+        headers: {
+          'Authorization': `Bearer ${r.jwt}`,
+          'Content-Type': 'application/json'
+        }
+      });
       console.log(response.data);
       alert("Proposal was created!");
       navigate("/player");

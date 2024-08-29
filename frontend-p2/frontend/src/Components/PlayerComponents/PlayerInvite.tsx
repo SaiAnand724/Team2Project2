@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const CreateTeamInviteForm: React.FC = () => {
   const [invite, setInvite] = useState({
-    amount: 0,
-    receiverPlayer: {userId: ""}
-  });
+    amount: 100,
+    receiverPlayer: { userId: "" }
+    }
+  );
 
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
@@ -17,7 +18,7 @@ export const CreateTeamInviteForm: React.FC = () => {
     const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
     axios.get('http://localhost:8080/user/all', {
       headers: {
-        Authorization: `${r.jwt}`
+        'Authorization': `Bearer ${r.jwt}`
       }
     })
       .then(response => {
@@ -54,7 +55,16 @@ export const CreateTeamInviteForm: React.FC = () => {
         amount: Number(invite.amount),
       }
       console.log("Sending proposal data: ", inviteToSend);
-      const response = await axios.post("http://localhost:8080/user/teaminvite", inviteToSend);
+      const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+      const response = await axios.post("http://localhost:8080/user/teaminvite", {"amount": 200, 
+            "receiverPlayer" :{
+                "userId": "8f34bf3f-0b4a-4ae5-a60a-106ac9429e41"
+            }}, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${r.jwt}`
+        },
+      });
       console.log(response.data);
       alert("Invite was created!");
       navigate("/player");
