@@ -61,3 +61,4 @@ Sponsor Stories
 
 Admin user
 - create player/teams/sponsors
+testing
