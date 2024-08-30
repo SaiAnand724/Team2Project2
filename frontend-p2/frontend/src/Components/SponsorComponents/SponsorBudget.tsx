@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import { TeamProposalInterface } from '../../Interfaces/TeamProposalInterface';
 import { sponsorStore } from '../../globalStore/store';
-import { SponsoredTeamsInterface } from '../../Interfaces/SponsoredTeamsInterface';
-import { TeamInterface } from '../../Interfaces/TeamInterface';
 
-const SponsorBudget: React.FC<{proposals:SponsoredTeamsInterface[]}> = ({proposals}) => {
+import { toast, ToastContainer } from 'react-toastify';
 
+const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
 
   const [currentBudget, setCurrentBudget] = useState<number>(0);
   const [amountSpent, setAmountSpent] = useState<number>(0);
@@ -18,11 +17,14 @@ const SponsorBudget: React.FC<{proposals:SponsoredTeamsInterface[]}> = ({proposa
         // Replace with actual API calls
         const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
         const totalProposalsAmount = proposals.reduce((acc, proposal) => acc + proposal.amount, 0);
-        const totalBudget = r.budget
-        setCurrentBudget(totalBudget-totalProposalsAmount);
+
+        const currentBudget = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "").budget
+        setCurrentBudget(currentBudget);
+
         setAmountSpent(totalProposalsAmount);
       } catch (error) {
         console.error('Error fetching budget data:', error);
+        toast.error("Error fetching budget data: " + error)
       }
     };
 
@@ -47,6 +49,7 @@ const SponsorBudget: React.FC<{proposals:SponsoredTeamsInterface[]}> = ({proposa
           </Typography>
         </CardContent>
       </Card>
+      <ToastContainer/>
     </Box>
   );
 };

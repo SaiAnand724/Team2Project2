@@ -3,7 +3,12 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { UserInterface } from "../../Interfaces/UserInterface";
 import { Button } from "@mui/material";
 import axios from "axios";
+
 import { store, userStore } from "../../globalStore/store";
+
+
+import { toast, ToastContainer } from "react-toastify";
+
 
 export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers}) => {
     const [teamMemberList, setTeamMemberList] = useState<UserInterface[]>(teamMembers) /** */
@@ -34,9 +39,11 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
             response = await axios.patch(`${managerURL}/role/Manager?player_id=${memberId}`)
             setTeamMemberList(response.data)
             console.log(response.data)
+            toast.success("Role changed")
         }
         catch {
             console.log("Error changing member role")
+            toast.error("Couldn't change role")
         }
     }
 
@@ -49,9 +56,11 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
             response = await axios.patch(`${managerURL}/users/${memberId}`)
             setTeamMemberList(response.data)
             console.log(response.data)
+            toast.success("Player Removed")
         }
         catch {
             console.log("Error removing member from team")
+            toast.error("Couldn't Remove Player")
         }
     }
 
@@ -88,6 +97,7 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
             </Table>
             </TableContainer>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

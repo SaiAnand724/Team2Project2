@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, Tab, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import axios from 'axios';
 import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterface";
+
 import { store } from '../../globalStore/store';
+
+import Table from "@mui/material/Table";
+import { Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { toast } from "react-toastify";
+
 
 export const SponsorDetails: React.FC<{ proposals: SponsoredTeamsInterface[] }> = ({ proposals }) => {
 
@@ -13,6 +19,7 @@ export const SponsorDetails: React.FC<{ proposals: SponsoredTeamsInterface[] }> 
     useEffect(() => {
         fetchProposalsByStatus('Pending');
     }, []);
+
 
     const fetchProposalsByStatus = async (status: string) => {
         try {
@@ -35,6 +42,7 @@ export const SponsorDetails: React.FC<{ proposals: SponsoredTeamsInterface[] }> 
         const status = newValue === 0 ? 'Pending' : newValue === 1 ? 'Accepted' : 'Rejected';
         fetchProposalsByStatus(status);
     };
+
 
     return (
         <div>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
 import { store, userStore } from "../../globalStore/store";
 import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface";
+import { toast, ToastContainer } from "react-toastify";
 
 export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
 
@@ -64,7 +65,10 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
             console.log(response.data)
         }
         catch {
+
             console.log("Error removing proposal")
+            toast.error("Error rejecting proposals")
+
         }
     }
 
@@ -79,7 +83,11 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
             console.log(response.data)
         }
         catch {
+
             console.log("Error accepting proposals")
+
+            toast.error("Error accepting proposals")
+
         }
     }
 
@@ -140,6 +148,12 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
                     </Box>
                 </CardContent>
             </Card>
+
+
+            {/** ))}    */}
+            <ToastContainer/>
+            
+
         </Grid>
                          * 
                         */

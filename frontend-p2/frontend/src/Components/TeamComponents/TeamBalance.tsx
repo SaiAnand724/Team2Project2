@@ -1,15 +1,52 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { userStore } from "../../globalStore/store";
+import { store, userStore } from "../../globalStore/store";
+import axios from "axios";
+import { TeamInterface } from "../../Interfaces/TeamInterface";
 
 export const TeamBalanceInfo:React.FC = ({}) => {
 
-    const [teamBalance, setTeamBalance] = useState(40000)
-    const [inviteAmountSpent, setinviteAmountSpent] = useState(500)
-    const [managerSalary, setManagerSalary] = useState<number>(10000)
+    const [teamBalance, setTeamBalance] = useState(0)
+    const [inviteAmountSpent, setinviteAmountSpent] = useState(0)
+    const [managerSalary, setManagerSalary] = useState<number>(JSON.parse(localStorage.getItem('loggedInUser') ?? "").salary)
+
+    const getTeamsURL = `${store.backendURL}/allteams`
+    const managerInvitesURL = `${store.backendURL}/user/teaminvite/sent`
 
 
     useEffect(() => {
+        //setManagerSalary()
+        axios.get(getTeamsURL, {
+            headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt}`
+            }
+          })
+          .then(response => {
+            const teams = response.data;
+            teams.forEach((team:TeamInterface) => {
+                if (team.teamName === JSON.parse(localStorage.getItem('loggedInUser') ?? "").teamName) {
+                    setTeamBalance(team.balance)
+                }
+            })
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+
+          axios.get(managerInvitesURL, {
+            headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt}`
+            }
+          })
+          .then(response => {
+            const invites: any[] = response.data
+            const inviteSpent = invites.reduce((acc, invite) => acc + invite.amount, 0)
+            setinviteAmountSpent(inviteSpent)
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
     }, []);
     
     return (
