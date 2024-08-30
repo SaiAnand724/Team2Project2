@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField, Card, Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { store } from '../../globalStore/store';
 
 export const CreateTeamInviteForm: React.FC = () => {
+
+  const userURL = `${store.backendURL}/user`
+
   const [invite, setInvite] = useState({
     amount: 100,
     receiverPlayer: { userId: "" }
@@ -16,7 +20,7 @@ export const CreateTeamInviteForm: React.FC = () => {
 
   useEffect(() => {
     const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
-    axios.get('http://localhost:8080/user/all', {
+    axios.get(`${userURL}/all`, {
       headers: {
         'Authorization': `Bearer ${r.jwt}`
       }
@@ -56,7 +60,7 @@ export const CreateTeamInviteForm: React.FC = () => {
       }
       console.log("Sending proposal data: ", inviteToSend);
       const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
-      const response = await axios.post("http://localhost:8080/user/teaminvite", {"amount": 200, 
+      const response = await axios.post(`${userURL}/teaminvite`, {"amount": 200, 
             "receiverPlayer" :{
                 "userId": "8f34bf3f-0b4a-4ae5-a60a-106ac9429e41"
             }}, {
@@ -67,7 +71,7 @@ export const CreateTeamInviteForm: React.FC = () => {
       });
       console.log(response.data);
       alert("Invite was created!");
-      navigate("/player");
+      navigate("/manager");
     } catch (error) {
       console.error("Error: ", error);
       alert("Adding Invite Failed! Error message: " + error);

@@ -3,9 +3,12 @@ import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { store } from '../../globalStore/store';
 
 
 export const CreateProposalForm: React.FC = () => {
+
+  const sponsorURL = `${store.backendURL}/sponsor`
   const [proposal, setProposal] = useState({
     receiverTeam: {teamId: ""},
     amount: 0,
@@ -19,7 +22,7 @@ export const CreateProposalForm: React.FC = () => {
   useEffect(() => {
     const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
     console.log(r.jwt)
-    axios.get('http://localhost:8080/allteams', {
+    axios.get(`${sponsorURL}/allteams`, {
       headers: {
         'Authorization': `Bearer ${r.jwt}`,
         'Content-Type': 'application/json'
@@ -63,7 +66,7 @@ export const CreateProposalForm: React.FC = () => {
       console.log("Sending proposal data: ", proposalToSend);
       const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
       console.log(r.jwt)
-      const response = await axios.post("http://localhost:8080/sponsor/proposal", proposalToSend, {
+      const response = await axios.post(`${sponsorURL}/sponsor/proposal`, proposalToSend, {
         headers: {
           'Authorization': `Bearer ${r.jwt}`,
           'Content-Type': 'application/json'
@@ -72,7 +75,7 @@ export const CreateProposalForm: React.FC = () => {
       console.log(response.data);
       {/*alert("Proposal was created!");*/}
       toast.success("Proposal was created")
-      navigate("/player");
+      navigate("/sponsor");
     } catch (error) {
       console.error("Error: ", error);
       {/*alert("Adding Proposal Failed! Error message: " + error);*/}
