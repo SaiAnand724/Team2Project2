@@ -1,7 +1,10 @@
+import { UUID } from "crypto";
+
 export interface TeamInviteProposal {
-    proposalId?: number,
+    proposalId: string,
     status: string,
-    senderManagerId?: number,
-    receiverPlayerId?: number,
+    teamName: string,
+    receiverUsername: string,
+    senderUsername:string,
     amount: number
 }

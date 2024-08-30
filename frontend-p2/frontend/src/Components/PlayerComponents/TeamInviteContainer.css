@@ -1,0 +1,16 @@
+.team-invite-container {
+    margin-left: 60px;
+    /* Default width of the sidebar when collapsed */
+    transition: margin-left 0.3s ease;
+    /* Smooth transition when sidebar expands */
+    padding: 20px;
+    /* Optional: Adds padding around the content */
+}
+
+/* Adjust margin-left when the sidebar is expanded */
+@media (min-width: 768px) {
+    .team-invite-container {
+        margin-left: 45px;
+        /* Width of the sidebar when expanded */
+    }
+}

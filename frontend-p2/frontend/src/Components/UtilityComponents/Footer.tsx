@@ -17,12 +17,21 @@ const Footer: React.FC = () => {
         textAlign: 'center',
         padding: '1rem',
         position: 'relative',
-        bottom: 0,
         width: '100%',
+        mt: 'auto', // Ensures footer stays at the bottom of the page content
       }}
     >
-      <Typography variant="body2">
-        © 2024 SportsManagementApp. All rights reserved.
+      <Typography
+        variant="body2"
+        sx={{
+          fontSize: {
+            xs: '0.75rem', // Small font size for extra-small screens
+            sm: '0.875rem', // Slightly larger for small screens
+            md: '1rem', // Default font size for medium and larger screens
+          },
+        }}
+      >
+        © 2024 Sports Sponsorship Management System. All rights reserved.
       </Typography>
     </Box>
   );

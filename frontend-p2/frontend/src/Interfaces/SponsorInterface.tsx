@@ -2,11 +2,12 @@ import { UUID } from "crypto";
 
 // Sponsor Model
 export interface SponsorInterface {
-    sponsorId?: UUID,
+    sponsorId?: UUID | string,
     username: string,
-    password: string,
+    password?: string,
     category: string,
     name: string,
     budget: number,
     proposalsId?: number
+    jwt?: string
 }
