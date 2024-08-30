@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { userStore } from "../../globalStore/store";
+import { store, userStore } from "../../globalStore/store";
 
 
 import { Divider, Grid } from "@mui/material";
@@ -10,15 +10,15 @@ import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface";
 import { UserInterface } from "../../Interfaces/UserInterface";
 import { TeamBalanceInfo } from "./TeamBalance";
 import { TeamMembers } from "./TeamList";
+import TeamCreate from "./TeamCreate";
 
 
 
 export const ManagerDashboard: React.FC = () => {
 
-    const managerURL = `${userStore.baseURL}/user`
+    const managerURL = `${store.backendURL}/user`
 
     const [proposalsList, setProposalsList] = useState<TeamProposalInterface[]>([]) /**  */
-    const [teamMemberList, setTeamMemberList] = useState<UserInterface[]>([]) /** */
 
     useEffect(() => {
         const sortedProposals = proposalsList.sort();
@@ -48,20 +48,16 @@ export const ManagerDashboard: React.FC = () => {
 
                 <div>
 
-                        <div style={{ textAlign: 'center', marginRight: '225px' }}>
+                        <div style={{ textAlign: 'center', marginRight: '200px' }}>
                             <h2>Team Balance + Manager Salary Info</h2>
                             <TeamBalanceInfo></TeamBalanceInfo>
                         </div>
 
-                        <br />
-                        <br />
-
-                        <div style={{ textAlign: 'center', marginRight: '225px' }}>
-                            <TeamMembers teamMembers={teamMemberList}></TeamMembers>
+                        <br />                  
+                        
+                        <div style={{ textAlign: 'center' }}>
+                        <TeamCreate></TeamCreate>
                         </div>
-
-
-
 
                 </div>
                 

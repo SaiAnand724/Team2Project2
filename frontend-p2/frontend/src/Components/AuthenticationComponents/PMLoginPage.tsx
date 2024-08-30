@@ -76,7 +76,7 @@ const PMLoginPage: React.FC = () => {
         navigate('/player');
       } else {
         toast.error('Unknown user role. Please contact support.');
-      }}, 3000)
+      }}, 1500)
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {

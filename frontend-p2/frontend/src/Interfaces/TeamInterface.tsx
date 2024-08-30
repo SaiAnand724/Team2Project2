@@ -2,7 +2,7 @@ import { UUID } from "crypto";
 
 // Team model
 export interface TeamInterface {
-    teamId?: UUID,
+    teamId: string,
     teamName: string,
     TeamSponsorId?: number,
     TeamSponsors?: string,

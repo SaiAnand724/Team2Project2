@@ -17,12 +17,23 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
 
 
     useEffect(() => {
-
-    }, []);
+        fetchAllTeamMembers()
+    }, [teamMemberList]);
 
     
     const fetchAllTeamMembers = async () => {
         try {
+            let response: any = null;
+            const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+            console.log(r.jwt)
+            response = await axios.get(`${managerURL}/user`, {
+              headers: {
+                'Authorization': `Bearer ${r.jwt}`,
+                'Content-Type': 'application/json'
+              },
+            })
+            setTeamMemberList(response.data)
+            console.log(response.data)
             
         }
         catch (error) {
@@ -67,26 +78,27 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
 
 
     return(
-        <div>
-            <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Team Members</h2>
-            <div className="container">
+        <div style={{ textAlign: 'center', marginLeft: '50px' }}>
+            <h2 style={{ textAlign: 'center', marginBottom: '25px'}}>Team Members</h2>
+            <div className="container" style={{ textAlign: 'center', marginLeft: '50px' }}>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 600 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell align="center">Member ID</TableCell>
-                        <TableCell align="center">Member Name</TableCell>
+                        <TableCell align="center">Member Username</TableCell>
                         <TableCell align="center">Role</TableCell>
+                        <TableCell align="center">Salary</TableCell>
                         <TableCell align="center">Options</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    Table Data vvv
                     {teamMemberList.map((teamMember) => (
                     <TableRow key={teamMember.userId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                         <TableCell align="center">{teamMember.userId}</TableCell>
-                        <TableCell align="center">{teamMember.firstName + " " + teamMember.lastName}</TableCell>
+                        <TableCell align="center">{teamMember.username}</TableCell>
                         <TableCell align="center">{teamMember.role}</TableCell>
+                        <TableCell align="center">${teamMember.salary}</TableCell>
                         <TableCell align="center">
                         <Button variant="outlined" color="secondary" onClick={changeRole}> Change Role </Button> 
                         <Button variant="outlined" color="error" onClick={fireUser}> Fire </Button>

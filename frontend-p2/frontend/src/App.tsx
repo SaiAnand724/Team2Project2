@@ -24,6 +24,9 @@ import { TeamInviteContainer } from "./Components/PlayerComponents/TeamInviteCon
 import { SponsorshipContainer } from "./Components/PlayerComponents/SponsorshipContainer";
 import RegisterUserPage from "./Components/AuthenticationComponents/RegisterUserPage";
 import RegisterSponsorPage from "./Components/AuthenticationComponents/RegisterSponsorPage";
+import { TeamMembersContainer } from "./Components/TeamComponents/TeamMembersContainer";
+import { TeamProposalsHist } from "./Components/TeamComponents/TeamProposalsHist";
+import { TeamInviteHist } from "./Components/TeamComponents/TeamInviteHist";
 
 const App: React.FC = () => {
   const { darkMode } = useTheme();
@@ -72,10 +75,13 @@ const App: React.FC = () => {
           <Route path="/newproposal" element={<CreateProposalForm />} />
           {/* Sponsor Routes */}
           <Route path="/sponsor" element={<SponsorDashboard />} />
-          <Route path="/affiliates" element={<SponsorshipList teams={[]} sponsTeams={[]} teamInvestments={[]} />} />
-          <Route path="/proposals-hist" element={<SponsorDetails proposals={[]} />} />
+          <Route path="/affiliates" element={<SponsorshipList teams={[]} sponsTeams={[]} />} />
+          <Route path="/sponsor/proposals-hist" element={<SponsorDetails proposals={[]} />} />
           <Route path="/newsponsorproposal" element={<CreateProposalForm />} />
           {/* Team Manager Routes */}
+          <Route path="/manager/teammembers" element={<TeamMembersContainer />} />
+          <Route path="/manager/invites" element={<TeamInviteHist />} />
+          <Route path="/manager/proposals-hist" element={<TeamProposalsHist proposals={[]}/>} />
           <Route path="/newteaminv" element={<CreateTeamInviteForm />} />
           {/* Player Routes */}
           <Route path="/player" element={<PlayerDashboard />} />

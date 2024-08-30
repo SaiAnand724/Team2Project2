@@ -47,9 +47,42 @@ export const SponsorDetails: React.FC<{ proposals: SponsoredTeamsInterface[] }> 
             <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Sponsor Proposal History</h2>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={currentTab} onChange={handleTabChange} aria-label="basic tabs example" centered>
-                    <Tab label="Pending Proposals" />
-                    <Tab label="Accepted Proposals" />
-                    <Tab label="Rejected Proposals" />
+                <Tab 
+                        label="Pending Proposals" 
+                        sx={{
+                            backgroundColor: currentTab === 0 ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.7)',
+                            opacity: 1,
+                            borderRadius: '4px',
+                            margin: '0 8px',
+                            '&.Mui-selected': {
+                                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            }
+                        }}
+                    />
+                    <Tab 
+                        label="Accepted Proposals" 
+                        sx={{
+                            backgroundColor: currentTab === 1 ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.7)',
+                            opacity: 1,
+                            borderRadius: '4px',
+                            margin: '0 8px',
+                            '&.Mui-selected': {
+                                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            }
+                        }}
+                    />
+                    <Tab 
+                        label="Rejected Proposals" 
+                        sx={{
+                            backgroundColor: currentTab === 2 ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.7)',
+                            opacity: 1,
+                            borderRadius: '4px',
+                            margin: '0 8px',
+                            '&.Mui-selected': {
+                                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            }
+                        }}
+                    />
                 </Tabs>
             </Box>
             <div className="container">
