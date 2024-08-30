@@ -36,7 +36,9 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
             })
             //console.log("parse obj:", r)
             console.log(response.data)
+
             const proposalFilter = response.data
+            
             const filteredProposals = proposalFilter.filter(
                 (proposalFilter: { status: string; team_name: string; }) => proposalFilter.status === 'Pending' && proposalFilter.team_name === `${r.teamName}`
               );
