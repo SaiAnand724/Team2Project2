@@ -22,7 +22,7 @@ export const CreateProposalForm: React.FC = () => {
   useEffect(() => {
     const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
     console.log(r.jwt)
-    axios.get(`${sponsorURL}/allteams`, {
+    axios.get(`${store.backendURL}/allteams`, {
       headers: {
         'Authorization': `Bearer ${r.jwt}`,
         'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export const CreateProposalForm: React.FC = () => {
       console.log("Sending proposal data: ", proposalToSend);
       const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
       console.log(r.jwt)
-      const response = await axios.post(`${sponsorURL}/sponsor/proposal`, proposalToSend, {
+      const response = await axios.post(`${sponsorURL}/proposal`, proposalToSend, {
         headers: {
           'Authorization': `Bearer ${r.jwt}`,
           'Content-Type': 'application/json'
