@@ -19,7 +19,7 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
     const handleAccept = async (inviteId: any) => {
         const token = JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt;
         try {
-            await axios.patch(`http://localhost:8080/user/teaminvites/accepted?teamInviteId=${inviteId}`, {}, {
+            await axios.patch(`${userStore.backendURL}/user/teaminvites/accepted?teamInviteId=${inviteId}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -38,7 +38,7 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
     const handleReject = async (inviteId: any) => {
         const token = JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt;
         try {
-            await axios.patch(`http://localhost:8080/user/teaminvites/rejected?teamInviteId=${inviteId}`, {}, {
+            await axios.patch(`${userStore.backendURL}/user/teaminvites/rejected?teamInviteId=${inviteId}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

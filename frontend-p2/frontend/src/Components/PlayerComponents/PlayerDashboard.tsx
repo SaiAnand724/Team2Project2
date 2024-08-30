@@ -21,9 +21,10 @@ export const PlayerDashboard: React.FC = () => {
         const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "");
 
         const token = r.jwt;
+        console.log("Backend URL:", userStore.backendURL);
 
         try {
-            const response = await axios.get("http://localhost:8080/user/teaminvite/received", {
+            const response = await axios.get(`${userStore.backendURL}/user/teaminvite/received`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
