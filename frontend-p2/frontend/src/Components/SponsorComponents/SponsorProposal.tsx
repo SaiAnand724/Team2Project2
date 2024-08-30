@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField } from '@mui/material';
+import { Container, Button, MenuItem, Select, FormControl, InputLabel, TextField, Card, Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -76,8 +76,21 @@ export const CreateProposalForm: React.FC = () => {
   };
 
   return (
-    <Container className="create-proposal-container">
-      <h1> LOGO </h1>
+    <Container>
+    <Card sx={{ margin: '20px', padding: '20px', paddingBottom: '30px'}}>
+      <Container className="create-proposal-container" sx={{ mb: 2 }}>
+      <Box margin="5%" display="flex" justifyContent="center" alignItems="center" mb={2}>
+        <img 
+          src="../../../apple-touch-icon.png" 
+          alt="Logo" 
+          style={{ width: '100px', height: 'auto' }} 
+        />
+      </Box>
+      <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
+          <Typography variant="h5" component="h2" align="center">
+            Sponsor Proposal Form
+          </Typography>
+      </Box>
       <TextField
         type="number"
         label="Amount"
@@ -104,8 +117,11 @@ export const CreateProposalForm: React.FC = () => {
           ))}
         </Select>
       </FormControl>
-      <Button variant="contained" onClick={sendSponsorProposal}>Submit</Button>
+      <Button variant="contained" onClick={sendSponsorProposal} sx={{mt: '20px' }}>Submit</Button>
+      </Container>
+    </Card>
     </Container>
+    
   );
 };
 
