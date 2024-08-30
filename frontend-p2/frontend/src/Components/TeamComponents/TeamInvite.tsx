@@ -1,4 +1,4 @@
-import { IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { IconButton, Menu, MenuItem, Paper, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface";
@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
         const [inviteList, setInviteList] = useState<TeamInviteProposal[]>(invites);
         const [snackbarOpen, setSnackbarOpen] = useState(false);
         const [snackbarMessage, setSnackbarMessage] = useState("");
+        const [tableKey, setTableKey] = useState(0)
 
         const handleClick = (event: React.MouseEvent<HTMLElement>, invite: TeamInviteProposal) => {
             setAnchorEl(event.currentTarget);
@@ -29,6 +30,8 @@ import { toast } from "react-toastify";
             setSelectedInvite(null);
          };
 
+
+
         const handleApprove = async () => {
             const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
 
@@ -36,6 +39,7 @@ import { toast } from "react-toastify";
             try{
                 if (selectedInvite) {
                     console.log(selectedInvite.proposalId)
+
 
                     const response = await axios.patch(`${userStore.backendURL}/user/teaminvites/accepted?teamInviteId=` + selectedInvite.proposalId,{},{
                         headers: {
@@ -51,6 +55,7 @@ import { toast } from "react-toastify";
                         : invite
                     )
                     );
+                    setTableKey((prevKey) => prevKey + 1)
                     setSnackbarMessage(`Invite for ${selectedInvite.teamName} accepted.`);
                     setSnackbarOpen(true);
 
@@ -72,6 +77,7 @@ import { toast } from "react-toastify";
             try{
             if (selectedInvite) {
 
+
                 const response = await axios.patch(`${userStore.backendURL}/user/teaminvites/rejected?teamInviteId=` + selectedInvite.proposalId, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -87,11 +93,13 @@ import { toast } from "react-toastify";
                       : invite
                   )
                 );
+                setTableKey((prevKey) => prevKey + 1)
                 setSnackbarMessage(`Invite for ${selectedInvite.teamName} rejected.`);
                 setSnackbarOpen(true);
 
 
               }
+              
               handleClose();
             }
             catch(error) {
@@ -100,7 +108,12 @@ import { toast } from "react-toastify";
             }
         };
 
+        const handleSnackbarClose = () => {
+            setSnackbarOpen(false);
+        };
+
         return (
+            <>
     
             <TableContainer component={Paper}>
                 <Table>
@@ -136,6 +149,12 @@ import { toast } from "react-toastify";
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}
+            message={snackbarMessage}/>
+        </>
       
 
     
