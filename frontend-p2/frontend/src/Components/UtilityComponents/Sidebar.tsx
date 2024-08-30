@@ -48,6 +48,7 @@ const Sidebar: React.FC = () => {
     { text: 'Players', icon: <GroupIcon />, link: '/manager/players', visible: role === 'Manager' },
     { text: 'Sponsorships', icon: <AttachMoneyIcon />, link: '/player/sponsorships', visible: role === 'Player' },
     { text: 'Create Proposal', icon: <MailIcon />, link: '/newsponsorproposal', visible: role === 'Sponsor' },
+    { text: 'Create Invite', icon: <MailIcon />, link: '/newteaminv', visible: role === 'Manager' },
     { text: 'Show All', icon: <GroupIcon />, link: '/show-all', visible: role === 'Player' },
     { text: 'Affiliates - Teams', icon: <GroupIcon />, link: '/affiliates', visible: role === 'Sponsor' },
   ];
