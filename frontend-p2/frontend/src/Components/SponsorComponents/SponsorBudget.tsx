@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import { TeamProposalInterface } from '../../Interfaces/TeamProposalInterface';
 import { sponsorStore } from '../../globalStore/store';
+import { SponsoredTeamsInterface } from '../../Interfaces/SponsoredTeamsInterface';
+import { TeamInterface } from '../../Interfaces/TeamInterface';
 
-const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
-  const [totalBudget, setTotalBudget] = useState<number>(0);
+const SponsorBudget: React.FC<{proposals:SponsoredTeamsInterface[]}> = ({proposals}) => {
+
+
   const [currentBudget, setCurrentBudget] = useState<number>(0);
   const [amountSpent, setAmountSpent] = useState<number>(0);
 
@@ -13,9 +16,9 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
     const fetchBudgetData = async () => {
       try {
         // Replace with actual API calls
+        const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
         const totalProposalsAmount = proposals.reduce((acc, proposal) => acc + proposal.amount, 0);
-        const totalBudget = sponsorStore.loggedInSponsor.budget
-        setTotalBudget(totalBudget);
+        const totalBudget = r.budget
         setCurrentBudget(totalBudget-totalProposalsAmount);
         setAmountSpent(totalProposalsAmount);
       } catch (error) {
@@ -32,9 +35,6 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
         <CardContent>
           <Typography variant="h5" component="div" gutterBottom>
             Overall Sponsorship Budget
-          </Typography>
-          <Typography variant="h6">
-            Total Budget: <span style={{ fontStyle: 'italic' }}>${totalBudget}</span>
           </Typography>
           <Typography variant="h6">
             Current Budget: <span style={{ fontStyle: 'italic' }}>${currentBudget}</span>

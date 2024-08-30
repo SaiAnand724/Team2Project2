@@ -1,11 +1,11 @@
 import { UUID } from "crypto";
 
 export interface SponsoredTeamsInterface {
-    proposalId?: UUID,
+    proposalId: string,
     amount: number,
     status: string,
-    senderSponsorName: string,
-    receiverTeamName: string,
+    sponsor_name: string,
+    team_name: string,
 }
 
 export interface AggregateTeamInvestmentsInterface {

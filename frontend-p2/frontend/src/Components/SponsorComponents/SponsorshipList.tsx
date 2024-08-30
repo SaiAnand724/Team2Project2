@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sponsorStore } from "../../globalStore/store";
+import { sponsorStore, store } from "../../globalStore/store";
 import axios from "axios";
 import { TeamInterface } from "../../Interfaces/TeamInterface";
 import { SponsoredTeamsInterface, AggregateTeamInvestmentsInterface } from "../../Interfaces/SponsoredTeamsInterface";
@@ -8,7 +8,7 @@ import { SponsorNavbar } from "./SponsorNavbar";
 
 export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:SponsoredTeamsInterface[], teamInvestments:AggregateTeamInvestmentsInterface[]}> = ({teams, sponsTeams, teamInvestments}) => {
     
-    const sponsorURL = `${sponsorStore.baseURL}/sponsor`
+    const sponsorURL = `${store.backendURL}/sponsor`
     
     const [teamsList, setTeamsList] = useState<TeamInterface[]>(teams);
     const [teamsSponsoredList, setTeamsSponsoredList] = useState<SponsoredTeamsInterface[]>(sponsTeams)
@@ -54,10 +54,10 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
         const investmentMap: Record<string, number> = {};
 
         teamsSponsoredList.forEach((sponsTeam) => {
-            if (investmentMap[sponsTeam.receiverTeamName]) {
-                investmentMap[sponsTeam.receiverTeamName] += sponsTeam.amount;
+            if (investmentMap[sponsTeam.team_name]) {
+                investmentMap[sponsTeam.team_name] += sponsTeam.amount;
             } else {
-                investmentMap[sponsTeam.receiverTeamName] = sponsTeam.amount;
+                investmentMap[sponsTeam.team_name] = sponsTeam.amount;
             }
         });
 
@@ -74,9 +74,6 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
 
     return (
         <div >
-            <div >
-                <SponsorNavbar></SponsorNavbar>
-            </div>
             <h2 style={{ textAlign: 'center', marginBottom: '25px' }}>Sponsored Team Investments</h2>
             <div className="container">
             <TableContainer component={Paper}>
