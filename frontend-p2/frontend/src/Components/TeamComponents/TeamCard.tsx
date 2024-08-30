@@ -150,13 +150,9 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
             </Card>
 
 
-            {/** ))}    */}
+            {/** ))}    */
             <ToastContainer/>
             
-
-        </Grid>
-                         * 
-                        */
 
     return (
         <div style={{ width: "100%" }}>
@@ -194,8 +190,7 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
         </div>
     )
 
-}
-            {/** ))}    */}
+}           
             
 
 

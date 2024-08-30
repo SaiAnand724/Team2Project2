@@ -5,8 +5,6 @@ import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterfac
 
 import { store } from '../../globalStore/store';
 
-import Table from "@mui/material/Table";
-import { Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { toast } from "react-toastify";
 
 
