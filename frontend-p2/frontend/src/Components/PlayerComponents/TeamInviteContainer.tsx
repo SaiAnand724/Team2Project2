@@ -28,6 +28,7 @@ export const TeamInviteContainer:React.FC = () => {
         const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
 
         const token = r.jwt
+        console.log(token)
 
 
         try {
@@ -46,12 +47,7 @@ export const TeamInviteContainer:React.FC = () => {
             toast.error("Couldn't get invites")
         }
     }
-    const refreshInvites = async () => {
 
-        await getAllInvites()
-        navigate("/player/team/invites")
-
-    }
     
     return (
 

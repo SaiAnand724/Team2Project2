@@ -1,4 +1,3 @@
-// PlayerDashboard.tsx
 import { useEffect, useState } from "react";
 
 import { store } from "../../globalStore/store";
@@ -14,16 +13,24 @@ export const PlayerDashboard: React.FC = () => {
     const playerURL = `${store.backendURL}/user`;
 
     const [invites, setInvites] = useState<TeamInviteProposal[]>([]);
+    const [salary, setSalary] = useState<number>(0)
 
     useEffect(() => {
         getAllInvites();
+        const storedSalary = localStorage.getItem("playerSalary");
+        if (storedSalary) {
+            const parsedSalary = parseFloat(storedSalary)
+            console.log("stored salary ", parsedSalary)
+            if (!isNaN(parsedSalary)) {
+                setSalary(parsedSalary);
+            }
+        }
     }, []);
 
     const getAllInvites = async () => {
         const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "");
-
         const token = r.jwt;
-        console.log("Backend URL:", store.backendURL);
+        console.log(token);
 
         try {
             const response = await axios.get(`${store.backendURL}/user/teaminvite/received`, {
@@ -40,6 +47,17 @@ export const PlayerDashboard: React.FC = () => {
         }
     };
 
+    const updateSalary = (amount: number) => {
+
+        if(!isNaN(amount)) {
+            const newSalary = salary + amount;
+            setSalary(newSalary);
+            localStorage.setItem("playerSalary", newSalary.toString());
+        }
+    };
+
+
+
     return (
         <Box>
             <AppBar position="static">
@@ -54,7 +72,7 @@ export const PlayerDashboard: React.FC = () => {
                 </Box>
                 <Grid container spacing={3} sx={{ my: 4 }}>
                     <Grid item xs={12} md={8}>
-                        <PlayerCard invites={invites} /> {/* Match prop name */}
+                        <PlayerCard invites={invites} updateSalary={updateSalary} /> {/* Match prop name */}
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Card sx={{ p: 2, textAlign: 'center' }}>
@@ -62,7 +80,7 @@ export const PlayerDashboard: React.FC = () => {
                                 Salary
                             </Typography>
                             <Typography variant="h4" color="primary">
-                                $$$
+                                ${salary}
                             </Typography>
                         </Card>
                     </Grid>
@@ -73,4 +91,3 @@ export const PlayerDashboard: React.FC = () => {
 };
 
 export default PlayerDashboard;
-

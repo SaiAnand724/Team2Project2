@@ -19,6 +19,7 @@ export const TeamCard: React.FC<{ proposals: TeamProposalInterface[] }> = ({ pro
 
     const fetchReceivedProposals = async () => {
         try {
+
             const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "");
             const response = await axios.get(`${store.backendURL}/sponsor/proposals`, {
                 headers: {
