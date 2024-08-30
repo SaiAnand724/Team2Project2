@@ -37,7 +37,7 @@ import { toast } from "react-toastify";
                 if (selectedInvite) {
                     console.log(selectedInvite.proposalId)
 
-                    const response = await axios.patch("http://localhost:8080/accepted?teamInviteId=" + selectedInvite.proposalId,{},{
+                    const response = await axios.patch(`${userStore.backendURL}/user/teaminvites/accepted?teamInviteId=` + selectedInvite.proposalId,{},{
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -72,7 +72,7 @@ import { toast } from "react-toastify";
             try{
             if (selectedInvite) {
 
-                const response = await axios.patch("http://localhost:8080/rejected?teamInviteId=" + selectedInvite.proposalId, {}, {
+                const response = await axios.patch(`${userStore.backendURL}/user/teaminvites/rejected?teamInviteId=` + selectedInvite.proposalId, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
