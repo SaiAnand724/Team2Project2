@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
 import { userStore } from "../../globalStore/store";
 import { TeamProposalInterface } from "../../Interfaces/TeamProposalInterface";
+import { toast, ToastContainer } from "react-toastify";
 
 export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
 
@@ -36,6 +37,7 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
         }
         catch {
             console.log("Error fetching pending proposals")
+            toast.error("Error fetching pending proposals")
         }
     }
 
@@ -50,6 +52,7 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
         }
         catch {
             console.log("Error fetching accepted proposals")
+            toast.error("Error fetching accepted proposals")
         }
     }
 
@@ -113,6 +116,7 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
             </Card>
 
             {/** ))}    */}
+            <ToastContainer/>
             
 
         </Grid>

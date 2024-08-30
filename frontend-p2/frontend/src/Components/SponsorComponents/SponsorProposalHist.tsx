@@ -5,6 +5,7 @@ import { SponsorNavbar } from "./SponsorNavbar";
 import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterface";
 import Table from "@mui/material/Table";
 import { Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { toast } from "react-toastify";
 
 export const SponsorDetails:React.FC<{proposals:SponsoredTeamsInterface[]}> = ({proposals}) => {
 
@@ -25,9 +26,11 @@ export const SponsorDetails:React.FC<{proposals:SponsoredTeamsInterface[]}> = ({
             response = await axios.get(`${sponsorURL}/proposals/Accepted`)
             setProposalsList(response.data)
             console.log(response.data)
+            
         }
         catch {
             console.log("Error fetching accepted proposals")
+            toast.error("Error fetching accepted proposals")
         }
     }
     
@@ -37,9 +40,11 @@ export const SponsorDetails:React.FC<{proposals:SponsoredTeamsInterface[]}> = ({
             response = await axios.get(`${sponsorURL}/proposals/Pending`)
             setProposalsList(response.data)
             console.log(response.data)
+            
         }
         catch {
             console.log("Error fetching pending proposals")
+            toast.error("Error fetching pending proposals")
         }
     }
 
@@ -52,6 +57,7 @@ export const SponsorDetails:React.FC<{proposals:SponsoredTeamsInterface[]}> = ({
         }
         catch {
             console.log("Error fetching accepted proposals")
+            toast.error("Error fetching accepted proposals")
         }
     }
     return (
