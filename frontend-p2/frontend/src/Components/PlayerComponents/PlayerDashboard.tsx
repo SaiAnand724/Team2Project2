@@ -1,6 +1,6 @@
 // PlayerDashboard.tsx
 import { useEffect, useState } from "react";
-import { userStore } from "../../globalStore/store";
+import { store, userStore } from "../../globalStore/store";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
 import { PlayerCard } from "./PlayerCard";
 import { AppBar, Box, Card, Container, Divider, Grid, Toolbar, Typography } from "@mui/material";
@@ -24,7 +24,7 @@ export const PlayerDashboard: React.FC = () => {
         console.log("Backend URL:", userStore.backendURL);
 
         try {
-            const response = await axios.get(`${userStore.backendURL}/user/teaminvite/received`, {
+            const response = await axios.get(`${store.backendURL}/user/teaminvite/received`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
