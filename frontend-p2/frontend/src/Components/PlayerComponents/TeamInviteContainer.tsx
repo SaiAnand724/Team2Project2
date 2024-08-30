@@ -12,6 +12,7 @@ import { toast, ToastContainer } from "react-toastify"
 export const TeamInviteContainer:React.FC = () => {
 
     const [invites, setInvites] = useState<TeamInviteProposal[]>([])
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -44,6 +45,12 @@ export const TeamInviteContainer:React.FC = () => {
             console.log("Error getting invites")
             toast.error("Couldn't get invites")
         }
+    }
+    const refreshInvites = async () => {
+
+        await getAllInvites()
+        navigate("/player/team/invites")
+
     }
     
     return (
