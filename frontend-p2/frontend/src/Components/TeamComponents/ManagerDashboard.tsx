@@ -57,7 +57,6 @@ export const ManagerDashboard: React.FC = () => {
                         <br />
 
                         <div style={{ textAlign: 'center', marginRight: '225px' }}>
-                            <h2>Team Members</h2>
                             <TeamMembers teamMembers={teamMemberList}></TeamMembers>
                         </div>
 

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import { TeamProposalInterface } from '../../Interfaces/TeamProposalInterface';
 import { sponsorStore } from '../../globalStore/store';
+
 import { toast, ToastContainer } from 'react-toastify';
 
 const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
+
   const [currentBudget, setCurrentBudget] = useState<number>(0);
   const [amountSpent, setAmountSpent] = useState<number>(0);
 
@@ -13,9 +15,12 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
     const fetchBudgetData = async () => {
       try {
         // Replace with actual API calls
+        const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
         const totalProposalsAmount = proposals.reduce((acc, proposal) => acc + proposal.amount, 0);
+
         const currentBudget = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "").budget
         setCurrentBudget(currentBudget);
+
         setAmountSpent(totalProposalsAmount);
       } catch (error) {
         console.error('Error fetching budget data:', error);

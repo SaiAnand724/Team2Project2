@@ -3,19 +3,31 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { UserInterface } from "../../Interfaces/UserInterface";
 import { Button } from "@mui/material";
 import axios from "axios";
-import { userStore } from "../../globalStore/store";
+
+import { store, userStore } from "../../globalStore/store";
+
+
 import { toast, ToastContainer } from "react-toastify";
+
 
 export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers}) => {
     const [teamMemberList, setTeamMemberList] = useState<UserInterface[]>(teamMembers) /** */
 
-    const managerURL = `${userStore.baseURL}/user`
+    const managerURL = `${store.backendURL}/user`
 
 
     useEffect(() => {
 
     }, []);
 
+    
+    const fetchAllTeamMembers = async () => {
+        try {
+            
+        }
+        catch (error) {
+        }
+    }
     
 
     const changeRole = async () => {
