@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; // Import toast functions
 import "react-toastify/dist/ReactToastify.css"; // Import default styles
+import { store } from "../../globalStore/store";
 
 export default function SLoginPage() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export default function SLoginPage() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/auth/sponsor/login",
+        `${store.backendURL}/auth/sponsor/login`,
         user,
         { withCredentials: true }
       );

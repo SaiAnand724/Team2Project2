@@ -17,6 +17,7 @@ import { useTheme as useCustomTheme } from '../UtilityComponents/ThemeProvider';
 import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
 import { ToastContainer, toast } from 'react-toastify'; // Import toast functions
 import 'react-toastify/dist/ReactToastify.css'; // Import the default styles
+import { store } from '../../globalStore/store';
 
 const PMLoginPage: React.FC = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -58,7 +59,7 @@ const PMLoginPage: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8080/auth/user/login', user, { withCredentials: true });
+      const response = await axios.post(`${store.backendURL}/auth/user/login`, user, { withCredentials: true });
       const userData = response.data;
 
       // Store user details in localStorage

@@ -14,6 +14,7 @@ import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
 import { createTheme, ThemeProvider, Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { store } from '../../globalStore/store';
 
 const RegisterPage: React.FC = () => {
   const { darkMode } = useCustomTheme();
@@ -51,7 +52,7 @@ const RegisterPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:8080/user/create', user);
+      const response = await axios.post(`${store.backendURL}/user/create`, user);
       console.log('User registered successfully:', response.data);
 
       toast.success('Registration successful! Taking you to the login page...');

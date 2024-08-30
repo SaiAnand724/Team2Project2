@@ -9,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import './SponsorshipContainer.css'
 import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterface"
+import { store } from "../../globalStore/store"
 
 
 export const SponsorshipContainer:React.FC = () => {
@@ -28,7 +29,7 @@ export const SponsorshipContainer:React.FC = () => {
         const token = r.jwt
 
         try {
-            const response = await axios.get("http://localhost:8080/user/sponsors/Accepted", {
+            const response = await axios.get(`${store.backendURL}/user/sponsors/Accepted`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

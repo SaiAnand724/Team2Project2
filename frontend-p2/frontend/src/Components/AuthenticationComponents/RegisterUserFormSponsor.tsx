@@ -5,6 +5,7 @@ import { useTheme as useAppTheme } from '../UtilityComponents/ThemeProvider';
 import ThemeSwitcher from "../UtilityComponents/ThemeSwitcher";
 import { useState } from "react"
 import axios from "axios"
+import { store } from "../../globalStore/store";
 
 
 /*  Functionality: Handles user registration.
@@ -77,7 +78,7 @@ export const RegisterUserForm: React.FC = () => {
         //   http://localhost:8080/sponsor/create
 
         //POST REQUEST - send this new user info to the backend
-        const response = await axios.post("http://localhost:8080/sponsor/create", user)
+        const response = await axios.post(`${store.backendURL}/sponsor/create`, user)
             .then((response) => {
                 console.log(response.data)
                 alert(response.data.username + " was created!")

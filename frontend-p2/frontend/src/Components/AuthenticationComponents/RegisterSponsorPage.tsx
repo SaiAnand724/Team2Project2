@@ -15,6 +15,7 @@ import ThemeSwitcher from '../UtilityComponents/ThemeSwitcher';
 import { createTheme, ThemeProvider, Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { store } from '../../globalStore/store';
 
 const SponsorRegisterPage: React.FC = () => {
   const { darkMode } = useCustomTheme(); // Use custom theme hook for dark mode
@@ -49,7 +50,7 @@ const SponsorRegisterPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:8080/sponsor/create', sponsor);
+      const response = await axios.post(`${store.backendURL}/sponsor/create`, sponsor);
       console.log('Sponsor registered successfully:', response.data);
 
       // Show toast and redirect after delay

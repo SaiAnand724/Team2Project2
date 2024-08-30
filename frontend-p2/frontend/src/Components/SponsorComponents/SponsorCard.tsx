@@ -17,12 +17,12 @@ import {
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { SponsorInterface } from "../../Interfaces/SponsorInterface";
 import axios from "axios";
-import { sponsorStore } from "../../globalStore/store";
+import { sponsorStore, store } from "../../globalStore/store";
 import { useEffect, useState } from "react";
 import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterface";
 
 export const SponsorCard: React.FC<{proposals: SponsoredTeamsInterface[];}> = ({ proposals }) => {
-  const sponsorURL = `http://localhost:8080/sponsor`;
+  const sponsorURL = `${store.backendURL}/sponsor`;
 
   const [proposalsList, setProposalsList] = useState<SponsoredTeamsInterface[]>(proposals); /** */{
     /** 
