@@ -32,7 +32,7 @@ export const TeamInviteContainer:React.FC = () => {
 
         try {
 
-            const response = await axios.get("http://localhost:8080/user/teaminvite/received", {
+            const response = await axios.get(`${userStore.backendURL}/user/teaminvite/received`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -19,6 +19,8 @@ export const userStore:any = {
         lastName: "",
         username: "",
         password: "",
+        teamName: "",
+        salary: 0,
         role: "",
         jwt: ""
     } as UserInterface,

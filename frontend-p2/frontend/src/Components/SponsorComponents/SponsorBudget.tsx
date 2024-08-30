@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import { TeamProposalInterface } from '../../Interfaces/TeamProposalInterface';
 import { sponsorStore } from '../../globalStore/store';
+import { toast, ToastContainer } from 'react-toastify';
 
 const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals}) => {
-  const [totalBudget, setTotalBudget] = useState<number>(0);
   const [currentBudget, setCurrentBudget] = useState<number>(0);
   const [amountSpent, setAmountSpent] = useState<number>(0);
 
@@ -14,12 +14,12 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
       try {
         // Replace with actual API calls
         const totalProposalsAmount = proposals.reduce((acc, proposal) => acc + proposal.amount, 0);
-        const totalBudget = sponsorStore.loggedInSponsor.budget
-        setTotalBudget(totalBudget);
-        setCurrentBudget(totalBudget-totalProposalsAmount);
+        const currentBudget = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "").budget
+        setCurrentBudget(currentBudget);
         setAmountSpent(totalProposalsAmount);
       } catch (error) {
         console.error('Error fetching budget data:', error);
+        toast.error("Error fetching budget data: " + error)
       }
     };
 
@@ -34,9 +34,6 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
             Overall Sponsorship Budget
           </Typography>
           <Typography variant="h6">
-            Total Budget: <span style={{ fontStyle: 'italic' }}>${totalBudget}</span>
-          </Typography>
-          <Typography variant="h6">
             Current Budget: <span style={{ fontStyle: 'italic' }}>${currentBudget}</span>
           </Typography>
           <Typography variant="h5" component="div" gutterBottom mt={2}>
@@ -47,6 +44,7 @@ const SponsorBudget: React.FC<{proposals:TeamProposalInterface[]}> = ({proposals
           </Typography>
         </CardContent>
       </Card>
+      <ToastContainer/>
     </Box>
   );
 };

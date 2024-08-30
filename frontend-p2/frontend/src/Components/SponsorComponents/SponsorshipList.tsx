@@ -5,6 +5,7 @@ import { TeamInterface } from "../../Interfaces/TeamInterface";
 import { SponsoredTeamsInterface, AggregateTeamInvestmentsInterface } from "../../Interfaces/SponsoredTeamsInterface";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { SponsorNavbar } from "./SponsorNavbar";
+import { toast, ToastContainer } from "react-toastify";
 
 export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:SponsoredTeamsInterface[], teamInvestments:AggregateTeamInvestmentsInterface[]}> = ({teams, sponsTeams, teamInvestments}) => {
     
@@ -33,6 +34,7 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
         }
         catch {
             console.log("Error fetching invested teams")
+            toast.error("Error fetching invested teams")
         }
     }
     
@@ -45,6 +47,7 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
         }
         catch {
             console.log("Error fetching invested teams")
+            toast.error("Error fetching invested teams")
         }
     }
 
@@ -101,6 +104,8 @@ export const SponsorshipList:React.FC<{teams:TeamInterface[], sponsTeams:Sponsor
             </Table>
             </TableContainer>
             </div>
+
+            <ToastContainer/>
 
         </div>
     );
