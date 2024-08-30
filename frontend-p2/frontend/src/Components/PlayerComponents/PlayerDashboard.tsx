@@ -10,7 +10,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const PlayerDashboard: React.FC = () => {
-    const playerURL = `${store.backendURL}/player`;
+    const playerURL = `${store.backendURL}/user`;
 
     const [invites, setInvites] = useState<TeamInviteProposal[]>([]);
     const [salary, setSalary] = useState<number>(0)

@@ -9,7 +9,7 @@ export interface SponsoredTeamsInterface {
 }
 
 export interface AggregateTeamInvestmentsInterface {
-    teamId?: UUID,
+    teamId?: string,
     teamName: string,
     totalInvestment: number,
 }

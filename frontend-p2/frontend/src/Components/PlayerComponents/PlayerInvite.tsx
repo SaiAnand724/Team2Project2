@@ -60,10 +60,7 @@ export const CreateTeamInviteForm: React.FC = () => {
       }
       console.log("Sending proposal data: ", inviteToSend);
       const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
-      const response = await axios.post(`${userURL}/teaminvite`, {"amount": 200, 
-            "receiverPlayer" :{
-                "userId": "8f34bf3f-0b4a-4ae5-a60a-106ac9429e41"
-            }}, {
+      const response = await axios.post(`${userURL}/teaminvite`, inviteToSend, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${r.jwt}`
