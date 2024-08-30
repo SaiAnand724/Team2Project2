@@ -8,11 +8,12 @@ import { Sponsorships } from "./Sponsorships"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import './SponsorshipContainer.css'
+import { SponsoredTeamsInterface } from "../../Interfaces/SponsoredTeamsInterface"
 
 
 export const SponsorshipContainer:React.FC = () => {
 
-    const [sponsorships, setSponsorships] = useState<TeamInterface[]>([])
+    const [sponsorships, setSponsorships] = useState<SponsoredTeamsInterface[]>([])
 
     useEffect(() => {
         getAllSponsorships()

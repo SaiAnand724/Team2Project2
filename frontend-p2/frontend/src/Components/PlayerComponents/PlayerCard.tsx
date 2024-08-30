@@ -6,7 +6,9 @@ import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterfac
 import { store, userStore } from "../../globalStore/store";
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface";
 
-export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites }) => {
+
+
+export const PlayerCard: React.FC<{invites: TeamInviteProposal[], updateSalary: (amount: number) => void}> = ({ invites, updateSalary }) => {
     const [invitesList, setInvitesList] = useState<TeamInviteProposal[]>(invites);
 
     useEffect(() => {
@@ -14,10 +16,12 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
         
         const pendingInvites = invites.filter(invite => invite.status === "Pending")
         setInvitesList(pendingInvites)
-    }, [invitesList]);
+    }, [invites]);
 
-    const handleAccept = async (inviteId: any) => {
-        const token = JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt;
+    const handleAccept = async (inviteId: any, amount:number) => {
+        const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "");
+        const token = r.jwt;
+        updateSalary(amount)
         try {
             await axios.patch(`${store.backendURL}/user/teaminvites/accepted?teamInviteId=${inviteId}`, {}, {
                 headers: {
@@ -36,7 +40,8 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
     };
 
     const handleReject = async (inviteId: any) => {
-        const token = JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt;
+        const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "");
+        const token = r.jwt;
         try {
             await axios.patch(`${store.backendURL}/user/teaminvites/rejected?teamInviteId=${inviteId}`, {}, {
                 headers: {
@@ -71,7 +76,7 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
                                         <Button
                                             variant="outlined"
                                             color="success"
-                                            onClick={() => handleAccept(invite.proposalId)}
+                                            onClick={() => handleAccept(invite.proposalId, invite.amount)}
                                         >
                                             Accept
                                         </Button>
@@ -94,6 +99,7 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
         </Grid>
     );
 };
+
 
 
 
