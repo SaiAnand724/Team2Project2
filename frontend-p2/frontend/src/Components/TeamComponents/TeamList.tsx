@@ -8,6 +8,7 @@ import { store, userStore } from "../../globalStore/store";
 
 
 import { toast, ToastContainer } from "react-toastify";
+import { IndeterminateCheckBoxRounded } from "@mui/icons-material";
 
 
 export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers}) => {
@@ -18,7 +19,7 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
 
     useEffect(() => {
         fetchAllTeamMembers()
-    }, [teamMemberList]);
+    }, []);
 
     
     const fetchAllTeamMembers = async () => {
@@ -41,15 +42,22 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
     }
     
 
-    const changeRole = async () => {
-        alert("Change Role button clicked")
+    const changeRole = async (Id: string, index: number) => {
+        alert("You cannot change your own role!")
+        return;
         try {
             let response:any = null;
             //figure out query param logic
-            const memberId = "UUID";
-            response = await axios.patch(`${managerURL}/role/Manager?player_id=${memberId}`)
-            setTeamMemberList(response.data)
-            console.log(response.data)
+            const memberId = Id;
+            const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+            response = await axios.patch(`${managerURL}/role/Manager?player_id=${memberId}`, {}, {
+                headers: {
+                  'Authorization': `Bearer ${r.jwt}`,
+                  'Content-Type': 'application/json'
+                },
+              })
+            // Set team member list, but with the updated role for the specific member
+            setTeamMemberList({...teamMemberList})
             toast.success("Role changed")
         }
         catch {
@@ -58,16 +66,21 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
         }
     }
 
-    const fireUser = async () => {
-        alert("Fire user button clicked")
+    const fireUser = async (Id: string, index: number) => {
+        alert("You cannot Fire your own User!")
+        return;
         try {
             let response:any = null;
             //figure out query param logic
-            const memberId = "UUID";
-            response = await axios.patch(`${managerURL}/users/${memberId}`)
-            setTeamMemberList(response.data)
-            console.log(response.data)
-            toast.success("Player Removed")
+            const memberId = Id;
+            const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "")
+            response = await axios.patch(`${managerURL}/users/${memberId}`, {},  {
+                headers: {
+                  'Authorization': `Bearer ${r.jwt}`,
+                  'Content-Type': 'application/json'
+                },
+              })
+              setTeamMemberList({...teamMemberList})
         }
         catch {
             console.log("Error removing member from team")
@@ -93,15 +106,15 @@ export const TeamMembers:React.FC<{teamMembers:UserInterface[]}> = ({teamMembers
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {teamMemberList.map((teamMember) => (
-                    <TableRow key={teamMember.userId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell align="center">{teamMember.userId}</TableCell>
-                        <TableCell align="center">{teamMember.username}</TableCell>
-                        <TableCell align="center">{teamMember.role}</TableCell>
-                        <TableCell align="center">${teamMember.salary}</TableCell>
+                    {teamMemberList.map((teamMember, index) => (
+                    <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        <TableCell align="center" key={index}>{teamMember.userId}</TableCell>
+                        <TableCell align="center" key={index}>{teamMember.username}</TableCell>
+                        <TableCell align="center" key={index}>{teamMember.role}</TableCell>
+                        <TableCell align="center" key={index}>${teamMember.salary}</TableCell>
                         <TableCell align="center">
-                        <Button variant="outlined" color="secondary" onClick={changeRole}> Change Role </Button> 
-                        <Button variant="outlined" color="error" onClick={fireUser}> Fire </Button>
+                        <Button variant="outlined" color="secondary" onClick={() => changeRole(teamMember.userId, index)}> Change Role </Button> 
+                        <Button variant="outlined" color="error" onClick={() => fireUser(teamMember.userId, index)}> Fire </Button>
                         </TableCell>
                     </TableRow>
                     ))}

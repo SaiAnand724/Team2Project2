@@ -1,8 +1,6 @@
-import { UUID } from "crypto";
-
 // Player and Team Manager Model
 export interface UserInterface {
-    userId?: UUID | string,
+    userId: string,
     username: string,
     password?: string,
     firstName: string,
