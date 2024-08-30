@@ -3,7 +3,7 @@ import { Box, Button, Card, CardContent, Grid, Typography } from "@mui/material"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
-import { userStore } from "../../globalStore/store";
+import { store, userStore } from "../../globalStore/store";
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface";
 
 export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites }) => {
@@ -19,7 +19,7 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
     const handleAccept = async (inviteId: any) => {
         const token = JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt;
         try {
-            await axios.patch(`${userStore.backendURL}/user/teaminvites/accepted?teamInviteId=${inviteId}`, {}, {
+            await axios.patch(`${store.backendURL}/user/teaminvites/accepted?teamInviteId=${inviteId}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -38,7 +38,7 @@ export const PlayerCard: React.FC<{invites: TeamInviteProposal[]}> = ({ invites 
     const handleReject = async (inviteId: any) => {
         const token = JSON.parse(localStorage.getItem('loggedInUser') ?? "").jwt;
         try {
-            await axios.patch(`${userStore.backendURL}/user/teaminvites/rejected?teamInviteId=${inviteId}`, {}, {
+            await axios.patch(`${store.backendURL}/user/teaminvites/rejected?teamInviteId=${inviteId}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

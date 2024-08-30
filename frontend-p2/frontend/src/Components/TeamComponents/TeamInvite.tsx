@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { TeamInviteProposal } from "../../Interfaces/TeamInviteInterface";
 import axios from "axios";
-import { userStore } from "../../globalStore/store";
+import { store, userStore } from "../../globalStore/store";
 import { toast } from "react-toastify";
 
 
@@ -41,7 +41,7 @@ import { toast } from "react-toastify";
                     console.log(selectedInvite.proposalId)
 
 
-                    const response = await axios.patch(`${userStore.backendURL}/user/teaminvites/accepted?teamInviteId=` + selectedInvite.proposalId,{},{
+                    const response = await axios.patch(`${store.backendURL}/user/teaminvites/accepted?teamInviteId=` + selectedInvite.proposalId,{},{
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -78,7 +78,7 @@ import { toast } from "react-toastify";
             if (selectedInvite) {
 
 
-                const response = await axios.patch(`${userStore.backendURL}/user/teaminvites/rejected?teamInviteId=` + selectedInvite.proposalId, {}, {
+                const response = await axios.patch(`${store.backendURL}/user/teaminvites/rejected?teamInviteId=` + selectedInvite.proposalId, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
