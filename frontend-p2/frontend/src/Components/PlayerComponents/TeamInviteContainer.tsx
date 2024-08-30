@@ -6,7 +6,7 @@ import axios from "axios"
 import { TeamInvite } from "../TeamComponents/TeamInvite"
 import './TeamInviteContainer.css';
 import { PlayerNavbar } from "./PlayerNavbar"
-import { userStore } from "../../globalStore/store"
+import { store, userStore } from "../../globalStore/store"
 import { toast, ToastContainer } from "react-toastify"
 
 export const TeamInviteContainer:React.FC = () => {
@@ -32,7 +32,7 @@ export const TeamInviteContainer:React.FC = () => {
 
         try {
 
-            const response = await axios.get(`${userStore.backendURL}/user/teaminvite/received`, {
+            const response = await axios.get(`${store.backendURL}/user/teaminvite/received`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
