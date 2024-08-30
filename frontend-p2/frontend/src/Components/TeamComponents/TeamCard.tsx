@@ -34,16 +34,19 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
                 'Content-Type': 'application/json'
               },
             })
+            //console.log("parse obj:", r)
             console.log(response.data)
             const proposalFilter = response.data
             const filteredProposals = proposalFilter.filter(
-                (proposalFilter: { status: string; team_name: string; }) => proposalFilter.status === 'Pending' && proposalFilter.team_name === 'BobMangTeam'
+                (proposalFilter: { status: string; team_name: string; }) => proposalFilter.status === 'Pending' && proposalFilter.team_name === `${r.teamName}`
               );
 
             console.log(filteredProposals)
             setProposalsList(filteredProposals)
         }
-        catch (error) {
+        catch {
+            console.log("Error getting recieved proposal")
+            toast.error("Error getting recieved proposals")
         }
     }
 
@@ -85,7 +88,6 @@ export const TeamCard: React.FC<{proposals:TeamProposalInterface[]}> = ({proposa
         catch {
 
             console.log("Error accepting proposals")
-
             toast.error("Error accepting proposals")
 
         }

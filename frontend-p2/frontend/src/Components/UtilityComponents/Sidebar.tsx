@@ -43,9 +43,9 @@ const Sidebar: React.FC = () => {
 
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, link: role === 'Player' ? '/player' : role === 'Manager' ? '/manager' : '/sponsor' },
-    { text: 'Teams', icon: <GroupIcon />, link: '/manager/teams', visible: role === 'Manager' },
-    { text: 'Proposals', icon: <MailIcon />, link: role === 'Player' ? '/player/team/invites' : role === 'Manager' ? '/manager/proposals' : '/proposals-hist' },
-    { text: 'Players', icon: <GroupIcon />, link: '/manager/players', visible: role === 'Manager' },
+    { text: 'Invite History', icon: <GroupIcon />, link: '/manager/invites', visible: role === 'Manager' },
+    { text: 'Proposals', icon: <MailIcon />, link: role === 'Player' ? '/user/teaminvites' : role === 'Manager' ? '/manager/proposals-hist' : '/sponsor/proposals-hist' },
+    { text: 'Team Members', icon: <GroupIcon />, link: '/manager/teammembers', visible: role === 'Manager' },
     { text: 'Sponsorships', icon: <AttachMoneyIcon />, link: '/player/sponsorships', visible: role === 'Player' },
     { text: 'Create Proposal', icon: <MailIcon />, link: '/newsponsorproposal', visible: role === 'Sponsor' },
     { text: 'Create Invite', icon: <MailIcon />, link: '/newteaminv', visible: role === 'Manager' },

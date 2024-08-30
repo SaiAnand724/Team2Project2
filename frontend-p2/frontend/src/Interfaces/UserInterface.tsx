@@ -5,10 +5,10 @@ export interface UserInterface {
     userId?: UUID | string,
     username: string,
     password?: string,
-    firstName?: string,
-    lastName?: string,
+    firstName: string,
+    lastName: string,
     role: string,
     jwt?: string,
     teamName?: string,
-    salary?: number,
+    salary: number,
 }
