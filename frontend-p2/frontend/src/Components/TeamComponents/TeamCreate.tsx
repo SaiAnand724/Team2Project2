@@ -3,6 +3,7 @@ import { Button, TextField, Paper, Typography } from '@mui/material';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 import { store } from '../../globalStore/store';
 
 type Team = {
@@ -12,7 +13,9 @@ type Team = {
 
 const TeamCreate: React.FC = () => {
 
+
   const playerURL = `${store.backendURL}/user`;
+
 
   const [team, setTeam] = useState<Team | null>(null);
   const [newTeamName, setNewTeamName] = useState('');
@@ -51,7 +54,9 @@ const TeamCreate: React.FC = () => {
         balance: newTeamBalance
       });
 
+
       const response = await axios.post(`${store.backendURL}/team`, {
+
         teamName: newTeamName,
         balance: newTeamBalance
       }, {
@@ -86,7 +91,9 @@ const TeamCreate: React.FC = () => {
   const updateTeam = async () => {
     try {
       if (team) {
+
         const response = await axios.patch(`${store.backendURL}/team/name/${updateTeamName}`, {}, {
+
           headers: {
             'Authorization': `Bearer ${getToken()}`,
             'Content-Type': 'application/json'
@@ -125,7 +132,9 @@ const TeamCreate: React.FC = () => {
 
   return (
     <div>
+
       <Paper style={{width: 250, height: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 16 }}>
+
           <img
             src='images/team.png' 
             alt="Team Logo"
@@ -151,7 +160,9 @@ const TeamCreate: React.FC = () => {
                 variant="contained"
                 color="primary"
                 onClick={() => setEditMode(true)}
+
                 style={{ marginBottom: 16, textAlign: 'center' }}
+
               >
                 Update Team Name
               </Button>
@@ -168,7 +179,9 @@ const TeamCreate: React.FC = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
+
                   style={{ marginBottom: 16, textAlign: 'center' }}
+
                 />
                 <Button
                   variant="contained"
@@ -194,7 +207,9 @@ const TeamCreate: React.FC = () => {
               variant="contained"
               color="primary"
               onClick={() => setCreateMode(true)}
+
               style={{ marginBottom: 16, textAlign: 'center' }}
+
             >
               Create Team
             </Button>
@@ -212,7 +227,9 @@ const TeamCreate: React.FC = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+
               style={{ marginBottom: 16, textAlign: 'center' }}
+
             />
             <TextField
               label="Initial Balance"
