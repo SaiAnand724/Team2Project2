@@ -1,6 +1,6 @@
 // PlayerDashboard.tsx
 import { useEffect, useState } from "react";
-import { userStore } from "../../globalStore/store";
+import { store } from "../../globalStore/store";
 import { PlayerProposalInterface } from "../../Interfaces/PlayerProposalInterface";
 import { PlayerCard } from "./PlayerCard";
 import { AppBar, Box, Card, Container, Divider, Grid, Toolbar, Typography } from "@mui/material";
@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const PlayerDashboard: React.FC = () => {
-    const playerURL = `${userStore.baseURL}/player`;
+    const playerURL = `${store.backendURL}/player`;
 
     const [invites, setInvites] = useState<TeamInviteProposal[]>([]);
 
@@ -21,10 +21,10 @@ export const PlayerDashboard: React.FC = () => {
         const r = JSON.parse(localStorage.getItem('loggedInUser') ?? "");
 
         const token = r.jwt;
-        console.log("Backend URL:", userStore.backendURL);
+        console.log("Backend URL:", store.backendURL);
 
         try {
-            const response = await axios.get(`${userStore.backendURL}/user/teaminvite/received`, {
+            const response = await axios.get(`${store.backendURL}/user/teaminvite/received`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

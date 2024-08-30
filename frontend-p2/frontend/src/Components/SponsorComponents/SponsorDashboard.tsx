@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { SponsorNavbar } from './SponsorNavbar';
 import { Divider, Grid } from '@mui/material';
 import { SponsorCard } from './SponsorCard';
-import { sponsorStore } from "../../globalStore/store"
+import { store } from "../../globalStore/store"
 import { SponsoredTeamsInterface } from '../../Interfaces/SponsoredTeamsInterface';
 import SponsorBudget from './SponsorBudget';
 
 export const SponsorDashboard:React.FC = () => {
 
-    const sponsorURL = `${sponsorStore.baseURL}/sponsor`
+    const sponsorURL = `${store.backendURL}/sponsor`
 
     const [proposalsList, setProposalsList] = useState<SponsoredTeamsInterface[]>([]) /**  */
     const r = JSON.parse(localStorage.getItem('loggedInSponsor') ?? "")
